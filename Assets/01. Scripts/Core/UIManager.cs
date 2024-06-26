@@ -9,9 +9,9 @@ public class UIManager : ManagerBase<UIManager>
 {
 	#region UI Variables
 
-	[Tooltip("[0 : Title] [1 : InGame] [2 : Result] [3 : Setting] [4 : Loading]")]
 	[Header("UI Canvases")]
 	public Canvas MainCanvas;
+	[Tooltip("[0 : Title] [1 : InGame] [2 : Result] [3 : Setting]")]
 	public Canvas[] UICanvases;
 
 	[Header("UI Elements")]
@@ -117,7 +117,6 @@ public class UIManager : ManagerBase<UIManager>
 			})
 			.OnComplete(() =>
 			{
-				FadePanel.raycastTarget = false;
 				StartCoroutine(TransitionScene(sceneName));
 			});
 	}
@@ -154,6 +153,12 @@ public class UIManager : ManagerBase<UIManager>
 				if (percentage >= 99f) asyncLoad.allowSceneActivation = true;
 			}
 		}
+
+		FadePanel.DOFade(0.0f, fadeDuration)
+			.OnComplete(() =>
+			{
+				FadePanel.raycastTarget = false;
+			});
 	}
 
 	#endregion
@@ -170,7 +175,6 @@ public class UIManager : ManagerBase<UIManager>
 			})
 			.OnComplete(() =>
 			{
-				FadePanel.raycastTarget = false;
 				StartCoroutine(TransitionScene(index));
 			});
 	}
@@ -207,6 +211,12 @@ public class UIManager : ManagerBase<UIManager>
 				if (percentage >= 99f) asyncLoad.allowSceneActivation = true;
 			}
 		}
+
+		FadePanel.DOFade(0.0f, fadeDuration)
+			.OnComplete(() =>
+			{
+				FadePanel.raycastTarget = false;
+			});
 	}
 
 	#endregion
