@@ -1,12 +1,15 @@
 using System;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
-    //어떤타일인지
-    //어떤상태인지
-    //누구의 공격이 진행중인지.
-public class Tile
+//어떤타일인지
+//어떤상태인지
+//누구의 공격이 진행중인지
+
+[Serializable]
+public class Tiles
 {
-    public Lazy<GameObject> Objects;
+    public Lazy<IDamageable> hereObj;
     //이건 idamageable 같은인터페이스/클래스 상속으로 구현하면 좋을것 같음
 
     public bool Breakable { get; private set; } = false;
@@ -15,13 +18,15 @@ public class Tile
     
     public TileState tileState { get; private set; } = TileState.None;
 
+    private UnityEngine.Tilemaps.Tile tile;
     private int breakTime = 0;
 
     public void Init(bool walkable, int breakTimes = 0, TileState state = TileState.None, int? oreInfo = null)
     {
+        SetSprite(null);
         if (walkable)
         {
-            Objects = new Lazy<GameObject>();
+            hereObj = new Lazy<IDamageable>();
             breakTime = breakTimes;
             tileState = state;
             //oreinfo = ore
@@ -33,9 +38,17 @@ public class Tile
         }
     }
 
+    public void SetSprite(Sprite sprite)
+    {
+        if (sprite == null)
+            return;
+
+        tile.sprite = sprite;
+    }
+
     public void DamageTile()
     {
-        //Objects.Value.Getdamage();
+        hereObj.Value.RecieveDamage();
     }
 
     public void BlockBreak()
