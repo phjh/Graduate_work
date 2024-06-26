@@ -52,13 +52,15 @@ public class Managers : MonoBehaviour
 	private void InItOtherManagers()
 	{
 		if (UIMng == null) UIMng = UIManager.GetInstacne();
-		if (FlowMng == null) FlowMng = FlowManager.GetInstacne();
-		if (MapMng == null)	MapMng = MapManager.GetInstacne();
-		if (TimeMng == null) TimeMng = TimeManager.GetInstacne();
-
 		UIMng.InitManager();
+		
+		if (FlowMng == null) FlowMng = FlowManager.GetInstacne();
 		FlowMng.InitManager();
+
+		if (MapMng == null)	MapMng = MapManager.GetInstacne();
 		MapMng.InitManager();
+
+		if (TimeMng == null) TimeMng = TimeManager.GetInstacne();
 		TimeMng.InitManager();
 	}
 

@@ -44,23 +44,32 @@ public struct SFXSource
 	public SFXType type;
 	public int ID;
 	public string objName;
-	public AudioSource source;
+	public AudioClip clip;
 }
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : ManagerBase<SoundManager>
 {
     [Header("Sound Sources")]
 	public BGMSource[] bgmList;
 	public SFXSource[] sfxList;
     [Header("Main Audio Mixer")]
     public AudioMixer audioMixer;
+    [Header("Audio Objects")]
+    public GameObject SFXPlayerPrefab;
 
     private Dictionary<BGMType, AudioSource> bgmDictionary = new Dictionary<BGMType, AudioSource>();
-    private Dictionary<SFXType, AudioSource> sfxDictionary = new Dictionary<SFXType, AudioSource>();
+    private Dictionary<SFXType, AudioClip> sfxDictionary = new Dictionary<SFXType, AudioClip>();
 
     private BGMType bgmSoundMode = BGMType.None;
 
-    private void SetUpDicitonarys()
+	public override void InitManager()
+	{
+		base.InitManager();
+
+		SetUpDicitonarys();
+	}
+
+	private void SetUpDicitonarys()
     {
         if(bgmDictionary.Count > 0) { bgmDictionary.Clear(); }
         foreach (BGMSource bs in bgmList)
@@ -71,11 +80,55 @@ public class SoundManager : MonoBehaviour
         if(sfxDictionary.Count > 0) {  sfxDictionary.Clear(); }
         foreach (SFXSource ss in sfxList)
         {
-            sfxDictionary.Add(ss.type, ss.source);
+            sfxDictionary.Add(ss.type, ss.clip);
         }
     }
 
 	public void ChangeBGMType(BGMType type)
     {
+        if(bgmDictionary.ContainsKey(type) == false)
+        {
+            Logger.LogWarning($"{type} BGM clip has not exist");
+            return;
+        }
+
+        if(bgmSoundMode != BGMType.None)
+        {
+            bgmDictionary[type].Stop();
+        }
+
+        bgmSoundMode = type;
+
+        bgmDictionary[bgmSoundMode].Play();
     }
+
+    public void PlaySFX(SFXType type)
+    {
+		if (sfxDictionary.ContainsKey(type) == false)
+		{
+			Debug.LogError($"{type} type SFX clip has not exist.");
+
+			return;
+		}
+
+        GameObject AudioPlayer = Instantiate(SFXPlayerPrefab);
+        AudioPlayer.transform.position = transform.position;
+        if (AudioPlayer.TryGetComponent(out AudioSource AS))
+        {
+            AS.clip = sfxDictionary[type];
+            if(AS.outputAudioMixerGroup == null)
+            {
+                if(audioMixer.FindMatchingGroups("SFX")[0] == true) AS.outputAudioMixerGroup = audioMixer.FindMatchingGroups("SFX")[0];
+			}
+            AS.Play();
+			//Destroy Player In Calculation time
+			Destroy(AudioPlayer, sfxDictionary[type].length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
+        }
+        else
+        {
+            Logger.LogError($"{SFXPlayerPrefab.name}'s AudioSource is Null");
+            Destroy(AudioPlayer);
+        }
+	}
+
 }

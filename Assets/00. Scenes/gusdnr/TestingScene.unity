@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec905050794a5314a997101d009dc095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  msgs: {fileID: 0}
   UICanvases:
   - {fileID: 63508186}
   - {fileID: 970025197}
@@ -493,6 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f521e77a062e0aa4eba5c316e681659b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  msgs: {fileID: 0}
   playerMng: {fileID: 0}
   CurrentGameState: 0
 --- !u!1 &852703629
@@ -1060,6 +1062,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29cba89830a83394eaeb5878fa524e41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  msgs: {fileID: 0}
   MapSize: {x: 101, y: 101}
   MapCenter: {x: 0, y: 0, z: 0}
 --- !u!1 &1611453367
@@ -1352,6 +1355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dfe4566c659cc842aefe55043b85c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  msgs: {fileID: 0}
 --- !u!1 &1852296642
 GameObject:
   m_ObjectHideFlags: 0
