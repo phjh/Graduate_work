@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ManagerBase<T> : MonoSingleton<T> where T : MonoSingleton<T>
 {
-    public Managers msgs;
+    [HideInInspector] public Managers msgs;
 
 	private void Start()
 	{
