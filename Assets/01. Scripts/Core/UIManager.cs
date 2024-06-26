@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,7 +39,7 @@ public class UIManager : ManagerBase<UIManager>
 		return ActiveScene() == SceneManager.GetSceneByName(name);
 	}
 
-	private bool isLoadingStart = false;
+	private bool isLoading = false;
 
 	#endregion
 
@@ -75,7 +76,6 @@ public class UIManager : ManagerBase<UIManager>
 			popups.Add(popup.GetType().Name.Replace(typeof(PopupUI).Name, ""), popup);
 			popup.TogglePopup(false);
 		}
-
 	}
 
 	public void EnableSelectCanvas(int index)
@@ -109,8 +109,17 @@ public class UIManager : ManagerBase<UIManager>
 
 	public void SetSceneName(string sceneName)
 	{
-		if (ActiveScene().name == sceneName || isLoadingStart) return;
-		StartCoroutine(TransitionScene(sceneName));
+		if (ActiveScene().name == sceneName || isLoading) return;
+		FadePanel.DOFade(1.0f, fadeDuration)
+			.OnStart(() =>
+			{
+				FadePanel.raycastTarget = true;
+			})
+			.OnComplete(() =>
+			{
+				FadePanel.raycastTarget = false;
+				StartCoroutine(TransitionScene(sceneName));
+			});
 	}
 
 	private IEnumerator TransitionScene(string sceneName)
@@ -122,21 +131,29 @@ public class UIManager : ManagerBase<UIManager>
 
 	private IEnumerator LoadSceneAsync(string sceneName)
 	{
-		isLoadingStart = true;
+		isLoading = true;
 
 		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 		asyncLoad.allowSceneActivation = false;
+		float percentage = 0f;
 
 		while (!asyncLoad.isDone)
 		{
-			if (asyncLoad.progress >= 0.9f)
-				asyncLoad.allowSceneActivation = true;
-
-			Debug.Log($"Loading : [{asyncLoad.progress * 100}]%");
 			yield return null;
-		}
 
-		SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
+			Logger.Log($"Loading : [{percentage}]%");
+
+			if (percentage < 90f)
+			{
+				percentage = Mathf.MoveTowards(percentage, asyncLoad.progress * 100, Time.deltaTime * 10f);
+			}
+			else
+			{
+				percentage = Mathf.MoveTowards(percentage, 100f, Time.deltaTime * 10f);
+
+				if (percentage >= 99f) asyncLoad.allowSceneActivation = true;
+			}
+		}
 	}
 
 	#endregion
@@ -145,8 +162,17 @@ public class UIManager : ManagerBase<UIManager>
 
 	public void SetSceneIndex(int index)
 	{
-		if (ActiveScene().buildIndex == index || isLoadingStart) return;
-		StartCoroutine(TransitionScene(index));
+		if (ActiveScene().buildIndex == index || isLoading) return;
+		FadePanel.DOFade(1.0f, fadeDuration)
+			.OnStart(() =>
+			{
+				FadePanel.raycastTarget = true;
+			})
+			.OnComplete(() =>
+			{
+				FadePanel.raycastTarget = false;
+				StartCoroutine(TransitionScene(index));
+			});
 	}
 
 	private IEnumerator TransitionScene(int index)
@@ -158,21 +184,29 @@ public class UIManager : ManagerBase<UIManager>
 
 	private IEnumerator LoadSceneAsync(int index)
 	{
-		isLoadingStart = true;
+		isLoading = true;
 
 		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
-		asyncLoad.allowSceneActivation = false;
+		asyncLoad.allowSceneActivation = true;
+		float percentage = 0f;
 
 		while (!asyncLoad.isDone)
 		{
-			if (asyncLoad.progress >= 0.9f)
-				asyncLoad.allowSceneActivation = true;
-
-			Debug.Log($"Loading : [{asyncLoad.progress * 100}]%");
 			yield return null;
-		}
 
-		SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(index));
+			Logger.Log($"Loading : [{percentage}]%");
+
+			if (percentage < 90f)
+			{
+				percentage = Mathf.MoveTowards(percentage, asyncLoad.progress * 100, Time.deltaTime * 10f);
+			}
+			else
+			{
+				percentage = Mathf.MoveTowards(percentage, 100f, Time.deltaTime * 10f);
+
+				if (percentage >= 99f) asyncLoad.allowSceneActivation = true;
+			}
+		}
 	}
 
 	#endregion
@@ -182,12 +216,21 @@ public class UIManager : ManagerBase<UIManager>
 		AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(index);
 		while (!asyncUnload.isDone)
 		{
-			Debug.Log($"UnLoading : [{asyncUnload.progress * 100}]%");
+			Logger.Log($"UnLoading : [{asyncUnload.progress * 100}]%");
 			yield return null;
 		}
 		Debug.Log($"UnLoad Complete : {SceneManager.GetSceneByBuildIndex(index).name}");
 
-		isLoadingStart = false;
+		isLoading = false;
+	}
+
+	public void QuitGame()
+	{
+	#if UNITY_EDITOR
+		UnityEditor.EditorApplication.isPlaying = false;
+	#else
+		Application.Quit();
+	#endif
 	}
 
 	#endregion

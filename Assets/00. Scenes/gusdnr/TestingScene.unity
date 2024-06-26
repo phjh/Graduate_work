@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &63508184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,12 +270,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   msgs: {fileID: 0}
+  MainCanvas: {fileID: 0}
   UICanvases:
   - {fileID: 63508186}
   - {fileID: 970025197}
   - {fileID: 1314393508}
   - {fileID: 1852296645}
   - {fileID: 2077385385}
+  FadePanel: {fileID: 0}
+  fadeDuration: 0
 --- !u!1 &449432443
 GameObject:
   m_ObjectHideFlags: 0
@@ -607,7 +610,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &970025195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -859,7 +862,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1314393506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1374,7 +1377,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1852296643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1476,7 +1479,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2077385383
 MonoBehaviour:
   m_ObjectHideFlags: 0
