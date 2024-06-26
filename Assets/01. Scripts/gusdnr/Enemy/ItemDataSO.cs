@@ -20,7 +20,7 @@ public class ItemDataSO : ScriptableObject
 {
 	[Header("Item Infomations")]
 	public Sprite ItemImage;
-	public string ItemName;
+	public string ItemName = "No Name";
 	public string ItemDescription;
 
 	[Header("Item Values")]
