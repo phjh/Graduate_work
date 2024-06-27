@@ -16,7 +16,7 @@ public class UIManager : ManagerBase<UIManager>
 
 	[Header("UI Elements")]
 	[SerializeField] private Image FadePanel;
-	[SerializeField] private float fadeDuration = 0.5f;
+	[SerializeField][Range(0.0f, 1.0f)] private float fadeDuration = 0.5f;
 
 	private Dictionary<string, PopupUI> popups = new Dictionary<string, PopupUI>();
 	private int beforeSelected = -1;

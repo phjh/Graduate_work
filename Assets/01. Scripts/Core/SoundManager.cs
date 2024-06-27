@@ -100,7 +100,7 @@ public class SoundManager : ManagerBase<SoundManager>
 		Logger.Log($"Set SFXPlayer : {SFXPlayerPrefab != null}");
 	}
 
-	private void SetUpDicitonarys()
+	private void SetUpDicitonarys() // Set Up Dictionarys to List Values
     {
         if(bgmDictionary.Count > 0) { bgmDictionary.Clear(); }
         foreach (BGMSource bs in bgmList)
