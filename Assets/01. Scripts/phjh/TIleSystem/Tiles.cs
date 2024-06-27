@@ -7,79 +7,45 @@ using UnityEngine.Tilemaps;
 //누구의 공격이 진행중인지
 
 [Serializable]
-public class Tiles
+public abstract class Tiles
 {
-    public Lazy<IDamageable> hereObj;
-    //이건 idamageable 같은인터페이스/클래스 상속으로 구현하면 좋을것 같음
 
-    public bool Breakable { get; private set; } = false;
+    public TileType tileState { get; private set; } = TileType.None;
 
-    //public int? OreInfo (대충 광석정보 담고있는 것 하나)
-    
-    public TileState tileState { get; private set; } = TileState.None;
-
-    private UnityEngine.Tilemaps.Tile tile;
-    private int breakTime = 0;
-
-    public void Init(bool walkable, int breakTimes = 0, TileState state = TileState.None, int? oreInfo = null)
+    public void Init(int breakTimes = 0, TileType state = TileType.None, int? oreInfo = null)
     {
-        SetSprite(null);
-        if (walkable)
+        if(state == TileType.None)
         {
-            hereObj = new Lazy<IDamageable>();
-            breakTime = breakTimes;
+
+        }
+
+        SetBlock(null);
+        {
             tileState = state;
             //oreinfo = ore
         }
-        else
         {
-            Breakable = false;
-            tileState = TileState.Blocked;
+            tileState = TileType.BreakableBlock;
         }
     }
 
-    public void SetSprite(Sprite sprite)
+    public void SetBlock(GameObject obj)
     {
-        if (sprite == null)
+        if (obj == null)
             return;
 
-        tile.sprite = sprite;
+        //대충 prefab생성해주는것
     }
 
-    public void DamageTile()
-    {
-        hereObj.Value.RecieveDamage();
-    }
-
-    public void BlockBreak()
-    {
-        if (Breakable == false || tileState == TileState.Walkable)
-            return;
-
-        breakTime--;
-
-        if(breakTime <= 0)
-        {
-            //if(ore != null)
-            //  SpawnOre()
-            tileState = TileState.Walkable;
-        }
-    }
-
-    public void SpawnOre()
-    {
-        //여기서 광석을 떨구든 해준다
-    }
+    public virtual void DoBlockEvent() { } 
 
 }
 
-public enum TileState
+public enum TileType
 {
-    Blocked = 0,
-    Walkable = 1,
-    Attacking = 2,
-    Immuniate = 3,
-    Interaction = 4,
-    None = 5,   //초기화때 및 기타등등 할때 쓸것
+    UnBreakableBlock = 0,
+    BreakableBlock = 1,
+    OreBlock = 2,
+    InteractionBlock = 3,   //뭐 이벤트 같은거도 재미있을지도
+    None = 4, //이건 초기화 같은데에서 쓰일예정
 }
-

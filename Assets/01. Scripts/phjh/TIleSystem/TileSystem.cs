@@ -11,6 +11,13 @@ public class TileSystem : MonoBehaviour
 
     private List<Tiles> tileMap = new();
 
+    #region 타일정보들
+
+    [SerializeField]
+    private List<Sprite> mapSprites;
+
+
+    #endregion
 
     private void Start()
     {
@@ -25,9 +32,15 @@ public class TileSystem : MonoBehaviour
         for (int i = 0; i < loops; i++)
         {
             tileMap.Add(new Tiles());
-            tileMap[i].Init(true);
+            tileMap[i].Init(true, i);
         }
     }
 
+    private int ListConverter(int width, int height)
+    {
+        //101width -> 1height
+        //대충 가로 후 세로
+        return width + height * this.width;
+    }
 
 }
