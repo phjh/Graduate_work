@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyMain : MonoBehaviour, IDamageable
 {
+	[SerializeField] private EnemyDataSO enemyData;
+
 	public int hp
 	{
 		get 
@@ -16,6 +18,4 @@ public class EnemyMain : MonoBehaviour, IDamageable
 			hp = value;
 		}
 	}
-
-	
 }
