@@ -13,6 +13,18 @@ public class Managers : MonoBehaviour
 	[Header("In Game Manager Scripts")]
 	public PlayerManager PlayerMng;
 
+	public float TimeScale
+	{
+		get
+		{
+			return TimeScale;
+		}
+
+		private set
+		{
+			TimeScale = value;
+		}
+	}
 
 	public static Managers _instance;
 	public static Managers GetInstance()
@@ -26,6 +38,11 @@ public class Managers : MonoBehaviour
 		Init();
 
 		InItOtherManagers();
+	}
+
+	private void Update()
+	{
+		TimeScale = TimeScale;
 	}
 
 	private static void Init()

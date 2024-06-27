@@ -19,11 +19,22 @@ public enum StatType
 public class ItemDataSO : ScriptableObject
 {
 	[Header("Item Infomations")]
-	public Sprite ItemImage;
-	public string ItemName = "No Name";
-	public string ItemDescription;
+	public Sprite Image;
+	public string Name = "No Name";
+	public string Description;
 
 	[Header("Item Values")]
 	public float ItemAddingValue;
-	public StatType AddingStatType;
+	public StatType AddingStatType = StatType.End;
+
+	public bool CheckingInitData() //Checking SO Data
+	{
+		if (Image == null) return false;
+		if (string.IsNullOrEmpty(Name)) return false;
+		if (string.IsNullOrEmpty(Description)) return false;
+		if (ItemAddingValue == 0) return false;
+		if (AddingStatType == StatType.End) return false;
+
+		return true;
+	}
 }

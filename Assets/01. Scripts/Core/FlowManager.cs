@@ -40,15 +40,15 @@ public class FlowManager : ManagerBase<FlowManager>
 		{
 			case GameState.Title:
 				{
-					Logger.Assert(msgs != null, "Mangers is Null");
-					Logger.Assert(msgs.UIMng != null, "Mangers is Null");
-					msgs.UIMng.EnableSelectCanvas(1);
+					Logger.Assert(mngs != null, "Mangers is Null");
+					Logger.Assert(mngs.UIMng != null, "Mangers is Null");
+					mngs.UIMng.EnableSelectCanvas(1);
 					break;
 				}
 			case GameState.Lobby:
 				{
 					if (playerMng == null) AddPlayerManager();
-					msgs.InItInGameManagers();
+					mngs.InItInGameManagers();
 					break;
 				}
 			case GameState.PlayGame:

@@ -122,7 +122,7 @@ public class SoundManager : ManagerBase<SoundManager>
 			}
             AS.Play();
 			//Destroy Player In Calculation time
-			Destroy(AudioPlayer, sfxDictionary[type].length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
+			Destroy(AudioPlayer, sfxDictionary[type].length * ((mngs.TimeScale < 0.01f) ? 0.01f : mngs.TimeScale));
         }
         else
         {
