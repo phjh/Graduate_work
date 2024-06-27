@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &63508184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,13 +269,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec905050794a5314a997101d009dc095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  msgs: {fileID: 0}
+  mngs: {fileID: 0}
+  MainCanvas: {fileID: 2077385385}
   UICanvases:
   - {fileID: 63508186}
   - {fileID: 970025197}
   - {fileID: 1314393508}
   - {fileID: 1852296645}
-  - {fileID: 2077385385}
+  FadePanel: {fileID: 784311541}
+  fadeDuration: 0.5
 --- !u!1 &449432443
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,7 +389,7 @@ GameObject:
   - component: {fileID: 784311542}
   - component: {fileID: 784311541}
   m_Layer: 5
-  m_Name: Image
+  m_Name: FadeImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -425,7 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -494,7 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f521e77a062e0aa4eba5c316e681659b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  msgs: {fileID: 0}
+  mngs: {fileID: 0}
   playerMng: {fileID: 0}
   CurrentGameState: 0
 --- !u!1 &852703629
@@ -607,7 +609,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &970025195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -859,7 +861,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1314393506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1062,7 +1064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29cba89830a83394eaeb5878fa524e41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  msgs: {fileID: 0}
+  mngs: {fileID: 0}
   MapSize: {x: 101, y: 101}
   MapCenter: {x: 0, y: 0, z: 0}
 --- !u!1 &1611453367
@@ -1355,7 +1357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dfe4566c659cc842aefe55043b85c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  msgs: {fileID: 0}
+  mngs: {fileID: 0}
 --- !u!1 &1852296642
 GameObject:
   m_ObjectHideFlags: 0
@@ -1374,7 +1376,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1852296643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1471,7 +1473,7 @@ GameObject:
   - component: {fileID: 2077385384}
   - component: {fileID: 2077385383}
   m_Layer: 5
-  m_Name: Canvas5
+  m_Name: MainCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

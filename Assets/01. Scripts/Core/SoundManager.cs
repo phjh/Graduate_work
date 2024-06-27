@@ -35,7 +35,7 @@ public struct BGMSource
 {
 	public BGMType type;
 	public int ID;
-	public AudioSource source;
+	public AudioClip clip;
 }
 
 [System.Serializable]
@@ -53,28 +53,59 @@ public class SoundManager : ManagerBase<SoundManager>
 	public BGMSource[] bgmList;
 	public SFXSource[] sfxList;
     [Header("Main Audio Mixer")]
-    public AudioMixer audioMixer;
+    [SerializeField] private AudioMixer audioMixer;
     [Header("Audio Objects")]
+	public AudioSource BGMPlayer;
     public GameObject SFXPlayerPrefab;
 
-    private Dictionary<BGMType, AudioSource> bgmDictionary = new Dictionary<BGMType, AudioSource>();
+    private Dictionary<BGMType, AudioClip> bgmDictionary = new Dictionary<BGMType, AudioClip>();
     private Dictionary<SFXType, AudioClip> sfxDictionary = new Dictionary<SFXType, AudioClip>();
 
     private BGMType bgmSoundMode = BGMType.None;
 
+	private void OnEnable()
+	{
+		if (audioMixer == null)
+		{
+			AudioMixer resource = Resources.Load<AudioMixer>("MainAudioMixer");
+			audioMixer = resource;
+		}
+	}
+
 	public override void InitManager()
 	{
 		base.InitManager();
-
+		
+		SetPlayers();
 		SetUpDicitonarys();
 	}
 
-	private void SetUpDicitonarys()
+	private void SetPlayers() //Set DontDestroyOnLoad BGMPlayer
+	{
+		if(BGMPlayer == null) //if BGM Player is null, Make New BGM Player
+		{
+			GameObject player = new GameObject( name = "BGM_Player");
+
+			BGMPlayer = player.AddComponent<AudioSource>();
+		}
+		
+		BGMPlayer.transform.parent = transform;
+		DontDestroyOnLoad(BGMPlayer);
+
+		if(SFXPlayerPrefab == null)
+		{
+			SFXPlayerPrefab = Resources.Load<GameObject>("Prefabs/SFX_Player");
+		}
+		
+		Logger.Log($"Set SFXPlayer : {SFXPlayerPrefab != null}");
+	}
+
+	private void SetUpDicitonarys() // Set Up Dictionarys to List Values
     {
         if(bgmDictionary.Count > 0) { bgmDictionary.Clear(); }
         foreach (BGMSource bs in bgmList)
         {
-            bgmDictionary.Add(bs.type, bs.source);
+            bgmDictionary.Add(bs.type, bs.clip);
         }
         
         if(sfxDictionary.Count > 0) {  sfxDictionary.Clear(); }
@@ -84,7 +115,7 @@ public class SoundManager : ManagerBase<SoundManager>
         }
     }
 
-	public void ChangeBGMType(BGMType type)
+	public void ChangeBGMType(BGMType type, float pitch = 1.0f)
     {
         if(bgmDictionary.ContainsKey(type) == false)
         {
@@ -92,43 +123,93 @@ public class SoundManager : ManagerBase<SoundManager>
             return;
         }
 
+
         if(bgmSoundMode != BGMType.None)
         {
-            bgmDictionary[type].Stop();
+			BGMPlayer.Stop();
+			BGMPlayer.clip = bgmDictionary[type];
+			BGMPlayer.pitch = pitch;
         }
 
         bgmSoundMode = type;
 
-        bgmDictionary[bgmSoundMode].Play();
+		BGMPlayer.loop = true;
+
+        BGMPlayer.Play();
     }
 
-    public void PlaySFX(SFXType type)
-    {
-		if (sfxDictionary.ContainsKey(type) == false)
+	public void StopBGM(bool isPause = false)
+	{
+		if(isPause == true)
 		{
-			Debug.LogError($"{type} type SFX clip has not exist.");
+			BGMPlayer.Pause();
+			return;
+		}
+		else if(isPause == false)
+		{
+			BGMPlayer.Stop();
+			return;
+		}
+	}
 
+	public void PlaySFX(SFXType type, float volume = 0.5f, float pitch = 1.0f)
+	{
+		if (!sfxDictionary.ContainsKey(type))
+		{
+			Logger.LogError($"{type} type SFX clip does not exist.");
 			return;
 		}
 
-        GameObject AudioPlayer = Instantiate(SFXPlayerPrefab);
-        AudioPlayer.transform.position = transform.position;
-        if (AudioPlayer.TryGetComponent(out AudioSource AS))
-        {
-            AS.clip = sfxDictionary[type];
-            if(AS.outputAudioMixerGroup == null)
-            {
-                if(audioMixer.FindMatchingGroups("SFX")[0] == true) AS.outputAudioMixerGroup = audioMixer.FindMatchingGroups("SFX")[0];
+		GameObject audioPlayer = Instantiate(SFXPlayerPrefab);
+		audioPlayer.transform.position = transform.position;
+
+		if (audioPlayer.TryGetComponent(out AudioSource audioSource))
+		{
+			audioSource.clip = sfxDictionary[type];
+			audioSource.volume = volume;
+			audioSource.pitch = pitch;
+
+			if (audioSource.outputAudioMixerGroup == null)
+			{
+				var sfxGroups = audioMixer.FindMatchingGroups("SFX");
+				if (sfxGroups.Length > 0)
+				{
+					audioSource.outputAudioMixerGroup = sfxGroups[0];
+				}
 			}
-            AS.Play();
-			//Destroy Player In Calculation time
-			Destroy(AudioPlayer, sfxDictionary[type].length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
-        }
-        else
-        {
-            Logger.LogError($"{SFXPlayerPrefab.name}'s AudioSource is Null");
-            Destroy(AudioPlayer);
-        }
+
+			audioSource.Play();
+
+			// Calculate destroy time
+			float destroyTime = sfxDictionary[type].length * Mathf.Max(0.01f, mngs.TimeScale);
+			Destroy(audioPlayer, destroyTime);
+		}
+		else
+		{
+			Logger.LogError($"{SFXPlayerPrefab.name} does not have an AudioSource component.");
+			Destroy(audioPlayer);
+		}
 	}
+
+	#region Set Volume
+
+	public void SetMasterVolume(float volume)
+	{
+		audioMixer.SetFloat("masterVolume", Mathf.Log10(volume) * 20f);
+	}
+
+	public void SetSoundFXXVolume(float volume)
+	{
+
+		audioMixer.SetFloat("sfxVolume", Mathf.Log10(volume) * 20f);
+	}
+
+	public void SetBGMVolume(float volume)
+	{
+
+		audioMixer.SetFloat("bgmVolume", Mathf.Log10(volume) * 20f);
+	}
+
+	#endregion
 
 }
