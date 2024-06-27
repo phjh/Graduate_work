@@ -75,8 +75,29 @@ public class SoundManager : ManagerBase<SoundManager>
 	public override void InitManager()
 	{
 		base.InitManager();
-
+		
+		SetPlayers();
 		SetUpDicitonarys();
+	}
+
+	private void SetPlayers() //Set DontDestroyOnLoad BGMPlayer
+	{
+		if(BGMPlayer == null) //if BGM Player is null, Make New BGM Player
+		{
+			GameObject player = new GameObject( name = "BGM_Player");
+
+			BGMPlayer = player.AddComponent<AudioSource>();
+		}
+		
+		BGMPlayer.transform.parent = transform;
+		DontDestroyOnLoad(BGMPlayer);
+
+		if(SFXPlayerPrefab == null)
+		{
+			SFXPlayerPrefab = Resources.Load<GameObject>("Prefabs/SFX_Player");
+		}
+		
+		Logger.Log($"Set SFXPlayer : {SFXPlayerPrefab != null}");
 	}
 
 	private void SetUpDicitonarys()
