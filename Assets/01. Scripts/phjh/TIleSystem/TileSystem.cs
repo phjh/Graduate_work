@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ public class TileSystem : MonoBehaviour
     [SerializeField]
     private int height = 101;
 
-    private List<Tiles> tileMap = new();
+    private Dictionary<Vector3Int, Lazy<Blocks>> tileMap = new();
 
     #region 타일정보들
 
@@ -31,16 +31,32 @@ public class TileSystem : MonoBehaviour
         int loops = width * height;
         for (int i = 0; i < loops; i++)
         {
-            tileMap.Add(new Tiles());
-            tileMap[i].Init(true, i);
+            //여기서 타일 감지해서 1차로 리스트에 세팅을 해준다.
+            ScanTileAndSetting();
+
+            //1차 세팅이 끝나고 2차적으로 랜덤으로 오브젝트같은것들을 배치한다.
+            SetRandomObjectsSetting();
+
         }
     }
 
     private int ListConverter(int width, int height)
     {
         //101width -> 1height
+        // 101가로 = 1세로
         //대충 가로 후 세로
         return width + height * this.width;
     }
+
+    private void ScanTileAndSetting()
+    {
+        
+    }
+
+    private void SetRandomObjectsSetting()
+    {
+
+    }
+
 
 }
