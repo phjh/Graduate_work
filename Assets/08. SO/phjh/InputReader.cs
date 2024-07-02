@@ -8,8 +8,7 @@ using static Controls;
 public class InputReader : ScriptableObject, IPlayerActions
 {
     public event Action<Vector2> MovementEvent;
-    public event Action DodgeEvent;
-    public event Action PauseEvent;
+    public event Action AttackEvent;
 
     public Vector2 AimPosition { get; private set; } //마우스는 이벤트방식이 아니기 때문에
 
@@ -26,16 +25,28 @@ public class InputReader : ScriptableObject, IPlayerActions
         _inputAction.Player.Enable(); //활성화 까먹지말자
     }
 
+    //대충 여기서 inputsystem 에러 안나게 해준다
+    bool IsCorrectScene()
+    {
+        return false;
+    }
+
     #region Player Inputs
     public void OnMove(InputAction.CallbackContext context)
     {
-        Vector2 value = context.ReadValue<Vector2>();
+        Vector2 value = context.ReadValue<Vector2>() * -1;
         MovementEvent?.Invoke(value);
     }
 
     public void OnAim(InputAction.CallbackContext context)
     {
         AimPosition = context.ReadValue<Vector2>();
+    }
+
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        //attack Event
+        AttackEvent?.Invoke();
     }
 
     #endregion

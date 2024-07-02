@@ -4,32 +4,45 @@ using UnityEngine;
 //어떤타일인지
 //누구의 공격이 진행중인지
 [Serializable]
-public abstract class Blocks
+public abstract class Blocks : MonoBehaviour
 {
     public Lazy<GameObject> block;
-    public BlockType blockType { get; private set; } = BlockType.None;
 
-    public void Init(BlockType type)
+    public BlockType blockType { get; protected set; } = BlockType.None;
+
+    public void Init(Vector3Int pos, GameObject block = null, Transform BlockParent = null)
     {
-        if (type == BlockType.None)
+        if (block == null)
         {
-            type = BlockType.None;
+            Logger.LogError($"{this.gameObject.name} block is null! InstanceID : {this.gameObject.GetInstanceID()}");
             return;
         }
 
-        blockType = type;
+        if(BlockParent == null)
+        {
+            BlockParent = this.transform;
+        }
+
+        //이건 나중에 풀매니저로 대체 할 예정
+        block.transform.position = pos;
+        block.transform.SetParent(BlockParent);
+        this.block = new(block);
 
         SetBlock();
     }
 
-    public virtual void SetBlock() 
+    public void DeleteBlock()
     {
-        //여기서 블럭을 세팅해준다
-        block = new();
+        block = null;
+        blockType = BlockType.None;
+        //풀매니저로 변경
+        Destroy(block.Value.gameObject);
     }
 
-    public virtual void DoBlockEvent() { } 
+    //여기서 블럭을 세팅해준다
+    public abstract void SetBlock();
 
+    public abstract void BlockEvent();
 }
 
 public enum BlockType

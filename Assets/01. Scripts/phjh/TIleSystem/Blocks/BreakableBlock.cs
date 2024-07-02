@@ -5,16 +5,16 @@ public class BreakableBlock : Blocks
     public override void SetBlock()
     {
         timeToBreak = 4;
-        base.SetBlock();
     }
 
-    public override void DoBlockEvent()
+    public override void BlockEvent()
     {
         timeToBreak--;
         if(timeToBreak == 0)
         {
-            MonoEventHandler.Instance.DestroyObject(block.Value);
-            
+            Destroy(block.Value);
+            block = null;
+            blockType = BlockType.None;
         }
     }
 
