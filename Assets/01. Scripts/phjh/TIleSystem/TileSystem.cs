@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TileSystem : MonoBehaviour
@@ -9,12 +10,16 @@ public class TileSystem : MonoBehaviour
     [SerializeField]
     private int height = 101;
 
-    private Dictionary<Vector3Int, Lazy<Blocks>> tileMap = new();
+    private Dictionary<Vector3Int, Blocks> tileMap = new();
+    [SerializeField]
+    public List<Vector3Int> pos;
+    [SerializeField]
+    public List<Blocks> tileblocks;
 
     #region 타일정보들
 
     [SerializeField]
-    private List<Sprite> mapSprites;
+    private List<GameObject> blocks;
 
 
     #endregion
@@ -24,6 +29,19 @@ public class TileSystem : MonoBehaviour
         InitMap();
     }
 
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Vector3Int pos = new Vector3Int(tileMap.Count + 1, 0, 1);
+            //풀매니저로 바궈줄거
+            GameObject obj = Instantiate(blocks[0]);
+            tileMap.Add(new Vector3Int(tileMap.Count + 1, 0, 1), obj.GetComponent<Blocks>());
+            tileblocks.Add(obj.GetComponent<Blocks>());
+            tileMap[pos].Init(pos, obj, this.transform);
+        }
+    }
 
     private void InitMap()
     {

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
@@ -15,8 +12,12 @@ public class PlayerMove : MonoBehaviour
     Vector3 _inputDirection;
     Vector3 _movementVelocity;
 
+    public bool CanMove { get; set; } = true;
+
     [SerializeField]
-    bool CanMove = true;
+    Animator animator;
+
+    private readonly int animationDirx = Animator.StringToHash("dirx");
 
     private void OnEnable()
     {
@@ -32,6 +33,8 @@ public class PlayerMove : MonoBehaviour
     {
         _inputDirection.x = dir.x;
         _inputDirection.z = dir.y;
+        //局聪皋捞记 贸府
+        animator.SetFloat(animationDirx, dir.x);
     }
 
     private void CalculatePlayerMovement()
