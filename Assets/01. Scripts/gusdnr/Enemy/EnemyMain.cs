@@ -6,16 +6,32 @@ public class EnemyMain : MonoBehaviour, IDamageable
 {
 	[SerializeField] private EnemyDataSO enemyData;
 
-	public int hp
+	public bool isAlive = true;
+
+	private Rigidbody EnemyRB;
+
+	public float CuttentHp
 	{
 		get 
 		{
-			return hp;
+			return CuttentHp;
 		}
 
 		set
 		{
-			hp = value;
+			CuttentHp = value;
 		}
 	}
+
+	public void TakeDamage(float dmg)
+	{
+		CuttentHp = Mathf.Clamp(CuttentHp - dmg, 0, enemyData.MaxHP);
+		if(CuttentHp <= 0) DieObject();
+	}
+
+	public void DieObject()
+	{
+		isAlive = false;
+	}
+
 }
