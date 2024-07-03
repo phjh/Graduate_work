@@ -5,4 +5,6 @@ using UnityEngine;
 public abstract class PoolableMono : MonoBehaviour
 {
     public abstract void ResetPoolableMono();
+
+    public abstract void EnablePoolableMono();
 }

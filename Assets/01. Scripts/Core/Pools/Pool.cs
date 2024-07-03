@@ -38,13 +38,16 @@ class Pool<T> where T : PoolableMono
 				obj.transform.SetParent(parent);
 			obj.gameObject.SetActive(true);
 		}
-		obj.ResetPoolableMono();
+		obj?.ResetPoolableMono();
+		obj?.EnablePoolableMono();
 		return obj;
 	}
 
 	public void Push(T obj)
 	{
+		obj?.ResetPoolableMono();
 		obj.gameObject.SetActive(false);
+
 		_pool.Push(obj);
 	}
 

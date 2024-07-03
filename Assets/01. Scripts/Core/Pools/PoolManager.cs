@@ -14,6 +14,7 @@ public class PoolManager : ManagerBase<PoolManager>
 	[Header("Pool Parents")]
 	[SerializeField] private Transform PoolParent_Object;
 	[SerializeField] private Transform PoolParent_Effect;
+	[SerializeField] private Transform PoolParent_Block;
 
 	[Header("Pool Values")]
 	[SerializeField] private FloorPoolLists[] DataStruct;
@@ -27,10 +28,12 @@ public class PoolManager : ManagerBase<PoolManager>
 	{
 		base.InitManager();
 
-		DontDestroyOnLoad(PoolParent_Object);
-		DontDestroyOnLoad(PoolParent_Effect);
+		DontDestroyOnLoad(PoolParent_Object.root);
+		DontDestroyOnLoad(PoolParent_Effect.root);
+		DontDestroyOnLoad(PoolParent_Block.root);
 
 		SetDataListInDictionary();
+		SetDataOnFloor("FIRST");
 		StartPooling();
 	}
 
@@ -51,17 +54,6 @@ public class PoolManager : ManagerBase<PoolManager>
 
 	private void StartPooling()
 	{
-		if(CompletePoolableMonos != null)
-		{
-			foreach(Pool<PoolableMono> item in CompletePoolableMonos.Values)
-			{
-				for (int c = 0; c < item.PoolCount; c++)
-				{
-
-				}
-			}
-		}
-
 		foreach (PoolDataStruct pds in CurrentFloorPoolData.DataStruct)
 		{
 			if (pds.poolableType == PoolableType.None ||
@@ -83,7 +75,11 @@ public class PoolManager : ManagerBase<PoolManager>
 						poolTemp = new Pool<PoolableMono>(pds.poolableMono, PoolParent_Effect, pds.Count);
 						break;
 					}
-
+				case PoolableType.Block:
+					{
+						poolTemp = new Pool<PoolableMono>(pds.poolableMono, PoolParent_Block, pds.Count);
+						break;
+					}
 				case PoolableType.None:
 				case PoolableType.End:
 				default:

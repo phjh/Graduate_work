@@ -9,6 +9,7 @@ public class Managers : MonoBehaviour
 	public MapManager MapMng;
 	public UIManager UIMng;
 	public TimeManager TimeMng;
+	public PoolManager PoolMng;
 	
 	[Header("In Game Manager Scripts")]
 	public PlayerManager PlayerMng;
@@ -79,6 +80,9 @@ public class Managers : MonoBehaviour
 
 		if (TimeMng == null) TimeMng = TimeManager.GetInstacne();
 		TimeMng.InitManager();
+
+		if (PoolMng == null) PoolMng = PoolManager.GetInstacne();
+		PoolMng.InitManager();
 	}
 
 	public void InItInGameManagers()
