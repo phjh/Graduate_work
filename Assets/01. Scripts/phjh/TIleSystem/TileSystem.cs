@@ -10,9 +10,6 @@ public class TileSystem : MonoBehaviour
     [SerializeField]
     private int height = 101;
 
-    private Dictionary<Vector3Int, Blocks> tileMap = new();
-    [SerializeField]
-    public List<Vector3Int> pos;
     [SerializeField]
     public List<Blocks> tileblocks;
 
@@ -34,18 +31,17 @@ public class TileSystem : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Vector3Int pos = new Vector3Int(tileMap.Count + 1, 0, 1);
+            Vector3Int pos = new Vector3Int(tileblocks.Count + 1, 0, 1);
             //풀매니저로 바궈줄거
-            GameObject obj = Instantiate(blocks[0]);
-            tileMap.Add(new Vector3Int(tileMap.Count + 1, 0, 1), obj.GetComponent<Blocks>());
-            tileblocks.Add(obj.GetComponent<Blocks>());
-            tileMap[pos].Init(pos, obj, this.transform);
+            Blocks block = Instantiate(blocks[0]).GetComponent<Blocks>();
+            block.Init(pos, block.gameObject, this.transform, this);
+            tileblocks.Add(block);
         }
     }
 
     private void InitMap()
     {
-        tileMap.Clear();
+        tileblocks.Clear();
         int loops = width * height;
         for (int i = 0; i < loops; i++)
         {

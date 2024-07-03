@@ -14,6 +14,7 @@ public class Oreblock : Blocks
     public override void SetBlock()
     {
         blockType = BlockType.OreBlock;
+        TimesToBreak = 1;
     }
 
     public override void BlockEvent()

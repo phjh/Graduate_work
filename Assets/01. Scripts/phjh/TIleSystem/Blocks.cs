@@ -8,9 +8,11 @@ public abstract class Blocks : MonoBehaviour
 {
     public Lazy<GameObject> block;
 
+    private TileSystem tileSystem;
+
     public BlockType blockType { get; protected set; } = BlockType.None;
 
-    public void Init(Vector3Int pos, GameObject block = null, Transform BlockParent = null)
+    public void Init(Vector3Int pos, GameObject block = null, Transform BlockParent = null, TileSystem tilesys = null)
     {
         if (block == null)
         {
@@ -27,15 +29,19 @@ public abstract class Blocks : MonoBehaviour
         block.transform.position = pos;
         block.transform.SetParent(BlockParent);
         this.block = new(block);
+        tileSystem = tilesys;
 
         SetBlock();
     }
 
     public void DeleteBlock()
     {
-        block = null;
         blockType = BlockType.None;
         //풀매니저로 변경
+
+        if(tileSystem != null)
+            tileSystem.tileblocks.Remove(this);
+
         Destroy(block.Value.gameObject);
     }
 
