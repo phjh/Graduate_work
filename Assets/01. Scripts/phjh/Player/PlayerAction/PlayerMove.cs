@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField]
-    InputReader input;
+    Player _player;
 
-    Rigidbody rb;
+    InputReader _inputReader;
+
+    Rigidbody _rb;
 
     float _currentSpeed = 4f;
 
@@ -14,16 +15,16 @@ public class PlayerMove : MonoBehaviour
 
     public bool CanMove { get; set; } = true;
 
-    private readonly int animationDirx = Animator.StringToHash("dirx");
-
-    private void OnEnable()
+    public void Init(Player player, InputReader inputReader)
     {
-        input.MovementEvent += GetMoveDirection;
+        _player = player;
+        _inputReader = inputReader;
     }
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
+        _inputReader.MovementEvent += GetMoveDirection;
     }
 
     public void GetMoveDirection(Vector2 dir)
@@ -31,7 +32,7 @@ public class PlayerMove : MonoBehaviour
         _inputDirection.x = dir.x;
         _inputDirection.z = dir.y;
         //局聪皋捞记 贸府
-        //animator.SetFloat(animationDirx, dir.x);
+
     }
 
     private void CalculatePlayerMovement()
@@ -47,13 +48,21 @@ public class PlayerMove : MonoBehaviour
 
     private void Move()
     {
-        rb.velocity = _movementVelocity;
+        _rb.velocity = _movementVelocity;
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            _player.canMove = !_player.canMove;
+        }
     }
 
     private void FixedUpdate()
     {
 
-        if (CanMove)
+        if (_player.canMove)
             CalculatePlayerMovement();
         else
             StopImmediately();

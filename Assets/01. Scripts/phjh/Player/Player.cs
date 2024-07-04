@@ -9,6 +9,10 @@ public class Player : MonoBehaviour
     private InputReader _inputReader;
     [SerializeField]
     private SkeletonAnimation _skeletonAnimation;
+    //임시 무기
+    [SerializeField]
+    private GameObject _tempBullet;
+    //스탯
 
     #endregion
 
@@ -16,6 +20,8 @@ public class Player : MonoBehaviour
 
     public InputReader inputReader {  get; private set; } 
     public SkeletonAnimation skeletonAnimation {  get; private set; }
+    //임시 무기
+    public GameObject tempBullet { get;private set; }
     //스텟 넣기
     //public stat stat
 
@@ -23,10 +29,13 @@ public class Player : MonoBehaviour
 
     #region 외부에서 수정할 값들(공격중인지, 움직일수있는지 등)
 
+    public bool canMove { get; set; } = true;
+
+
+
     public bool isAttacking { get; set; } = false;
     public bool isDead { get; set; } = false;
     public bool isMoving { get; set; } = false;
-
 
     #endregion
 
@@ -39,6 +48,10 @@ public class Player : MonoBehaviour
     {
         inputReader = _inputReader;
         skeletonAnimation = _skeletonAnimation;
+        tempBullet = _tempBullet;
+
+        this.gameObject.AddComponent<PlayerMove>().Init(this, inputReader);
+        this.gameObject.AddComponent<PlayerAttack>().Init(this, inputReader, tempBullet);
     }
 
 }
