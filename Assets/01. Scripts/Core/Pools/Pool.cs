@@ -45,15 +45,13 @@ class Pool<T> where T : PoolableMono
 
 	public void Push(T obj)
 	{
-		obj?.ResetPoolableMono();
 		obj.gameObject.SetActive(false);
 
 		_pool.Push(obj);
 	}
 
-	public void DestroyComplete(T obj)
+	public void DestroyPool(T obj)
 	{
 		GameObject.Destroy(obj.gameObject);
-		_pool.Clear();
 	}
 }

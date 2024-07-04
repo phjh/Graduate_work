@@ -181,7 +181,7 @@ public class SoundManager : ManagerBase<SoundManager>
 			audioSource.Play();
 
 			// Calculate destroy time
-			float destroyTime = sfxDictionary[type].length * Mathf.Max(0.01f, mngs.TimeScale);
+			float destroyTime = sfxDictionary[type].length * Mathf.Max(0.01f, Time.timeScale);
 			Destroy(audioPlayer, destroyTime);
 		}
 		else

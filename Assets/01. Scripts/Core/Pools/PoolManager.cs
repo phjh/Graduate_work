@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
+using UnityEngine.InputSystem;
 
 [System.Serializable]
-public struct FloorPoolLists
+public struct FloorPoolList
 {
 	public string FloorName;
 	public PoolListSO PoolData;
@@ -17,12 +19,12 @@ public class PoolManager : ManagerBase<PoolManager>
 	[SerializeField] private Transform PoolParent_Block;
 
 	[Header("Pool Values")]
-	[SerializeField] private FloorPoolLists[] DataStruct;
+	[SerializeField] private FloorPoolList[] DataStruct;
 
 	private PoolListSO CurrentFloorPoolData;
 
-	private Dictionary<string, PoolListSO> PoolListData;
-	private Dictionary<string, Pool<PoolableMono>> CompletePoolableMonos;
+	private Dictionary<string, PoolListSO> PoolListData = new Dictionary<string, PoolListSO>();
+	private Dictionary<string, Pool<PoolableMono>> CompletePoolableMonos = new Dictionary<string, Pool<PoolableMono>>();
 
 	public override void InitManager()
 	{
@@ -33,15 +35,15 @@ public class PoolManager : ManagerBase<PoolManager>
 		DontDestroyOnLoad(PoolParent_Block.root);
 
 		SetDataListInDictionary();
-		SetDataOnFloor("FIRST");
+		SetDataOnFloor("TESTING");
 		StartPooling();
 	}
 
 	public void SetDataListInDictionary()
 	{
-		foreach (FloorPoolLists fpls in DataStruct)
+		foreach (FloorPoolList floorList in DataStruct)
 		{
-			if(fpls.PoolData != null) PoolListData.Add(fpls.FloorName, fpls.PoolData);
+			if(floorList.PoolData != null) PoolListData.Add(floorList.FloorName, floorList.PoolData);
 		}
 	}
 
@@ -59,7 +61,7 @@ public class PoolManager : ManagerBase<PoolManager>
 			if (pds.poolableType == PoolableType.None ||
 				pds.poolableType == PoolableType.End) Logger.LogError($" PoolableType is Null.");
 			if (pds.poolableMono == null) Logger.LogError($" PoolableMono is Null.");
-			if (pds.Count >= 0) Logger.LogError($" Count is Wrong Value");
+			if (pds.Count <= 0) Logger.LogError($" Count is Wrong Value");
 
 			Pool<PoolableMono> poolTemp = new Pool<PoolableMono>(null, null, 0);
 			
@@ -87,18 +89,52 @@ public class PoolManager : ManagerBase<PoolManager>
 					break;
 			}
 
-			CompletePoolableMonos.Add(pds.poolableName, poolTemp);
+			CompletePoolableMonos.TryAdd(pds.poolableName, poolTemp);
 		}
 	}
 
 	public PoolableMono Pop(string PoolableName)
 	{
+		if (CompletePoolableMonos[PoolableName] == null)
+		{
+			Logger.LogError($"Named {PoolableName} Object is Null");
+			return null;
+		}
 		PoolableMono item = CompletePoolableMonos[PoolableName].Pop();
+		return item;
+	}
+
+	public PoolableMono Pop(string PoolableName, Transform SpawnTrm)
+	{
+		if (CompletePoolableMonos[PoolableName] == null)
+		{
+			Logger.LogError($"Named {PoolableName} Object is Null");
+			return null;
+		}
+		PoolableMono item = CompletePoolableMonos[PoolableName].Pop();
+		item.transform.position = SpawnTrm.position;
+		return item;
+	}
+
+	public PoolableMono Pop(string PoolableName, Vector3 SpawnPos)
+	{
+		if (CompletePoolableMonos[PoolableName] == null)
+		{
+			Logger.LogError($"Named {PoolableName} Object is Null");
+			return null;
+		}
+		PoolableMono item = CompletePoolableMonos[PoolableName].Pop();
+		item.transform.position = SpawnPos;
 		return item;
 	}
 
 	public void Push(PoolableMono item, string PoolableName)
 	{
+		if (CompletePoolableMonos[PoolableName] == null)
+		{
+			Logger.LogError($"Named {PoolableName} Object is Null");
+			return;
+		}
 		CompletePoolableMonos[PoolableName].Push(item);
 	}
 

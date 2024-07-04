@@ -13,15 +13,7 @@ MonoBehaviour:
   m_Name: Testing
   m_EditorClassIdentifier: 
   DataStruct:
-  - poolableType: 0
-    poolableMono: {fileID: 0}
-    poolableName: 
-    Count: 0
-  - poolableType: 0
-    poolableMono: {fileID: 0}
-    poolableName: 
-    Count: 0
-  - poolableType: 0
-    poolableMono: {fileID: 0}
-    poolableName: 
-    Count: 0
+  - poolableType: 3
+    poolableMono: {fileID: 4264733278310249070, guid: 8f2ebee9476e46649876c37c4e90deeb, type: 3}
+    poolableName: GroundTile
+    Count: 10201

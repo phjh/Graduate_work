@@ -1,13 +1,10 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class Oreblock : Blocks
 {
     public int TimesToBreak;
     //public oretype type
-
-    public GameObject OreObj;
+    public ItemDataSO OreData;
 
     //이외 모션 및 여러가지 여기서 처리 예정
 
@@ -29,7 +26,11 @@ public class Oreblock : Blocks
 
     private void DropOre()
     {
-        Instantiate(OreObj, transform.position, Quaternion.identity);
+        for(int c = 0; c < Random.Range(1, 3); c++)
+        {
+            if(PoolManager.Instance.Pop("DropedItem", transform).TryGetComponent(out DropedItem item))
+            item.InitializeItemData(OreData);
+        }
     }
 
 }

@@ -24,5 +24,5 @@ public struct PoolDataStruct
 [CreateAssetMenu(fileName = "New Pool List", menuName = "SO/Data/Pool List")]
 public class PoolListSO : ScriptableObject
 {
-	public PoolDataStruct[] DataStruct;
+	public List<PoolDataStruct> DataStruct;
 }

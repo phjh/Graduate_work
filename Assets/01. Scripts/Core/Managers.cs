@@ -14,19 +14,6 @@ public class Managers : MonoBehaviour
 	[Header("In Game Manager Scripts")]
 	public PlayerManager PlayerMng;
 
-	public float TimeScale
-	{
-		get
-		{
-			return TimeScale;
-		}
-
-		private set
-		{
-			TimeScale = value;
-		}
-	}
-
 	public static Managers _instance;
 	public static Managers GetInstance()
 	{
@@ -39,11 +26,6 @@ public class Managers : MonoBehaviour
 		Init();
 
 		InItOtherManagers();
-	}
-
-	private void Update()
-	{
-		TimeScale = TimeScale;
 	}
 
 	private static void Init()
@@ -71,18 +53,18 @@ public class Managers : MonoBehaviour
 	{
 		if (UIMng == null) UIMng = UIManager.GetInstacne();
 		UIMng.InitManager();
-		
+
 		if (FlowMng == null) FlowMng = FlowManager.GetInstacne();
 		FlowMng.InitManager();
+
+		if (PoolMng == null) PoolMng = PoolManager.GetInstacne();
+		PoolMng.InitManager();
 
 		if (MapMng == null)	MapMng = MapManager.GetInstacne();
 		MapMng.InitManager();
 
 		if (TimeMng == null) TimeMng = TimeManager.GetInstacne();
 		TimeMng.InitManager();
-
-		if (PoolMng == null) PoolMng = PoolManager.GetInstacne();
-		PoolMng.InitManager();
 	}
 
 	public void InItInGameManagers()

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -2113256499780053751}
   - component: {fileID: 1707642071261991014}
   - component: {fileID: 501864872036241026}
+  - component: {fileID: 5168615283934140895}
   m_Layer: 0
   m_Name: OreBlock
   m_TagString: Untagged
@@ -99,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TimesToBreak: 0
-  OreObj: {fileID: 2184337568969752553, guid: 6b22c191361006c4584a8bef41d3103c, type: 3}
+  OreData: {fileID: 0}
 --- !u!65 &1707642071261991014
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -148,3 +149,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!208 &5168615283934140895
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7406593859079600810}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.1}
+  m_MoveThreshold: 0.05
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
+  m_TimeToStationary: 0.5

@@ -50,7 +50,7 @@ public class DropedItem : PoolableMono
         ItemData = InitData;
     }
 
-    private void SetItemObject()
+	private void SetItemObject()
     {
         ItemRenderer.sprite = ItemData.Image;
 
@@ -62,12 +62,7 @@ public class DropedItem : PoolableMono
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            ItemInfoCanvas.DOScale(Vector3.one, infoDuration).SetEase(Ease.OutBack)
-                .OnStart(() =>
-                {
-                    SetItemObject();
-                });
-
+            ItemInfoCanvas.DOScale(Vector3.one, infoDuration).SetEase(Ease.OutBack);
         }
 	}
 
@@ -99,6 +94,7 @@ public class DropedItem : PoolableMono
 
 	public override void EnablePoolableMono()
 	{
-        transform.rotation = Quaternion.identity;
+		if (ItemInfoCanvas.TryGetComponent(out Canvas itemCanvas)) itemCanvas.worldCamera = Camera.main;
+		SetItemObject();
 	}
 }
