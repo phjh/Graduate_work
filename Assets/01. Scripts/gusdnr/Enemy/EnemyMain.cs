@@ -27,10 +27,6 @@ public class EnemyMain : PoolableMono, IDamageable
 		}
 	}
 
-	private Rigidbody EnemyRB;
-	private Collider EnemyCollider;
-
-
 	public override void ResetPoolableMono()
 	{
 		enemyData.SetUpDictionary();
@@ -81,6 +77,7 @@ public class EnemyMain : PoolableMono, IDamageable
 	public void DieObject()
 	{
 		isAlive = false;
+		PoolManager.Instance.Push(this, this.gameObject.name);
 	}
 
 	#endregion

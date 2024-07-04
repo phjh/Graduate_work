@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 
-public class DropedItem : MonoBehaviour
+public class DropedItem : PoolableMono
 {
     [Header("Item UI")]
     [SerializeField] private Transform ItemInfoCanvas;
@@ -35,10 +35,8 @@ public class DropedItem : MonoBehaviour
 
 	private void Start()
 	{
-		if(TryGetComponent(out ItemRenderer) == false)
-        {
-           ItemRenderer = this.gameObject.AddComponent<SpriteRenderer>();
-        }
+		ResetPoolableMono();
+		EnablePoolableMono();
 	}
 
 	public void InitializeItemData(ItemDataSO InitData)
@@ -87,5 +85,20 @@ public class DropedItem : MonoBehaviour
         {
 			ItemInfoCanvas.DOScale(Vector3.zero, infoDuration).SetEase(Ease.OutExpo);
 		}
+	}
+
+	public override void ResetPoolableMono()
+	{
+		if (TryGetComponent(out ItemRenderer) == false)
+		{
+			ItemRenderer = this.gameObject.AddComponent<SpriteRenderer>();
+		}
+
+        ItemInfoCanvas.localScale = Vector3.zero;
+	}
+
+	public override void EnablePoolableMono()
+	{
+        transform.rotation = Quaternion.identity;
 	}
 }
