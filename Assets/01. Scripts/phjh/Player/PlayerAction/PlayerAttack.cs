@@ -40,7 +40,8 @@ public class PlayerAttack : MonoBehaviour
         Vector3 dir = new Vector3(mousedir.x, 0, mousedir.y);
 
         GameObject bullet = Instantiate(obj,transform.position, Quaternion.identity);
-        bullet.transform.forward = rot;
+        //bullet.transform.forward = rot;
+        bullet.transform.rotation.SetLookRotation(rot);
         //bullet.transform.LookAt(dir);
     }
 
@@ -107,7 +108,7 @@ public class PlayerAttack : MonoBehaviour
 
         private (bool success, Vector3 position) GetMousePosition()
         {
-            var ray = mainCamera.ScreenPointToRay(input.AimPosition);
+            var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, groundMask))
             {

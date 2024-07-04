@@ -22,6 +22,6 @@ public class PlayerBullet : MonoBehaviour
             block.BlockEvent();
             Destroy(this.gameObject);
         }
-        
     }
+
 }

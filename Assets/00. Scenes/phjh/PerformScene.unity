@@ -739,7 +739,7 @@ Transform:
   m_GameObject: {fileID: 1083618061}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 7.68}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -761,12 +761,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1150290683}
   - component: {fileID: 1150290685}
+  - component: {fileID: 1150290689}
   - component: {fileID: 1150290686}
   - component: {fileID: 1150290687}
   - component: {fileID: 1150290688}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -870,7 +871,21 @@ CapsuleCollider:
   m_Radius: 0.3317083
   m_Height: 1.0924788
   m_Direction: 1
-  m_Center: {x: 0.000018835068, y: 0.31193483, z: -0.30516815}
+  m_Center: {x: 0.000018835068, y: 0.31193483, z: 0.29}
+--- !u!114 &1150290689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150290682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0321785cc18051d488134d4111e16341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputReader: {fileID: 11400000, guid: d5f1bb7ed5cdb0e4b81a0758893645c3, type: 2}
+  _skeletonAnimation: {fileID: 1846681439}
 --- !u!1 &1273705525
 GameObject:
   m_ObjectHideFlags: 0
