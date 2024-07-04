@@ -60,9 +60,9 @@ public class DropedItem : MonoBehaviour
 		ItemDescription.text = string.IsNullOrEmpty(ItemData.Description) ? "No Desc" : ItemData.Description;
 	}
 
-	private void OnCollisionEnter(Collision collision)
-	{
-        if (collision.gameObject.CompareTag("Player"))
+	private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
         {
             ItemInfoCanvas.DOScale(Vector3.one, infoDuration).SetEase(Ease.OutBack)
                 .OnStart(() =>
@@ -73,9 +73,17 @@ public class DropedItem : MonoBehaviour
         }
 	}
 
-	private void OnCollisionExit(Collision collision)
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player") && Input.GetKeyDown(KeyCode.F))
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
 	{
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
 			ItemInfoCanvas.DOScale(Vector3.zero, infoDuration).SetEase(Ease.OutExpo);
 		}

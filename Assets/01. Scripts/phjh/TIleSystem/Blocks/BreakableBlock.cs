@@ -12,9 +12,7 @@ public class BreakableBlock : Blocks
         timeToBreak--;
         if(timeToBreak == 0)
         {
-            Destroy(block.Value);
-            block = null;
-            blockType = BlockType.None;
+            DeleteBlock();
         }
     }
 

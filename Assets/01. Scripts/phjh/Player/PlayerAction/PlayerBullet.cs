@@ -4,12 +4,24 @@ using UnityEngine;
 
 public class PlayerBullet : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision collision)
+    Rigidbody rb;
+
+    [SerializeField]
+    float speed;
+
+    private void Start()
     {
-        if (collision.gameObject.TryGetComponent<Blocks>(out Blocks block))
+        rb = GetComponent<Rigidbody>();
+        rb.velocity = transform.rotation * Vector3.forward * speed;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.TryGetComponent<Blocks>(out Blocks block))
         {
             block.BlockEvent();
             Destroy(this.gameObject);
         }
     }
+
 }

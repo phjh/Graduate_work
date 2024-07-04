@@ -46,7 +46,8 @@ public class InputReader : ScriptableObject, IPlayerActions
     public void OnAttack(InputAction.CallbackContext context)
     {
         //attack Event
-        AttackEvent?.Invoke();
+        if(context.performed)
+            AttackEvent?.Invoke();
     }
 
     #endregion

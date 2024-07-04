@@ -14,9 +14,6 @@ public class PlayerMove : MonoBehaviour
 
     public bool CanMove { get; set; } = true;
 
-    [SerializeField]
-    Animator animator;
-
     private readonly int animationDirx = Animator.StringToHash("dirx");
 
     private void OnEnable()
@@ -34,12 +31,12 @@ public class PlayerMove : MonoBehaviour
         _inputDirection.x = dir.x;
         _inputDirection.z = dir.y;
         //局聪皋捞记 贸府
-        animator.SetFloat(animationDirx, dir.x);
+        //animator.SetFloat(animationDirx, dir.x);
     }
 
     private void CalculatePlayerMovement()
     {
-        _movementVelocity = _inputDirection * _currentSpeed;
+        _movementVelocity = _inputDirection * _currentSpeed * -1;
     }
 
     public void StopImmediately()
