@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DataStruct:
   - poolableType: 3
-    poolableMono: {fileID: 4264733278310249070, guid: 8f2ebee9476e46649876c37c4e90deeb, type: 3}
+    poolableMono: {fileID: 347348731956819196, guid: fc024a97182ad5d43a675ba13ae90408, type: 3}
     poolableName: GroundTile
-    Count: 10201
+    Count: 1

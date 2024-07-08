@@ -5,7 +5,7 @@ using UnityEngine;
 class Pool<T> where T : PoolableMono
 {
 	private Stack<T> _pool = new Stack<T>();
-	private T _prefab; //오리지날 저장
+	private T _prefab; //Save Original Prefab
 	private Transform _parent;
 
 	public int PoolCount => _pool.Count;
@@ -30,14 +30,20 @@ class Pool<T> where T : PoolableMono
 		if (_pool.Count <= 0)
 		{
 			obj = GameObject.Instantiate(_prefab, _parent);
+			obj.name = obj.name.Replace("(Clone)", "");
+
+			obj?.gameObject.SetActive(false);
+
+			Logger.Log(obj.name);
 		}
 		else
 		{
 			obj = _pool.Pop();
-			if (parent != null)
-				obj.transform.SetParent(parent);
-			obj.gameObject.SetActive(true);
 		}
+
+		if (parent != null)	obj.transform.SetParent(parent);
+
+		obj?.gameObject.SetActive(true);
 		obj?.ResetPoolableMono();
 		obj?.EnablePoolableMono();
 		return obj;
