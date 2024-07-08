@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class TileSystem : MonoBehaviour
@@ -18,6 +17,7 @@ public class TileSystem : MonoBehaviour
     [SerializeField]
     private List<GameObject> blocks;
 
+    
 
     #endregion
 
@@ -31,7 +31,7 @@ public class TileSystem : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Vector3Int pos = new Vector3Int(tileblocks.Count + 1, 0, 1);
+            Vector3 pos = new Vector3Int(tileblocks.Count + 1, 0, 1);
             //풀매니저로 바궈줄거
             Blocks block = Instantiate(blocks[0]).GetComponent<Blocks>();
             block.Init(pos, block.gameObject, this.transform, this);

@@ -13,6 +13,7 @@ public class InputReader : ScriptableObject, IPlayerActions
     public Vector2 AimPosition { get; private set; } //마우스는 이벤트방식이 아니기 때문에
 
     private Controls _inputAction;
+    private bool isActive;
 
     private void OnEnable()
     {
@@ -26,9 +27,9 @@ public class InputReader : ScriptableObject, IPlayerActions
     }
 
     //대충 여기서 inputsystem 에러 안나게 해준다
-    bool IsCorrectScene()
+    public void SetActive(bool active)
     {
-        return false;
+        isActive = active;
     }
 
     #region Player Inputs

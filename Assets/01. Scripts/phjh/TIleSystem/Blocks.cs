@@ -12,7 +12,7 @@ public abstract class Blocks : MonoBehaviour
 
     public BlockType blockType { get; protected set; } = BlockType.None;
 
-    public void Init(Vector3Int pos, GameObject block = null, Transform BlockParent = null, TileSystem tilesys = null)
+    public void Init(Vector3 pos, GameObject block = null, Transform BlockParent = null, TileSystem tilesys = null)
     {
         if (block == null)
         {

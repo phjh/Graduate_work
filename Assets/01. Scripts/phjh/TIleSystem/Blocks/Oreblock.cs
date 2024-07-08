@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-[Serializable]
 public class Oreblock : Blocks
 {
     public int TimesToBreak;

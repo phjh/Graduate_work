@@ -1,3 +1,6 @@
+using Spine;
+using Spine.Unity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,15 +18,20 @@ public class PlayerAttack : MonoBehaviour
 
     private Vector3 rot;
     private Vector2 mousedir;
-
     
     private Camera mainCamera;
 
-    public void Init(Player player, InputReader inputReader, GameObject bullet)
+    private List<Lazy<AnimationReferenceAsset>> _moveAnimation;
+
+    public void Init(Player player, InputReader inputReader, GameObject bullet, List<AnimationReferenceAsset> animations)
     {
         _player = player;
         _inputReader = inputReader;
         this.tempBullet = bullet;
+        foreach (var animation in animations)
+        {
+            _moveAnimation.Add(new Lazy<AnimationReferenceAsset>(animation));
+        }
     }
 
     void Start()
@@ -35,15 +43,11 @@ public class PlayerAttack : MonoBehaviour
     private void Update()
     {
         SetAim();
-        SetWeaponDir();
     }
 
     public void DoAttack()
     {
-        if (_player.canMove)
-        {
-
-
+        //이거 무기에따라 바뀌게 수정예정
         Vector3 dir = new Vector3(mousedir.x, 0, mousedir.y);
 
         GameObject bullet = Instantiate(tempBullet, transform.position, Quaternion.identity);
@@ -52,16 +56,9 @@ public class PlayerAttack : MonoBehaviour
         
         bullet.transform.rotation = Quaternion.Slerp(bullet.transform.rotation, rotation, 1);
 
-        }
     }
 
-    private void SetWeaponDir()
-    {
-        float rotz = mousedir.y / 6f; //0~15도 연산 
-
-    }
-
-    #region Methods
+    #region AimingMethods
 
     private void SetAim()
     {
@@ -78,8 +75,8 @@ public class PlayerAttack : MonoBehaviour
             // Make the transform look in the direction.
             //transform.forward = direction;
             rot = direction;
-        
-    }
+        }
+        SetPlayerAnimation(position);
     }
 
     private (bool success, Vector3 position) GetMousePosition()
@@ -96,6 +93,14 @@ public class PlayerAttack : MonoBehaviour
             // The Raycast did not hit anything.
             return (success: false, position: Vector3.zero);
         }
+    }
+
+    private void SetPlayerAnimation(Vector3 dir)
+    {
+        bool isback = dir.x > 0;
+        
+
+
     }
 
     #endregion

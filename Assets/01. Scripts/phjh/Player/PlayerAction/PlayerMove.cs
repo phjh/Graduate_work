@@ -1,19 +1,20 @@
+using Spine.Unity;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    Player _player;
+    private Player _player;
 
-    InputReader _inputReader;
+    private InputReader _inputReader;
 
-    Rigidbody _rb;
+    private Rigidbody _rb;
 
-    float _currentSpeed = 4f;
+    private float _currentSpeed = 4f;
 
-    Vector3 _inputDirection;
-    Vector3 _movementVelocity;
-
-    public bool CanMove { get; set; } = true;
+    private Vector3 _inputDirection;
+    private Vector3 _movementVelocity;
 
     public void Init(Player player, InputReader inputReader)
     {

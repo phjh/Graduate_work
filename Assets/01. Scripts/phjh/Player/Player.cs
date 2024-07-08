@@ -1,4 +1,5 @@
 using Spine.Unity;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -11,8 +12,11 @@ public class Player : MonoBehaviour
     private SkeletonAnimation _skeletonAnimation;
     //임시 무기
     [SerializeField]
-    private GameObject _tempBullet;
+    private Weapons _tempWeapon;
     //스탯
+
+    [SerializeField]
+    private List<AnimationReferenceAsset> _moveAnimations;
 
     #endregion
 
@@ -21,21 +25,24 @@ public class Player : MonoBehaviour
     public InputReader inputReader {  get; private set; } 
     public SkeletonAnimation skeletonAnimation {  get; private set; }
     //임시 무기
-    public GameObject tempBullet { get;private set; }
+    public Weapons weapon;
     //스텟 넣기
     //public stat stat
 
     #endregion
 
-    #region 외부에서 수정할 값들(공격중인지, 움직일수있는지 등)
+    #region 외부에서 수정할 bool값들(공격중인지, 움직일수있는지 등)
 
     public bool canMove { get; set; } = true;
-
-
+    public bool canAttack { get; set; } = true;
+    
 
     public bool isAttacking { get; set; } = false;
-    public bool isDead { get; set; } = false;
     public bool isMoving { get; set; } = false;
+    public bool isAniming { get; set; } = false;
+    public bool isDead { get; set; } = false;
+
+    public bool inputAble { get; set; } = true;
 
     #endregion
 
@@ -48,10 +55,10 @@ public class Player : MonoBehaviour
     {
         inputReader = _inputReader;
         skeletonAnimation = _skeletonAnimation;
-        tempBullet = _tempBullet;
+        weapon = _tempWeapon;
 
         this.gameObject.AddComponent<PlayerMove>().Init(this, inputReader);
-        this.gameObject.AddComponent<PlayerAttack>().Init(this, inputReader, tempBullet);
+        this.gameObject.AddComponent<PlayerAttack>().Init(this, inputReader, weapon.weaponObj, _moveAnimations);
     }
 
 }
