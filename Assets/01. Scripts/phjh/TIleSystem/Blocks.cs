@@ -25,6 +25,11 @@ public abstract class Blocks : MonoBehaviour
             BlockParent = this.transform;
         }
 
+        if(tilesys == null)
+        {
+            Logger.LogWarning("tile sys is null at" + this.gameObject.name);
+        }
+
         //이건 나중에 풀매니저로 대체 할 예정
         block.transform.position = pos;
         block.transform.SetParent(BlockParent);

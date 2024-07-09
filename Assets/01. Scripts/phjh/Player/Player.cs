@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     private SkeletonAnimation _skeletonAnimation;
     //임시 무기
     [SerializeField]
-    private Weapons _tempWeapon;
+    private Weapon _tempWeapon;
     //스탯
 
     [SerializeField]
@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     public InputReader inputReader {  get; private set; } 
     public SkeletonAnimation skeletonAnimation {  get; private set; }
     //임시 무기
-    public Weapons weapon;
+    public Weapon weapon;
     //스텟 넣기
     //public stat stat
 
