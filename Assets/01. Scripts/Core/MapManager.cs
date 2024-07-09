@@ -10,6 +10,7 @@ public class MapManager : ManagerBase<MapManager>
 	[Header("Map Data Setting")]
 	public Vector2 MapSize = Vector2.one;
 	public Vector3 MapCenter = Vector3.zero;
+	public int GroundTileSize = 5;
 
 	private NavMeshSurface nms;
 
@@ -35,11 +36,11 @@ public class MapManager : ManagerBase<MapManager>
 
 		Vector3 TilePos = Vector3.zero;
 
-		for(int x = 0; x < MapSize.x;  x++)
+		for(int x = 0; x < MapSize.x;  x += GroundTileSize)
 		{
 			TilePos.x = halfX - x * 1f;
 
-			for(int y = 0; y < MapSize.y; y++)
+			for(int y = 0; y < MapSize.y; y += GroundTileSize)
 			{
 				TilePos.z = halfY - y * 1f;
 

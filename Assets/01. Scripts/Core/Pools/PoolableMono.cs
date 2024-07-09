@@ -2,9 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PoolableMono : MonoBehaviour
+public class PoolableMono : MonoBehaviour
 {
-    public abstract void ResetPoolableMono();
+    public virtual void ResetPoolableMono()
+    {
 
-    public abstract void EnablePoolableMono();
+    }
+
+    public virtual void EnablePoolableMono()
+    {
+
+    }
 }

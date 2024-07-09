@@ -8,6 +8,9 @@ public class HealthUI : MonoBehaviour
 	[Header("Player Condition UI Elements")]
 	[SerializeField] private Image[] PlayerHP;
 
+	private float MaxHP;
+	private float HPFeelAmount = 0;
+
 	Managers mngs;
 	//Player player
 

@@ -1473,7 +1473,6 @@ MonoBehaviour:
   mngs: {fileID: 0}
   MapSize: {x: 101, y: 101}
   MapCenter: {x: 0, y: 0, z: 0}
-  testtile: {fileID: 5501472736584558096, guid: 8f2ebee9476e46649876c37c4e90deeb, type: 3}
 --- !u!114 &1490187691
 MonoBehaviour:
   m_ObjectHideFlags: 0
