@@ -1,29 +1,31 @@
+using Spine.Unity;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField]
-    InputReader input;
+    private Player _player;
 
-    Rigidbody rb;
+    private InputReader _inputReader;
 
-    float _currentSpeed = 4f;
+    private Rigidbody _rb;
 
-    Vector3 _inputDirection;
-    Vector3 _movementVelocity;
+    private float _currentSpeed = 4f;
 
-    public bool CanMove { get; set; } = true;
+    private Vector3 _inputDirection;
+    private Vector3 _movementVelocity;
 
-    private readonly int animationDirx = Animator.StringToHash("dirx");
-
-    private void OnEnable()
+    public void Init(Player player, InputReader inputReader)
     {
-        input.MovementEvent += GetMoveDirection;
+        _player = player;
+        _inputReader = inputReader;
     }
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
+        _inputReader.MovementEvent += GetMoveDirection;
     }
 
     public void GetMoveDirection(Vector2 dir)
@@ -31,7 +33,7 @@ public class PlayerMove : MonoBehaviour
         _inputDirection.x = dir.x;
         _inputDirection.z = dir.y;
         //局聪皋捞记 贸府
-        //animator.SetFloat(animationDirx, dir.x);
+
     }
 
     private void CalculatePlayerMovement()
@@ -47,13 +49,21 @@ public class PlayerMove : MonoBehaviour
 
     private void Move()
     {
-        rb.velocity = _movementVelocity;
+        _rb.velocity = _movementVelocity;
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            _player.canMove = !_player.canMove;
+        }
     }
 
     private void FixedUpdate()
     {
 
-        if (CanMove)
+        if (_player.canMove)
             CalculatePlayerMovement();
         else
             StopImmediately();
