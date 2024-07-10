@@ -4,15 +4,15 @@ using UnityEngine;
 //어떤타일인지
 //누구의 공격이 진행중인지
 [Serializable]
-public abstract class Blocks : MonoBehaviour
+public abstract class Blocks : PoolableMono
 {
     public Lazy<GameObject> block;
-
-    private TileSystem tileSystem;
-
+    
     public BlockType blockType { get; protected set; } = BlockType.None;
 
-    public void Init(Vector3 pos, GameObject block = null, Transform BlockParent = null, TileSystem tilesys = null)
+    private string blockname;
+
+    public void Init(Vector3 pos, GameObject block = null, string name = null)
     {
         if (block == null)
         {
@@ -20,21 +20,9 @@ public abstract class Blocks : MonoBehaviour
             return;
         }
 
-        if(BlockParent == null)
-        {
-            BlockParent = this.transform;
-        }
-
-        if(tilesys == null)
-        {
-            Logger.LogWarning("tile sys is null at" + this.gameObject.name);
-        }
-
-        //이건 나중에 풀매니저로 대체 할 예정
         block.transform.position = pos;
-        block.transform.SetParent(BlockParent);
         this.block = new(block);
-        tileSystem = tilesys;
+        this.blockname = name;
 
         SetBlock();
     }
@@ -44,16 +32,19 @@ public abstract class Blocks : MonoBehaviour
         blockType = BlockType.None;
         //풀매니저로 변경
 
-        if(tileSystem != null)
-            tileSystem.tileblocks.Remove(this);
-
-        Destroy(block.Value.gameObject);
+        MapManager.Instance.DeleteFromDictionary(transform.position, blockname);
     }
 
     //여기서 블럭을 세팅해준다
     public abstract void SetBlock();
 
     public abstract void BlockEvent();
+
+    protected void MiningEffect()
+    {
+        //풀매니저에서 이펙트 가져와서 해야함
+        //Managers.instance.PoolMng.Pop("miningeffect");
+    }
 }
 
 public enum BlockType
@@ -62,5 +53,5 @@ public enum BlockType
     UnBreakableBlock = 1,
     BreakableBlock = 2,
     OreBlock = 3,
-    InteractionBlock = 4,   //뭐 이벤트 같은거도 재미있을지도 + 가시나 함정같은것도 생각해보자
+    InteractionBlock = 4,   //뭐 이벤트 같은거 추가할때 쓸 예정 + 가시나 함정같은것도 생각해보자
 }

@@ -17,6 +17,7 @@ public class Oreblock : Blocks
     public override void BlockEvent()
     {
         TimesToBreak--;
+        MiningEffect();
         if (TimesToBreak <= 0)
         {
             DropOre();

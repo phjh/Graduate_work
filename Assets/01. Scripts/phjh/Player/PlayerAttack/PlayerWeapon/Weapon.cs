@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public GameObject weaponObj;
+    public WeaponSO weaponObj;
 
 
-    public void ChangeWeapon(WeaponSO weaponInfo)
+
+    public void Attack()
     {
-
+        
     }
-
-
 
 }

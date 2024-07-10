@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
         weapon = _tempWeapon;
 
         this.gameObject.AddComponent<PlayerMove>().Init(this, inputReader);
-        this.gameObject.AddComponent<PlayerAttack>().Init(this, inputReader, weapon.weaponObj, _moveAnimations);
+        this.gameObject.AddComponent<PlayerAttack>().Init(this, inputReader, weapon.weaponObj.bullet, _moveAnimations);
     }
 
 }

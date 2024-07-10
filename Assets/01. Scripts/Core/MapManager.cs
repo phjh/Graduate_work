@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
@@ -17,6 +18,12 @@ public class MapManager : ManagerBase<MapManager>
 	private int halfX = 0;
 	private int halfY = 0;
 
+	[Range(0, 30)]
+	[SerializeField]
+	private int oreBlocks;
+
+	private Dictionary<Vector3, Lazy<PoolableMono>> maps = new();
+
 	public override void InitManager()
 	{
 		base.InitManager();
@@ -26,6 +33,7 @@ public class MapManager : ManagerBase<MapManager>
 		TryGetComponent(out nms); 
 
 		SetGroundTile();
+		SetBlocks();
 		BuildNavMesh();
 	}
 
@@ -51,8 +59,67 @@ public class MapManager : ManagerBase<MapManager>
 		nms.BuildNavMesh();
 	}
 
+
 	private void SetBlocks()
 	{
+		SetUnBreakableBlock();
+		//SetBreakableBlocks();
+		//SetOreBlocks();
+	}
+
+	//부서지지 않는 벽 설치
+	private void SetUnBreakableBlock()
+	{
+		float x = MapSize.x / 2f;
+		float y = 0;
+		float z = MapSize.y / 2f;
+		int loops = (int)MapSize.x - 1;
+		AddToDictionary(new Vector3(-x, y, -z), "UnBreakableWallBlock");
+		AddToDictionary(new Vector3(-x, y,  z), "UnBreakableWallBlock");
+		AddToDictionary(new Vector3( x, y, -z), "UnBreakableWallBlock");
+		AddToDictionary(new Vector3( x, y,  z), "UnBreakableWallBlock");
+		for(int i = 1; i <= loops; i++)
+		{
+			AddToDictionary(new Vector3( x,    y, i - z), "UnBreakableWallBlock");
+			AddToDictionary(new Vector3(-x,    y, i - z), "UnBreakableWallBlock");
+			AddToDictionary(new Vector3(i - x, y,     z), "UnBreakableWallBlock");
+			AddToDictionary(new Vector3(i - x, y,    -z), "UnBreakableWallBlock");
+		}
+    }
+
+	private void SetBreakableBlocks()
+	{
+
+	}
+
+	private void SetOreBlocks()
+	{
+		for(int i = 0; i < oreBlocks; i++)
+		{
+			AddToDictionary(new Vector3(UnityEngine.Random.Range((int)-MapSize.x / 2, (int)MapSize.x / 2), 1, UnityEngine.Random.Range((int)-MapSize.y / 2, (int)MapSize.y / 2)), "OreBlock");
+			//여기서 광석시야일때 보이게 해주는거 따로 추가해준다.
+        }
+	}
+
+	private void AddToDictionary(Vector3 position, string poolObjectname)
+	{
+		PoolableMono poolObj = mngs.PoolMng.Pop(poolObjectname, position);
+        maps.Add(position,new(poolObj)); //new Lazy<PoolableMono>(poolObj)
+		if (maps[position].Value.TryGetComponent<Blocks>(out Blocks block))
+		{
+			block.Init(position, poolObj.gameObject, poolObjectname);
+		}
+		else
+		{
+			Logger.LogError("block is null");
+		}
+		//maps[position].Value.GetComponent<Blocks>().Init(position, poolObj.gameObject, poolObject);
+	}
+
+	public void DeleteFromDictionary(Vector3 position, string name)
+	{
+		mngs.PoolMng.Push(maps[position].Value, name);
+		maps.Remove(position);
 	}
 
 	private void BuildNavMesh()

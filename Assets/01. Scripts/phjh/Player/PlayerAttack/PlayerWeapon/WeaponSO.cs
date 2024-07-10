@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,5 +9,6 @@ public class WeaponSO : ScriptableObject
     //public attackways 
     public float damageFactor;
     public GameObject bullet;
+
 
 }
