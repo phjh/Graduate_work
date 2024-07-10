@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthUI : MonoBehaviour
 {
 	[Header("Player Condition UI Elements")]
-	[SerializeField] private Image[] PlayerHP;
+	[SerializeField] private Image PlayerHPBar;
+	[SerializeField] private TextMeshProUGUI HPText;
 
 	private float MaxHP;
 	private float HPFeelAmount = 0;
@@ -19,5 +21,10 @@ public class HealthUI : MonoBehaviour
 		mngs = Managers.GetInstance();
 		
 		//player = mngs.PlayerManager.player;
+	}
+
+	private void ChangeHPText()
+	{
+
 	}
 }

@@ -21,6 +21,9 @@ public class PoolManager : ManagerBase<PoolManager>
 	[Header("Pool Values")]
 	[SerializeField] private FloorPoolList[] DataStruct;
 
+	[Header("Floor Names")]
+	[SerializeField] private List<string> FloorNamesList;
+
 	private PoolListSO CurrentFloorPoolData;
 
 	private Dictionary<string, PoolListSO> PoolListData = new Dictionary<string, PoolListSO>();
