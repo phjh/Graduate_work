@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 
+struct ChunkInfo
+{
+
+
+	public string chunkName;
+	public List<List<int>> chunkData;
+}
 
 [RequireComponent(typeof(NavMeshSurface))]
 public class MapManager : ManagerBase<MapManager>
@@ -30,7 +37,7 @@ public class MapManager : ManagerBase<MapManager>
 	private Dictionary<Vector3, Lazy<PoolableMono>> maps = new();
 
 	[SerializeField]
-	TextAsset exceldata;
+	private ChunkSO chunkData;
 
 	[SerializeField]
 	public List<List<int>> BreakableMapData = new();
@@ -101,25 +108,29 @@ public class MapManager : ManagerBase<MapManager>
 
 	private void SetChunks()
 	{
+		//새로 생성할 청크 SO 제작 및 받기
+		chunkData = chunkData.CreateChunk();
+
 		//청크데이터 생성 및 받아오기
-		List<List<int>> chunkBlocks = SetChunkData(exceldata);
+		SetChunkData(chunkData);
 
         //데이터 값에 광석 블럭들 넣어주기
-        SetOreBlocks(ref chunkBlocks);
+        SetOreBlocks(chunkData);
 
 
-        //나중에 인터렉션 블럭 추가할거면 하기
+		//나중에 인터렉션 블럭 추가할거면 하기
 
 
 
-        //청크대로 블럭 생성해주기
+		//청크대로 블럭 생성해주기
+		CreateBlocks(chunkData);
 
     }
 
-    private List<List<int>> SetChunkData(TextAsset datacsv)
+    private void SetChunkData(ChunkSO chunk)
 	{
 		//엑셀에서 값들 받아오기
-        excelstr = datacsv.text.Split(new string[] { ",", "\n" }, System.StringSplitOptions.None);
+        excelstr = chunk.excelData.text.Split(new string[] { ",", "\n" }, System.StringSplitOptions.None);
 		
 		//데이터값 2차원 리스트로 바꿔주기
 		List<List<int>> chunkData = new();
@@ -135,17 +146,32 @@ public class MapManager : ManagerBase<MapManager>
             chunkData.Add(ilist);
         }
 
-		return chunkData;
+		chunk.chunkData = chunkData;
     }
 
-	private void SetOreBlocks(ref List<List<int>> chunkData)
+	private void SetOreBlocks(ChunkSO chunk)
 	{
-		for(int i = 0; i < oreBlocks; i++)
-		{
+		
+	}
 
-			//AddToDictionary(new Vector3(UnityEngine.Random.Range((int)-MapSize.x / 2, (int)MapSize.x / 2), 1, UnityEngine.Random.Range((int)-MapSize.y / 2, (int)MapSize.y / 2)), "OreBlock");
-			//여기서 광석시야일때 보이게 해주는거 따로 추가해준다.
-        }
+	private void CreateBlocks(ChunkSO chunk)
+	{
+		List<List<int>> chunklist = chunk.chunkData;
+		Vector3 chunkPos = chunk.chunkPos;
+
+		for (int i = 0; i < chunklist.Count; i++) 
+		{
+			for(int j = 0; j < chunklist[i].Count; j++)
+			{
+				if (chunklist[i][j] == 1)
+				{
+					AddToDictionary(chunkPos + new Vector3(i, 0 ,j), "BreakableBlock");
+
+				}
+
+			}
+		}
+
 	}
 
 	private void AddToDictionary(Vector3 position, string poolObjectname)

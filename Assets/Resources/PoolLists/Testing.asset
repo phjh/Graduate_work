@@ -21,3 +21,7 @@ MonoBehaviour:
     poolableMono: {fileID: -3455044952538899643, guid: 1605fc83125e7de448afa3ef02f60762, type: 3}
     poolableName: UnBreakableWallBlock
     Count: 1
+  - poolableType: 3
+    poolableMono: {fileID: 1390448685863316615, guid: 0c22ad1127ee62c48a2fed62453e4008, type: 3}
+    poolableName: BreakableBlock
+    Count: 1
