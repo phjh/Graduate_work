@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SceneFlowBase : MonoBehaviour
+public abstract class SceneFlowBase : MonoBehaviour
 {
-    private Managers mngs;
+    protected Managers mngs;
 	public GameState ThisSceneState;
 
 	private void Awake()
@@ -14,13 +14,10 @@ public class SceneFlowBase : MonoBehaviour
 
 	public void SetFlowThisScene()
 	{
-		mngs.FlowMng.ChangeGameState(ThisSceneState);
+		mngs?.FlowMng.ChangeGameState(ThisSceneState);
 
 		this?.LinkedManagerToObject();
 	}
 
-	public virtual void LinkedManagerToObject()
-	{
-
-	}
+	public abstract void LinkedManagerToObject();
 }

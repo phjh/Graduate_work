@@ -1,19 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyMain : PoolableMono, IDamageable
 {
+	[Header("Enemy Values")]
+	[Tooltip("This Enemys Pool Tag")]
 	public string EnemyName;
-	[SerializeField] private StatusSO enemyData;
+	public StatusSO enemyData;
 
 	[HideInInspector] public Stat MaxHP;
 	[HideInInspector] public Stat Attack;
 	[HideInInspector] public Stat AttackSpeed;
 	[HideInInspector] public Stat MoveSpeed;
-
-	public bool isAlive = true;
+	[HideInInspector] public bool isAlive = true;
 	
+	private NavMeshAgent EnemyAgent;
+
 	public float CurrentHp
 	{
 		get 
@@ -36,6 +40,8 @@ public class EnemyMain : PoolableMono, IDamageable
 
 	public override void EnablePoolableMono()
 	{
+		if (EnemyAgent == null) TryGetComponent(out  EnemyAgent);
+
 		isAlive = true;
 
 		CurrentHp = MaxHP.GetValue();
@@ -47,6 +53,8 @@ public class EnemyMain : PoolableMono, IDamageable
 		Attack = enemyData.StatDictionary["Attack"];
 		AttackSpeed = enemyData.StatDictionary["AttackSpeed"];
 		MoveSpeed = enemyData.StatDictionary["MoveSpeed"];
+
+		this.gameObject.name = EnemyName;
 	}
 
 	#region IDamageable Methods
@@ -54,8 +62,8 @@ public class EnemyMain : PoolableMono, IDamageable
 	public void TakeDamage(float dmg)
 	{
 		if(dmg < 0) IncreaseHP(dmg);
-		else if(dmg == 0) return;
-		else if(dmg >= 1) DecreaseHP(dmg);
+		if(dmg == 0) return;
+		if(dmg >= 1) DecreaseHP(dmg);
 	}
 
 	private void IncreaseHP(float dmg)
