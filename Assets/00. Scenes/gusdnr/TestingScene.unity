@@ -1473,6 +1473,15 @@ MonoBehaviour:
   mngs: {fileID: 0}
   MapSize: {x: 101, y: 101}
   MapCenter: {x: 0, y: 0, z: 0}
+  GroundTileSize: 5
+  chunkwidth: 25
+  chunkheight: 25
+  oreBlocks: 0
+  exceldata: {fileID: 4900000, guid: b2c235a95bcd2c943ba0f9a4fa31d84f, type: 3}
+  BreakableMapData: []
+  recentList:
+    list: 
+  excelstr: []
 --- !u!114 &1490187691
 MonoBehaviour:
   m_ObjectHideFlags: 0

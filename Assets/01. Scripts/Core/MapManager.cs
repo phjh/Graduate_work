@@ -1,9 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
-using Unity.Properties;
 using UnityEngine;
+
 
 [RequireComponent(typeof(NavMeshSurface))]
 public class MapManager : ManagerBase<MapManager>
@@ -18,13 +17,27 @@ public class MapManager : ManagerBase<MapManager>
 	private int halfX = 0;
 	private int halfY = 0;
 
+	[SerializeField]
+	private int chunkwidth;
+	[SerializeField]
+	private int chunkheight;	
+
+
 	[Range(0, 30)]
 	[SerializeField]
 	private int oreBlocks;
 
 	private Dictionary<Vector3, Lazy<PoolableMono>> maps = new();
 
-	public override void InitManager()
+	[SerializeField]
+	TextAsset exceldata;
+
+	[SerializeField]
+	public List<List<int>> BreakableMapData = new();
+
+	public string[] excelstr;
+
+    public override void InitManager()
 	{
 		base.InitManager();
 		Logger.Log($"Setted Map Size {MapSize.x} {MapSize.y}");
@@ -63,8 +76,7 @@ public class MapManager : ManagerBase<MapManager>
 	private void SetBlocks()
 	{
 		SetUnBreakableBlock();
-		//SetBreakableBlocks();
-		//SetOreBlocks();
+		SetChunks();
 	}
 
 	//부서지지 않는 벽 설치
@@ -74,10 +86,10 @@ public class MapManager : ManagerBase<MapManager>
 		float y = 0;
 		float z = MapSize.y / 2f;
 		int loops = (int)MapSize.x - 1;
-		AddToDictionary(new Vector3(-x, y, -z), "UnBreakableWallBlock");
-		AddToDictionary(new Vector3(-x, y,  z), "UnBreakableWallBlock");
-		AddToDictionary(new Vector3( x, y, -z), "UnBreakableWallBlock");
-		AddToDictionary(new Vector3( x, y,  z), "UnBreakableWallBlock");
+		AddToDictionary(new Vector3(-x,  y, -z), "UnBreakableWallBlock");
+		AddToDictionary(new Vector3(-x,  y,  z), "UnBreakableWallBlock");
+		AddToDictionary(new Vector3( x,  y, -z), "UnBreakableWallBlock");
+		AddToDictionary(new Vector3( x,  y,  z), "UnBreakableWallBlock");
 		for(int i = 1; i <= loops; i++)
 		{
 			AddToDictionary(new Vector3( x,    y, i - z), "UnBreakableWallBlock");
@@ -87,16 +99,51 @@ public class MapManager : ManagerBase<MapManager>
 		}
     }
 
-	private void SetBreakableBlocks()
+	private void SetChunks()
 	{
+		//청크데이터 생성 및 받아오기
+		List<List<int>> chunkBlocks = SetChunkData(exceldata);
 
-	}
+        //데이터 값에 광석 블럭들 넣어주기
+        SetOreBlocks(ref chunkBlocks);
 
-	private void SetOreBlocks()
+
+        //나중에 인터렉션 블럭 추가할거면 하기
+
+
+
+        //청크대로 블럭 생성해주기
+
+    }
+
+    private List<List<int>> SetChunkData(TextAsset datacsv)
+	{
+		//엑셀에서 값들 받아오기
+        excelstr = datacsv.text.Split(new string[] { ",", "\n" }, System.StringSplitOptions.None);
+		
+		//데이터값 2차원 리스트로 바꿔주기
+		List<List<int>> chunkData = new();
+
+        for (int i = 0; i < chunkwidth; i++)
+        {
+            List<int> ilist = new List<int>();
+            for (int j = 0; j < chunkheight; j++)
+            {
+                if (excelstr[i * chunkwidth + j][0] != 13)
+                    ilist.Add(excelstr[i * chunkwidth + j][0] - '0');
+            }
+            chunkData.Add(ilist);
+        }
+
+		return chunkData;
+    }
+
+	private void SetOreBlocks(ref List<List<int>> chunkData)
 	{
 		for(int i = 0; i < oreBlocks; i++)
 		{
-			AddToDictionary(new Vector3(UnityEngine.Random.Range((int)-MapSize.x / 2, (int)MapSize.x / 2), 1, UnityEngine.Random.Range((int)-MapSize.y / 2, (int)MapSize.y / 2)), "OreBlock");
+
+			//AddToDictionary(new Vector3(UnityEngine.Random.Range((int)-MapSize.x / 2, (int)MapSize.x / 2), 1, UnityEngine.Random.Range((int)-MapSize.y / 2, (int)MapSize.y / 2)), "OreBlock");
 			//여기서 광석시야일때 보이게 해주는거 따로 추가해준다.
         }
 	}
