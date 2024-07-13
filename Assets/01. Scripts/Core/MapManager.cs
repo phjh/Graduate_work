@@ -99,7 +99,7 @@ public class MapManager : ManagerBase<MapManager>
 	{
 
         //货肺 积己且 没农 SO 力累 棺 罐扁
-        ChunkDatas[0] = ChunkDatas[0].CreateChunk();
+        ChunkDatas[0] = ChunkDatas[0].CreateChunk(Vector3.zero);
 		SetChunks(ChunkDatas[0]);
 
 		//甘 促矫 备况林扁
