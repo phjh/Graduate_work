@@ -1859,6 +1859,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea0632ba9b92adc46b5ca34d200b18d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PoolName: 
   EnemyName: 
   enemyData: {fileID: 0}
   MaxHP:
@@ -2104,6 +2105,11 @@ MonoBehaviour:
   MapSize: {x: 77, y: 77}
   MapCenter: {x: 0, y: 0, z: 0}
   GroundTileSize: 5
+  chunkwidth: 0
+  chunkheight: 0
+  oreBlocks: 0
+  chunkData: {fileID: 0}
+  excelstr: []
 --- !u!114 &1490187691
 MonoBehaviour:
   m_ObjectHideFlags: 0

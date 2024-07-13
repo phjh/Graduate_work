@@ -14,6 +14,8 @@ public class DropedItem : PoolableMono
     [Header("UI Variables")]
     [SerializeField][Range(0.0f, 1.0f)] private float infoDuration = 0.3f;
     
+    private Managers mngs;
+
     public ItemDataSO ItemData
     {
         get
@@ -48,7 +50,8 @@ public class DropedItem : PoolableMono
         }
 
         ItemData = InitData;
-    }
+        ItemData.SetRandomAddingValue();
+	}
 
 	private void SetItemObject()
     {
@@ -70,7 +73,8 @@ public class DropedItem : PoolableMono
     {
         if (other.gameObject.CompareTag("Player") && Input.GetKeyDown(KeyCode.F))
         {
-            Destroy(this.gameObject);
+            mngs.PlayerMng.AddOreInDictionary(ItemData.AddingStatType, ItemData.ItemAddingValue);
+            mngs.PoolMng.Push(this, PoolName);
         }
     }
 
@@ -89,7 +93,8 @@ public class DropedItem : PoolableMono
 			ItemRenderer = this.gameObject.AddComponent<SpriteRenderer>();
 		}
 
-        ItemInfoCanvas.localScale = Vector3.zero;
+		if (mngs == null) mngs = Managers.GetInstance();
+		ItemInfoCanvas.localScale = Vector3.zero;
 	}
 
 	public override void EnablePoolableMono()

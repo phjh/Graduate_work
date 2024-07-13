@@ -24,8 +24,11 @@ public class ItemDataSO : ScriptableObject
 	public string Description;
 
 	[Header("Item Values")]
-	public float ItemAddingValue;
 	public StatType AddingStatType = StatType.End;
+	[SerializeField] private float minValue = 5f;
+	[SerializeField] private float maxValue = 10f;
+
+	public float ItemAddingValue {  get; private set; } = 5f;
 
 	public bool CheckingInitData() //Checking SO Data
 	{
@@ -36,5 +39,11 @@ public class ItemDataSO : ScriptableObject
 		if (AddingStatType == StatType.End) return false;
 
 		return true;
+	}
+
+	public float SetRandomAddingValue()
+	{
+		ItemAddingValue = Random.Range(minValue, maxValue);
+		return ItemAddingValue;
 	}
 }
