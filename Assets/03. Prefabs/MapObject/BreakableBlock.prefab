@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1390448685863316615}
   - component: {fileID: 7774698472860095009}
   m_Layer: 0
-  m_Name: wall_breakable
+  m_Name: BreakableBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,6 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d08d593ffbce6364aae3a418d17e58f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PoolName: BreakableBlock
+  MaxTimesToBreak: 4
 --- !u!65 &7774698472860095009
 BoxCollider:
   m_ObjectHideFlags: 0

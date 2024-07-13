@@ -1,17 +1,21 @@
+using UnityEngine;
+
 public class BreakableBlock : Blocks
 {
-    int timeToBreak;
+	[Header("Block Value")]
+    public int MaxTimesToBreak = 4;
+	private int TimesToBreak;
 
     public override void SetBlock()
     {
-        timeToBreak = 4;
+		TimesToBreak = MaxTimesToBreak;
     }
 
     public override void BlockEvent()
     {
-        timeToBreak--;
+		TimesToBreak--;
         MiningEffect();
-        if(timeToBreak == 0)
+        if(TimesToBreak <= 0)
         {
             DeleteBlock();
         }

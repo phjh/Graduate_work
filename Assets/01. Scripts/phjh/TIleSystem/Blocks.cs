@@ -22,8 +22,6 @@ public abstract class Blocks : PoolableMono
 
         block.transform.position = pos;
         this.block = new(block);
-        this.blockname = name;
-
         SetBlock();
     }
 
@@ -32,7 +30,7 @@ public abstract class Blocks : PoolableMono
         blockType = BlockType.None;
         //풀매니저로 변경
 
-        MapManager.Instance.DeleteFromDictionary(transform.position, blockname);
+        MapManager.Instance.DeleteFromDictionary(transform.position, PoolName);
     }
 
     //여기서 블럭을 세팅해준다

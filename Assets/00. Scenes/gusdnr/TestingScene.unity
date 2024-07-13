@@ -2105,11 +2105,10 @@ MonoBehaviour:
   MapSize: {x: 77, y: 77}
   MapCenter: {x: 0, y: 0, z: 0}
   GroundTileSize: 5
-  chunkwidth: 0
-  chunkheight: 0
-  oreBlocks: 0
-  chunkData: {fileID: 0}
-  excelstr: []
+  chunkWidth: 0
+  chunkHeight: 0
+  ChunkDatas: []
+  PlaceOreBlockInCounter: 0
 --- !u!114 &1490187691
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,8 +5,6 @@ using UnityEngine;
 
 struct ChunkInfo
 {
-
-
 	public string chunkName;
 	public List<List<int>> chunkData;
 }
@@ -19,30 +17,21 @@ public class MapManager : ManagerBase<MapManager>
 	public Vector3 MapCenter = Vector3.zero;
 	public int GroundTileSize = 5;
 
+	public List<List<int>> BreakableMapData;
+	
 	private NavMeshSurface nms;
 
 	private int halfX = 0;
 	private int halfY = 0;
 
-	[SerializeField]
-	private int chunkwidth;
-	[SerializeField]
-	private int chunkheight;	
+	[Header("Chunk Data Setting")]
+	[SerializeField] private int chunkWidth;
+	[SerializeField] private int chunkHeight;
+	[SerializeField] private List<ChunkSO> ChunkDatas = new List<ChunkSO>(9);
+	[Range(1, 30)][SerializeField] private int PlaceOreBlockInCounter;
 
-
-	[Range(0, 30)]
-	[SerializeField]
-	private int oreBlocks;
-
+	private string[] excelSheetData;
 	private Dictionary<Vector3, Lazy<PoolableMono>> maps = new();
-
-	[SerializeField]
-	private ChunkSO chunkData;
-
-	[SerializeField]
-	public List<List<int>> BreakableMapData = new();
-
-	public string[] excelstr;
 
     public override void InitManager()
 	{
@@ -93,16 +82,16 @@ public class MapManager : ManagerBase<MapManager>
 		float y = 0;
 		float z = MapSize.y / 2f;
 		int loops = (int)MapSize.x - 1;
-		AddToDictionary(new Vector3(-x,  y, -z), "UnBreakableWallBlock");
-		AddToDictionary(new Vector3(-x,  y,  z), "UnBreakableWallBlock");
-		AddToDictionary(new Vector3( x,  y, -z), "UnBreakableWallBlock");
-		AddToDictionary(new Vector3( x,  y,  z), "UnBreakableWallBlock");
+		AddToDictionary(new Vector3(-x,  y, -z), "WallBlock");
+		AddToDictionary(new Vector3(-x,  y,  z), "WallBlock");
+		AddToDictionary(new Vector3( x,  y, -z), "WallBlock");
+		AddToDictionary(new Vector3( x,  y,  z), "WallBlock");
 		for(int i = 1; i <= loops; i++)
 		{
-			AddToDictionary(new Vector3( x,    y, i - z), "UnBreakableWallBlock");
-			AddToDictionary(new Vector3(-x,    y, i - z), "UnBreakableWallBlock");
-			AddToDictionary(new Vector3(i - x, y,     z), "UnBreakableWallBlock");
-			AddToDictionary(new Vector3(i - x, y,    -z), "UnBreakableWallBlock");
+			AddToDictionary(new Vector3( x,    y, i - z), "WallBlock");
+			AddToDictionary(new Vector3(-x,    y, i - z), "WallBlock");
+			AddToDictionary(new Vector3(i - x, y,     z), "WallBlock");
+			AddToDictionary(new Vector3(i - x, y,    -z), "WallBlock");
 		}
     }
 
@@ -110,8 +99,8 @@ public class MapManager : ManagerBase<MapManager>
 	{
 
         //새로 생성할 청크 SO 제작 및 받기
-        chunkData = chunkData.CreateChunk();
-        SetChunks(chunkData);
+        ChunkDatas[0] = ChunkDatas[0].CreateChunk();
+		SetChunks(ChunkDatas[0]);
 
 		//맵 다시 구워주기
 		BuildNavMesh();
@@ -135,18 +124,18 @@ public class MapManager : ManagerBase<MapManager>
     private void SetChunkData(ChunkSO chunk)
 	{
 		//엑셀에서 값들 받아오기
-        excelstr = chunk.excelData.text.Split(new string[] { ",", "\n" }, System.StringSplitOptions.None);
+        excelSheetData = chunk.excelData.text.Split(new string[] { ",", "\n" }, System.StringSplitOptions.None);
 		
 		//데이터값 2차원 리스트로 바꿔주기
 		List<List<int>> chunkData = new();
 
-        for (int i = 0; i < chunkwidth; i++)
+        for (int i = 0; i < chunkWidth; i++)
         {
             List<int> ilist = new List<int>();
-            for (int j = 0; j < chunkheight; j++)
+            for (int j = 0; j < chunkHeight; j++)
             {
-                if (excelstr[i * chunkwidth + j][0] != 13)
-                    ilist.Add(excelstr[i * chunkwidth + j][0] - '0');
+                if (excelSheetData[i * chunkWidth + j][0] != 13)
+                    ilist.Add(excelSheetData[i * chunkWidth + j][0] - '0');
             }
             chunkData.Add(ilist);
         }
@@ -188,7 +177,7 @@ public class MapManager : ManagerBase<MapManager>
 	{
 		PoolableMono poolObj = mngs.PoolMng.Pop(poolObjectname, position);
         maps.Add(position,new(poolObj)); //new Lazy<PoolableMono>(poolObj)
-		if (maps[position].Value.TryGetComponent<Blocks>(out Blocks block))
+		if (maps[position].Value.TryGetComponent(out Blocks block))
 		{
 			block.Init(position, poolObj.gameObject, poolObjectname);
 		}

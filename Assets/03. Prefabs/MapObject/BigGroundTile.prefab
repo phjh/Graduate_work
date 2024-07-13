@@ -119,4 +119,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cb502ab120540b439c20efd3867b5df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PoolName: GroundTile
   GroundLayerIndex: 8
