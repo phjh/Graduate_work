@@ -11,7 +11,7 @@ public class PlayerAttack : MonoBehaviour
     private InputReader _inputReader;
 
     [SerializeField]
-    private GameObject tempBullet;
+    private PoolableMono tempBullet;
 
     //[SerializeField]
     //GameObject WeaponPivot;
@@ -23,7 +23,7 @@ public class PlayerAttack : MonoBehaviour
 
     private List<Lazy<AnimationReferenceAsset>> _moveAnimation;
 
-    public void Init(Player player, InputReader inputReader, GameObject bullet, List<AnimationReferenceAsset> animations)
+    public void Init(Player player, InputReader inputReader, PoolableMono bullet, List<AnimationReferenceAsset> animations)
     {
         _player = player;
         _inputReader = inputReader;
@@ -47,14 +47,14 @@ public class PlayerAttack : MonoBehaviour
 
     public void DoAttack()
     {
-        //이거 무기에따라 바뀌게 수정예정
-        Vector3 dir = new Vector3(mousedir.x, 0, mousedir.y);
+        //Vector3 dir = new Vector3(mousedir.x, 0, mousedir.y);
 
-        GameObject bullet = Instantiate(tempBullet, transform.position, Quaternion.identity);
+        PlayerBullet bullet = (PlayerBullet)PoolManager.Instance.Pop(tempBullet.name, this.transform.position + Vector3.up);
         //bullet.transform.forward = rot;
         Quaternion rotation = Quaternion.LookRotation(rot);
-        
-        bullet.transform.rotation = Quaternion.Slerp(bullet.transform.rotation, rotation, 1);
+
+        bullet.Init(rotation);
+        //bullet.transform.rotation = Quaternion.Slerp(bullet.transform.rotation, rotation, 1);
 
     }
 

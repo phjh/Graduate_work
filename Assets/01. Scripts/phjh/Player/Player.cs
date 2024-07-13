@@ -1,5 +1,6 @@
 using Spine.Unity;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -12,7 +13,7 @@ public class Player : MonoBehaviour
     private SkeletonAnimation _skeletonAnimation;
     //임시 무기
     [SerializeField]
-    private Weapon _tempWeapon;
+    private WeaponSO _tempWeapon;
     //스탯
 
     [SerializeField]
@@ -25,7 +26,7 @@ public class Player : MonoBehaviour
     public InputReader inputReader {  get; private set; } 
     public SkeletonAnimation skeletonAnimation {  get; private set; }
     //임시 무기
-    public Weapon weapon;
+    public WeaponSO weapon;
     //스텟 넣기
     //public stat stat
 
@@ -57,8 +58,35 @@ public class Player : MonoBehaviour
         skeletonAnimation = _skeletonAnimation;
         weapon = _tempWeapon;
 
-        this.gameObject.AddComponent<PlayerMove>().Init(this, inputReader);
-        this.gameObject.AddComponent<PlayerAttack>().Init(this, inputReader, weapon.weaponObj.bullet, _moveAnimations);
+        #region 플레이어 컴포넌트 세팅
+
+        //플레이어 움직임 부분
+        if (this.gameObject.TryGetComponent<PlayerMove>(out PlayerMove move))
+            move.Init(this, inputReader);
+        else
+            Logger.LogWarning("Playermove is null");
+
+        //플레이어 공격 부분
+        if (this.gameObject.TryGetComponent<PlayerAttack>(out PlayerAttack attack))
+            attack.Init(this, inputReader, weapon.bullet, _moveAnimations);
+        else
+            Logger.LogWarning("Playerattack is null");
+
+        //플레이어 쉴드 부분
+        if (this.gameObject.TryGetComponent<PlayerShield>(out PlayerShield shield))
+            shield.Init();
+        else
+            Logger.LogWarning("Playershield is null");
+
+        #endregion
+
+
+
+    }
+
+    public void ChagneWeapon(WeaponSO weapon)
+    {
+        this.weapon = weapon;
     }
 
 }

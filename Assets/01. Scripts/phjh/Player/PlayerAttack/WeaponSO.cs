@@ -8,7 +8,8 @@ public class WeaponSO : ScriptableObject
 {
     //public attackways 
     public float damageFactor;
-    public GameObject bullet;
+    public PoolableMono bullet;
+
 
 
 }

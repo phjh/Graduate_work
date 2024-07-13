@@ -25,3 +25,7 @@ MonoBehaviour:
     poolableMono: {fileID: 1390448685863316615, guid: 0c22ad1127ee62c48a2fed62453e4008, type: 3}
     poolableName: BreakableBlock
     Count: 1
+  - poolableType: 1
+    poolableMono: {fileID: 3993027108183574981, guid: 96a76c925af5e2246bb46ef8feea1dc6, type: 3}
+    poolableName: PickaxeBullet
+    Count: 1

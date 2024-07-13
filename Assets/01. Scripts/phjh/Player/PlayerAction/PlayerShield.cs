@@ -8,7 +8,8 @@ public class PlayerShield : MonoBehaviour
 
     private float defensiveRegen;
 
-
+    [SerializeField]
+    private float immuniateTime;
 
     public void Init()
     {

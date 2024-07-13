@@ -83,7 +83,7 @@ public class MapManager : ManagerBase<MapManager>
 	private void SetBlocks()
 	{
 		SetUnBreakableBlock();
-		SetChunks();
+		SetMap();
 	}
 
 	//부서지지 않는 벽 설치
@@ -106,25 +106,30 @@ public class MapManager : ManagerBase<MapManager>
 		}
     }
 
-	private void SetChunks()
+	private void SetMap()
 	{
-		//새로 생성할 청크 SO 제작 및 받기
-		chunkData = chunkData.CreateChunk();
 
+        //새로 생성할 청크 SO 제작 및 받기
+        chunkData = chunkData.CreateChunk();
+        SetChunks(chunkData);
+
+		//맵 다시 구워주기
+		BuildNavMesh();
+	}
+
+	private void SetChunks(ChunkSO chunkData)
+	{
 		//청크데이터 생성 및 받아오기
 		SetChunkData(chunkData);
 
         //데이터 값에 광석 블럭들 넣어주기
         SetOreBlocks(chunkData);
 
-
 		//나중에 인터렉션 블럭 추가할거면 하기
-
-
+		SetInteractionBlocks(chunkData);
 
 		//청크대로 블럭 생성해주기
 		CreateBlocks(chunkData);
-
     }
 
     private void SetChunkData(ChunkSO chunk)
@@ -152,6 +157,11 @@ public class MapManager : ManagerBase<MapManager>
 	private void SetOreBlocks(ChunkSO chunk)
 	{
 		
+	}
+
+	private void SetInteractionBlocks(ChunkSO chunk)
+	{
+
 	}
 
 	private void CreateBlocks(ChunkSO chunk)
