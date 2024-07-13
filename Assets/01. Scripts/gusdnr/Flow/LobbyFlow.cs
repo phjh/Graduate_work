@@ -10,7 +10,7 @@ public class LobbyFlow : SceneFlowBase
 	[SerializeField] private Button StartBtn;
 	[SerializeField] private string NextSceneName; 
 
-	public override void LinkedManagerToObject()
+	public override void ActiveFlowBase()
 	{
 		StartBtn?.onClick.RemoveAllListeners();
 		StartBtn?.onClick.AddListener(() => mngs.UIMng.SetSceneName(NextSceneName));

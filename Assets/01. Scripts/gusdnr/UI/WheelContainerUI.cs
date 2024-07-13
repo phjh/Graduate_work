@@ -10,7 +10,8 @@ public class WheelContainerUI : MonoBehaviour
 	[SerializeField] private float ActiveDuration = 0.5f;
 	[SerializeField] private float MinPosX;
 	[SerializeField] private float MaxPosX;
-	[SerializeField] private List<Button> WheelBtnElements = new List<Button>();
+	[SerializeField] private List<WeaponWheelUI> WheelElement = new List<WeaponWheelUI>();
+	[SerializeField] private Button CancelBtn;
 
 	private RectTransform containerTrm;
 
@@ -26,7 +27,8 @@ public class WheelContainerUI : MonoBehaviour
 
 		MinPosX = containerTrm.position.x; 
 
-		WheelBtnElements.ForEach(btn => btn.interactable = alreadyActiveWheel);
+		WheelElement.ForEach(element => element.ActiveWheel(alreadyActiveWheel));
+		CancelBtn.interactable = alreadyActiveWheel;
 	}
 
 	public void ActiveWeaponWheel()
@@ -35,13 +37,13 @@ public class WheelContainerUI : MonoBehaviour
 
 		if (containerTrm == null) TryGetComponent(out containerTrm);
 		
-		containerTrm.DOAnchorPos3DX(alreadyActiveWheel ? MinPosX : MaxPosX, ActiveDuration)
+		containerTrm.DOAnchorPosX(alreadyActiveWheel ? MinPosX : MaxPosX, ActiveDuration)
 				.OnStart(() =>
 				{
 					alreadyWorkingActive = true;
 
 					alreadyActiveWheel = !alreadyActiveWheel;
-					WheelBtnElements.ForEach(btn => btn.interactable = alreadyActiveWheel);
+					WheelElement.ForEach(element => element.ActiveWheel(alreadyActiveWheel));
 				})
 				.OnComplete(() =>
 				{

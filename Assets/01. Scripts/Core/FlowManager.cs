@@ -18,11 +18,19 @@ public class FlowManager : ManagerBase<FlowManager>
 	[HideInInspector] public PlayerManager playerMng;
 
 	public GameState CurrentGameState;
+	
+	private SceneFlowBase CurrentSceneFlow;
 
 	public override void InitManager()
 	{
 		base.InitManager();
 		ChangeGameState(GameState.Title);
+		mngs.UIMng.OnCompleteLoadScene += GetFlow;
+	}
+
+	protected override void OnDisable()
+	{
+		mngs.UIMng.OnCompleteLoadScene -= GetFlow;
 	}
 
 	public bool ChangeGameState(GameState newState)
@@ -34,7 +42,7 @@ public class FlowManager : ManagerBase<FlowManager>
 		return true;
 	}
 
-	public void WorkGameState(GameState InitState)
+	private void WorkGameState(GameState InitState)
 	{
 		switch (InitState)
 		{
@@ -48,12 +56,13 @@ public class FlowManager : ManagerBase<FlowManager>
 			case GameState.Lobby:
 				{
 					if (playerMng == null) AddPlayerManager();
-					mngs.InItInGameManagers();
+					mngs.InItLobbyManagers();
 					break;
 				}
 			case GameState.PlayGame:
 				{
 					if(playerMng == null) AddPlayerManager();
+					mngs.InItInGameManagers();
 					break;
 				}
 			case GameState.EndGame:
@@ -82,5 +91,11 @@ public class FlowManager : ManagerBase<FlowManager>
 		go.transform.parent = transform.parent;
 
 		playerMng = go.AddComponent<PlayerManager>();
+	}
+
+	private void GetFlow()
+	{
+		CurrentSceneFlow = FindFirstObjectByType<SceneFlowBase>();
+		CurrentSceneFlow?.SetFlowThisScene();
 	}
 }

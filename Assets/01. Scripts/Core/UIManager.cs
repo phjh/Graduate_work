@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,8 @@ public class UIManager : ManagerBase<UIManager>
 	[SerializeField] private Image FadePanel;
 	[SerializeField][Range(0.0f, 1.0f)] private float fadeDuration = 0.5f;
 	[SerializeField] private Image LoadProcessBar;
+
+	public event Action OnCompleteLoadScene;
 
 	public bool IsWorkingLoading
 	{
@@ -139,6 +142,7 @@ public class UIManager : ManagerBase<UIManager>
 	private IEnumerator LoadSceneAsync(string sceneName)
 	{
 		IsWorkingLoading = true;
+		LoadProcessBar.enabled = IsWorkingLoading;
 
 		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 		asyncLoad.allowSceneActivation = false;
@@ -164,11 +168,14 @@ public class UIManager : ManagerBase<UIManager>
 		}
 
 		FadePanel.DOFade(0.0f, fadeDuration)
-			.OnComplete((TweenCallback)(() =>
+			.OnComplete(() =>
 			{
 				FadePanel.raycastTarget = false;
 				this.IsWorkingLoading = false;
-			}));
+
+				LoadProcessBar.enabled = IsWorkingLoading;
+				OnCompleteLoadScene?.Invoke();
+			});
 	}
 
 	#endregion
@@ -202,6 +209,7 @@ public class UIManager : ManagerBase<UIManager>
 	private IEnumerator LoadSceneAsync(int index)
 	{
 		IsWorkingLoading = true;
+		LoadProcessBar.enabled = IsWorkingLoading;
 
 		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
 		asyncLoad.allowSceneActivation = true;
@@ -226,11 +234,14 @@ public class UIManager : ManagerBase<UIManager>
 		}
 
 		FadePanel.DOFade(0.0f, fadeDuration)
-			.OnComplete((TweenCallback)(() =>
+			.OnComplete(() =>
 			{
 				FadePanel.raycastTarget = false;
 				this.IsWorkingLoading = false;
-			}));
+
+				LoadProcessBar.enabled = IsWorkingLoading;
+				OnCompleteLoadScene?.Invoke();
+			});
 	}
 
 	#endregion

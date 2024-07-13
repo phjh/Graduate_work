@@ -16,8 +16,8 @@ public abstract class SceneFlowBase : MonoBehaviour
 	{
 		mngs?.FlowMng.ChangeGameState(ThisSceneState);
 
-		this?.LinkedManagerToObject();
+		this?.ActiveFlowBase();
 	}
 
-	public abstract void LinkedManagerToObject();
+	public abstract void ActiveFlowBase();
 }

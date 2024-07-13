@@ -25,7 +25,7 @@ public class Managers : MonoBehaviour
 	{
 		Init();
 
-		InItOtherManagers();
+		InItIntroManagers();
 	}
 
 	private static void Init()
@@ -49,7 +49,7 @@ public class Managers : MonoBehaviour
 		}
 	}
 
-	private void InItOtherManagers()
+	private void InItIntroManagers()
 	{
 		if (UIMng == null) UIMng = UIManager.GetInstacne();
 		UIMng.InitManager();
@@ -67,12 +67,17 @@ public class Managers : MonoBehaviour
 		TimeMng.InitManager();
 	}
 
-	public void InItInGameManagers()
+	public void InItLobbyManagers()
 	{
 		if (PlayerMng == null)
 		{
 			PlayerMng = PlayerManager.GetInstacne();
 			PlayerMng.InitManager();
 		}
+	}
+
+	public void InItInGameManagers()
+	{
+
 	}
 }
