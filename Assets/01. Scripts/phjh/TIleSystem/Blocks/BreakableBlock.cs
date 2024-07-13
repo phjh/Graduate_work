@@ -10,6 +10,7 @@ public class BreakableBlock : Blocks
     public override void BlockEvent()
     {
         timeToBreak--;
+        MiningEffect();
         if(timeToBreak == 0)
         {
             DeleteBlock();

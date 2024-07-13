@@ -14,11 +14,11 @@ public class Managers : MonoBehaviour
 	[Header("In Game Manager Scripts")]
 	public PlayerManager PlayerMng;
 
-	public static Managers _instance;
+	public static Managers instance;
 	public static Managers GetInstance()
 	{
 		Init();
-		return _instance;
+		return instance;
 	}
 
 	private void Awake()
@@ -30,7 +30,7 @@ public class Managers : MonoBehaviour
 
 	private static void Init()
 	{
-		if (_instance == null)
+		if (instance == null)
 		{
 			GameObject go = GameObject.Find("@Managers");
 
@@ -45,7 +45,7 @@ public class Managers : MonoBehaviour
 			}
 
 			DontDestroyOnLoad(go);
-			_instance = go.GetComponent<Managers>();
+			instance = go.GetComponent<Managers>();
 		}
 	}
 
