@@ -7,10 +7,8 @@ using UnityEngine;
 public abstract class Blocks : PoolableMono
 {
     public Lazy<GameObject> block;
-    
-    public BlockType blockType { get; protected set; } = BlockType.None;
 
-    private string blockname;
+    public BlockType blockType { get; protected set; } = BlockType.None;
 
     public void Init(Vector3 pos, GameObject block = null, string name = null)
     {
@@ -28,7 +26,7 @@ public abstract class Blocks : PoolableMono
     public void DeleteBlock()
     {
         blockType = BlockType.None;
-        MapManager.Instance.DeleteBlock(transform.position, blockname);
+        MapManager.Instance.DeleteBlock(transform.position, gameObject.name);
     }
 
     //여기서 블럭을 세팅해준다

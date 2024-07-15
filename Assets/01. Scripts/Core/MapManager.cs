@@ -81,12 +81,12 @@ public class MapManager : ManagerBase<MapManager>
 	//부서지지 않는 벽 설치
 	private void SetUnBreakableBlock()
 	{
-		for(int x = 0; x <= MapSize.x; x++)
+		for(int x = -1; x <= MapSize.x; x++)
 		{
 			AddBlock(new Vector3(x, 0, -1), "WallBlock");
 			AddBlock(new Vector3(x, 0, MapSize.y), "WallBlock");
 		}
-		for(int y = 0; y <= MapSize.y; y++)
+		for(int y = -1; y <= MapSize.y; y++)
 		{
 			AddBlock(new Vector3(-1, 0, y), "WallBlock");
 			AddBlock(new Vector3(MapSize.x , 0 , y), "WallBlock");
