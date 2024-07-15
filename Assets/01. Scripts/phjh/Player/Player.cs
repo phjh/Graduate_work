@@ -1,6 +1,5 @@
 using Spine.Unity;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -32,6 +31,12 @@ public class Player : MonoBehaviour
 
     #endregion
 
+    #region 플레이어가 가지고 있을값들
+
+    private PlayerShield _playerShield;
+
+    #endregion
+
     #region 외부에서 수정할 bool값들(공격중인지, 움직일수있는지 등)
 
     public bool canMove { get; set; } = true;
@@ -41,6 +46,7 @@ public class Player : MonoBehaviour
     public bool isAttacking { get; set; } = false;
     public bool isMoving { get; set; } = false;
     public bool isAniming { get; set; } = false;
+    public bool isImmunity { get; set; } = false;
     public bool isDead { get; set; } = false;
 
     public bool inputAble { get; set; } = true;
@@ -63,6 +69,9 @@ public class Player : MonoBehaviour
 
 		WeaponData = _tempWeapon;
 
+        //인풋리더 활성화
+        inputReader.SetActive(true);
+
         #region 플레이어 컴포넌트 세팅
 
         //플레이어 움직임 부분
@@ -71,21 +80,58 @@ public class Player : MonoBehaviour
         else
             Logger.LogWarning("Playermove is null");
 
-        //플레이어 공격 부분
         if (this.gameObject.TryGetComponent(out PlayerAttack attack))
-            attack.Init(this, inputReader, WeaponData.bullet, _moveAnimations);
+            attack.Init(this, inputReader, WeaponData.bullet);
         else
             Logger.LogWarning("Playerattack is null");
 
         //플레이어 쉴드 부분
-        if (this.gameObject.TryGetComponent(out PlayerShield shield))
-            shield.Init();
+        if (this.gameObject.TryGetComponent(out _playerShield))
+            _playerShield.Init(this);
         else
             Logger.LogWarning("Playershield is null");
 
         #endregion
 
 
-
     }
+
+    public void GetDamage(float damage)
+    {
+        //뎀지 안받는 상태
+        if (isImmunity)
+            return;
+
+        //카메라 흔들림 넣기
+        if (_playerShield.canDefence)
+        {
+            _playerShield.Defence();
+            
+        }
+        else
+        {
+            //그대로 데미지 입게끔 해준다
+            SetHealthBar();
+        }
+    }
+
+
+
+    private void SetHealthBar()
+    {
+        
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            _playerShield.RegenDefence();
+        }
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            GetDamage(1);
+        }
+    }
+
 }

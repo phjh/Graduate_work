@@ -28,9 +28,7 @@ public abstract class Blocks : PoolableMono
     public void DeleteBlock()
     {
         blockType = BlockType.None;
-        //풀매니저로 변경
-
-        MapManager.Instance.DeleteFromDictionary(transform.position, PoolName);
+        MapManager.Instance.DeleteBlock(transform.position, blockname);
     }
 
     //여기서 블럭을 세팅해준다

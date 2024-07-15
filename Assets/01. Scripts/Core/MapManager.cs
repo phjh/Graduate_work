@@ -29,6 +29,8 @@ public class MapManager : ManagerBase<MapManager>
 	private string[] excelSheetData;
 	private Dictionary<Vector3, Lazy<PoolableMono>> maps = new();
 
+    public Action blockBreakEvent;
+
     public override void InitManager()
 	{
 		base.InitManager();

@@ -302,7 +302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3055398395884776193, guid: dd35ac6964ddc7f4d81e57c59a7b5b14, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 3055398395884776193, guid: dd35ac6964ddc7f4d81e57c59a7b5b14, type: 3}
       propertyPath: m_LocalPosition.z
@@ -782,6 +782,7 @@ MonoBehaviour:
   - {fileID: 1412897581}
   FadePanel: {fileID: 1587300587}
   fadeDuration: 0.5
+  LoadProcessBar: {fileID: 0}
 --- !u!1 &1312066481
 GameObject:
   m_ObjectHideFlags: 0
@@ -1735,6 +1736,7 @@ MonoBehaviour:
   DataStruct:
   - FloorName: TESTING
     PoolData: {fileID: 11400000, guid: bb9ec012f21ed8141a7b6f08768d2c12, type: 2}
+  FloorNamesList: []
 --- !u!1 &1930788237
 GameObject:
   m_ObjectHideFlags: 0

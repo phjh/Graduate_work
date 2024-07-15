@@ -20,10 +20,7 @@ public class PlayerMove : MonoBehaviour
     {
         _player = player;
         _inputReader = inputReader;
-    }
 
-    private void Start()
-    {
         _rb = GetComponent<Rigidbody>();
         _inputReader.MovementEvent += GetMoveDirection;
     }
@@ -32,8 +29,6 @@ public class PlayerMove : MonoBehaviour
     {
         _inputDirection.x = dir.x;
         _inputDirection.z = dir.y;
-        //局聪皋捞记 贸府
-
     }
 
     private void CalculatePlayerMovement()
