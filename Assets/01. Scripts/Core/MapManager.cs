@@ -18,6 +18,8 @@ public class MapManager : ManagerBase<MapManager>
 	public float GroundTileSize = 5;
 
 	public List<List<int>> BreakableMapData;
+
+    public Action blockBreakEvent;
 	
 	private NavMeshSurface nms;
 
@@ -29,7 +31,6 @@ public class MapManager : ManagerBase<MapManager>
 	private string[] excelSheetData;
 	private Dictionary<Vector3, Lazy<PoolableMono>> maps = new();
 
-    public Action blockBreakEvent;
 
     public override void InitManager()
 	{
@@ -82,13 +83,13 @@ public class MapManager : ManagerBase<MapManager>
 	{
 		for(int x = 0; x <= MapSize.x; x++)
 		{
-			AddToDictionary(new Vector3(x, 0, 0), "WallBlock");
-			AddToDictionary(new Vector3(x, 0, MapSize.y), "WallBlock");
+			AddBlock(new Vector3(x, 0, 0), "WallBlock");
+			AddBlock(new Vector3(x, 0, MapSize.y), "WallBlock");
 		}
 		for(int y = 0; y <= MapSize.y; y++)
 		{
-			AddToDictionary(new Vector3(0, 0, y), "WallBlock");
-			AddToDictionary(new Vector3(MapSize.x , 0 , y), "WallBlock");
+			AddBlock(new Vector3(0, 0, y), "WallBlock");
+			AddBlock(new Vector3(MapSize.x , 0 , y), "WallBlock");
 		}
     }
 
@@ -161,7 +162,7 @@ public class MapManager : ManagerBase<MapManager>
 			{
 				if (chunklist[i][j] == 1)
 				{
-					AddToDictionary(chunkPos + new Vector3(i, 0 ,j), "BreakableBlock");
+					AddBlock(chunkPos + new Vector3(i, 0 ,j), "BreakableBlock");
 
 				}
 
@@ -170,7 +171,7 @@ public class MapManager : ManagerBase<MapManager>
 
 	}
 
-	private void AddToDictionary(Vector3 position, string poolObjectname)
+	private void AddBlock(Vector3 position, string poolObjectname)
 	{
 		PoolableMono poolObj = mngs.PoolMng.Pop(poolObjectname, position);
         maps.TryAdd(position,new(poolObj)); //new Lazy<PoolableMono>(poolObj)
@@ -185,7 +186,7 @@ public class MapManager : ManagerBase<MapManager>
 		//maps[position].Value.GetComponent<Blocks>().Init(position, poolObj.gameObject, poolObject);
 	}
 
-	public void DeleteFromDictionary(Vector3 position, string name)
+	public void DeleteBlock(Vector3 position, string name)
 	{
 		mngs.PoolMng.Push(maps[position].Value, name);
 		maps.Remove(position);
