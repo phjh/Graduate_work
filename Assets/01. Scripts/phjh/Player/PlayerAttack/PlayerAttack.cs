@@ -17,25 +17,23 @@ public class PlayerAttack : MonoBehaviour
     //GameObject WeaponPivot;
 
     private Vector3 rot;
-    private Vector2 mousedir;
     
     private Camera mainCamera;
 
     private List<Lazy<AnimationReferenceAsset>> _moveAnimation;
 
-    public void Init(Player player, InputReader inputReader, PoolableMono bullet, List<AnimationReferenceAsset> animations)
+    public void Init(Player player, InputReader inputReader, PoolableMono bullet, List<AnimationReferenceAsset> animations = null)
     {
         _player = player;
         _inputReader = inputReader;
         this.tempBullet = bullet;
-        foreach (var animation in animations)
-        {
-            _moveAnimation.Add(new Lazy<AnimationReferenceAsset>(animation));
-        }
-    }
 
-    void Start()
-    {
+
+        //foreach (var animation in animations)
+        //{
+        //    _moveAnimation.Add(new Lazy<AnimationReferenceAsset>(animation));
+        //}
+
         _inputReader.AttackEvent += DoAttack;
         mainCamera = Camera.main;
     }
@@ -44,6 +42,8 @@ public class PlayerAttack : MonoBehaviour
     {
         SetAim();
     }
+
+
 
     public void DoAttack()
     {
@@ -97,6 +97,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void SetPlayerAnimation(Vector3 dir)
     {
+        //여기서 애니메이션 천리해준다
         bool isback = dir.x > 0;
         
 
