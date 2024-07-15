@@ -2143,7 +2143,7 @@ MonoBehaviour:
   mngs: {fileID: 0}
   MapSize: {x: 77, y: 77}
   MapCenter: {x: 0, y: 0, z: 0}
-  GroundTileSize: 2.5
+  GroundTileSize: 7
   ChunkSize: {x: 0, y: 0}
   ChunkDatas: []
   PlaceOreBlockInCounter: 0
