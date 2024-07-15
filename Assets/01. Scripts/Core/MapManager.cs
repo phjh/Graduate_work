@@ -83,12 +83,12 @@ public class MapManager : ManagerBase<MapManager>
 	{
 		for(int x = 0; x <= MapSize.x; x++)
 		{
-			AddBlock(new Vector3(x, 0, 0), "WallBlock");
+			AddBlock(new Vector3(x, 0, -1), "WallBlock");
 			AddBlock(new Vector3(x, 0, MapSize.y), "WallBlock");
 		}
 		for(int y = 0; y <= MapSize.y; y++)
 		{
-			AddBlock(new Vector3(0, 0, y), "WallBlock");
+			AddBlock(new Vector3(-1, 0, y), "WallBlock");
 			AddBlock(new Vector3(MapSize.x , 0 , y), "WallBlock");
 		}
     }

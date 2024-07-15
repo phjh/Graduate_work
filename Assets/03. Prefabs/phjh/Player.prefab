@@ -163,7 +163,6 @@ MonoBehaviour:
   _skeletonAnimation: {fileID: 3715410899195899294}
   _tempWeapon: {fileID: 11400000, guid: b445d93d96ba3a44d85eef9fe7b04b9b, type: 2}
   _moveAnimations: []
-  weapon: {fileID: 11400000, guid: b445d93d96ba3a44d85eef9fe7b04b9b, type: 2}
 --- !u!54 &386010221553801865
 Rigidbody:
   m_ObjectHideFlags: 0

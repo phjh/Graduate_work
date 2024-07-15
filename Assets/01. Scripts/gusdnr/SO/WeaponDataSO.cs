@@ -4,7 +4,7 @@ using UnityEngine;
 public enum WeaponEnum
 {
     None = -1,
-	Pickax = 0,
+	Pickaxe = 0,
     Drill = 1,
 	Excavator = 2,
     End

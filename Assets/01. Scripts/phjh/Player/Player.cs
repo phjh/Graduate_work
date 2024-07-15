@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     public InputReader inputReader {  get; private set; } 
     public SkeletonAnimation skeletonAnimation {  get; private set; }
     //임시 무기
-    public WeaponDataSO WeaponData;
+    public WeaponDataSO WeaponData { get; private set; }
     //스텟 넣기
     //public stat stat
 

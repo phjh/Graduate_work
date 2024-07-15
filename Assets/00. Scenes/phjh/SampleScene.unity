@@ -336,6 +336,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5882553678484359075, guid: dd35ac6964ddc7f4d81e57c59a7b5b14, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8318015527098555312, guid: dd35ac6964ddc7f4d81e57c59a7b5b14, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8712910298408103457, guid: dd35ac6964ddc7f4d81e57c59a7b5b14, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -1155,7 +1163,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.1
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 637bc5020386fe24cb8ba8a56ae3db9a, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 909c1399956f13c4fae3ca52378079a7, type: 2}
   m_BuildHeightMesh: 0
 --- !u!114 &1539195825
 MonoBehaviour:
@@ -1173,11 +1181,10 @@ MonoBehaviour:
   MapSize: {x: 101, y: 101}
   MapCenter: {x: 0, y: 0, z: 0}
   GroundTileSize: 5
-  chunkwidth: 25
-  chunkheight: 25
-  oreBlocks: 0
-  chunkData: {fileID: 11400000, guid: 1f2e62048510e5f4c9da513d45aca9c1, type: 2}
-  excelstr: []
+  ChunkSize: {x: 25, y: 25}
+  ChunkDatas:
+  - {fileID: 11400000, guid: 1f2e62048510e5f4c9da513d45aca9c1, type: 2}
+  PlaceOreBlockInCounter: 0
 --- !u!1 &1587300586
 GameObject:
   m_ObjectHideFlags: 0
@@ -1733,6 +1740,7 @@ MonoBehaviour:
   PoolParent_Object: {fileID: 420874590}
   PoolParent_Effect: {fileID: 1930788238}
   PoolParent_Block: {fileID: 1935434289}
+  PoolParent_UI: {fileID: 0}
   DataStruct:
   - FloorName: TESTING
     PoolData: {fileID: 11400000, guid: bb9ec012f21ed8141a7b6f08768d2c12, type: 2}

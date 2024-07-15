@@ -14,7 +14,7 @@ public class BreakableBlock : Blocks
     public override void BlockEvent()
     {
         MapManager.Instance.blockBreakEvent?.Invoke();
-        timeToBreak--;
+        TimesToBreak--;
         MiningEffect();
         if(TimesToBreak <= 0)
         {
