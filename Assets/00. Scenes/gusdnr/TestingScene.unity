@@ -2142,11 +2142,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mngs: {fileID: 0}
   MapSize: {x: 77, y: 77}
-  MapCenter: {x: 0, y: 0, z: 0}
   GroundTileSize: 7
-  ChunkSize: {x: 0, y: 0}
-  ChunkDatas: []
-  PlaceOreBlockInCounter: 0
+  ChunkSize: {x: 25, y: 25}
+  ChunkDatas:
+  - {fileID: 11400000, guid: 1f2e62048510e5f4c9da513d45aca9c1, type: 2}
+  - {fileID: 11400000, guid: 1f2e62048510e5f4c9da513d45aca9c1, type: 2}
+  - {fileID: 11400000, guid: 1f2e62048510e5f4c9da513d45aca9c1, type: 2}
+  - {fileID: 11400000, guid: 1f2e62048510e5f4c9da513d45aca9c1, type: 2}
+  - {fileID: 11400000, guid: 1f2e62048510e5f4c9da513d45aca9c1, type: 2}
+  - {fileID: 11400000, guid: 1f2e62048510e5f4c9da513d45aca9c1, type: 2}
+  - {fileID: 11400000, guid: 1f2e62048510e5f4c9da513d45aca9c1, type: 2}
+  - {fileID: 11400000, guid: 1f2e62048510e5f4c9da513d45aca9c1, type: 2}
+  - {fileID: 11400000, guid: 1f2e62048510e5f4c9da513d45aca9c1, type: 2}
+  PlaceOreBlockInCounter: 12
 --- !u!114 &1490187691
 MonoBehaviour:
   m_ObjectHideFlags: 0

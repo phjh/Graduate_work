@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
@@ -14,7 +15,6 @@ public class MapManager : ManagerBase<MapManager>
 {
 	[Header("Map Data Setting")]
 	public Vector2 MapSize = Vector2.one;
-	public Vector3 MapCenter = Vector3.zero;
 	public float GroundTileSize = 5;
 
 	public List<List<int>> BreakableMapData;
@@ -36,16 +36,16 @@ public class MapManager : ManagerBase<MapManager>
 	{
 		base.InitManager();
 		Logger.Log($"Setted Map Size {MapSize.x} {MapSize.y}");
-		Logger.Log($"Map Center: {MapCenter.x} {MapCenter.y} {MapCenter.z}");
 
 		TryGetComponent(out nms); 
 
 		SetGroundTile();
 		SetBlocks();
-		BuildNavMesh();
+
+		nms.BuildNavMesh();
 	}
 
-	private void SetGroundTile()
+		private void SetGroundTile()
 	{
 		float calcTileSize = 0.1f * GroundTileSize;
 
@@ -81,12 +81,12 @@ public class MapManager : ManagerBase<MapManager>
 	//부서지지 않는 벽 설치
 	private void SetUnBreakableBlock()
 	{
-		for(int x = -1; x <= MapSize.x; x++)
+		for(int x = 0; x <= MapSize.x; x++)
 		{
 			AddBlock(new Vector3(x, 0, 0), "WallBlock");
 			AddBlock(new Vector3(x, 0, MapSize.y), "WallBlock");
 		}
-		for(int y = -1; y <= MapSize.y; y++)
+		for(int y = 0; y <= MapSize.y; y++)
 		{
 			AddBlock(new Vector3(0, 0, y), "WallBlock");
 			AddBlock(new Vector3(MapSize.x , 0 , y), "WallBlock");
@@ -95,13 +95,22 @@ public class MapManager : ManagerBase<MapManager>
 
 	private void SetMap()
 	{
+		int xChubkCount = Mathf.RoundToInt(MapSize.x - 2 / ChunkSize.x); 
+		int yChubkCount = Mathf.RoundToInt(MapSize.y - 2 / ChunkSize.y); 
 
-        //새로 생성할 청크 SO 제작 및 받기
-        ChunkDatas[0] = ChunkDatas[0].CreateChunk(Vector3.zero);
-		SetChunks(ChunkDatas[0]);
+		Vector3 ChunkPos = Vector3.zero;
+		
+		for(int x = 0; x < xChubkCount; x++)
+		{
+			ChunkPos.x = (ChunkSize.x * x) + 1;
+			for(int y = 0; y < yChubkCount; y++)
+			{
+				ChunkPos.z = (ChunkSize.y * y) +1;
 
-		//맵 다시 구워주기
-		BuildNavMesh();
+				ChunkSO cloneChunk = ChunkDatas[(x * 3) + y].CreateCloneChunk(ChunkPos);
+				SetChunks(cloneChunk);
+			}
+		}
 	}
 
 	private void SetChunks(ChunkSO chunkData)
@@ -117,55 +126,56 @@ public class MapManager : ManagerBase<MapManager>
 
 		//청크대로 블럭 생성해주기
 		CreateBlocks(chunkData);
-    }
+	}
 
-    private void SetChunkData(ChunkSO chunk)
+    private void SetChunkData(ChunkSO InitChunk)
 	{
-		//엑셀에서 값들 받아오기
-        excelSheetData = chunk.excelData.text.Split(new string[] { ",", "\n" }, System.StringSplitOptions.None);
-		
-		//데이터값 2차원 리스트로 바꿔주기
-		List<List<int>> chunkData = new();
+		// Read and Save Execl Sheet Data (To CSV)
+        excelSheetData = InitChunk.excelData.text.Split(new string[] { ",", "\n" }, System.StringSplitOptions.None);
 
-        for (int i = 0; i < ChunkSize.x; i++)
+		// Change Data Value Type to List<List<int>>
+		InitChunk.chunkData = new List<List<int>>();
+
+		for (int i = 0; i < ChunkSize.x; i++)
         {
-            List<int> ilist = new List<int>();
+            List<int> sheetDataList = new List<int>();
             for (int j = 0; j < ChunkSize.y; j++)
             {
-                if (excelSheetData[i * ChunkSize.x + j][0] != 13)
-                    ilist.Add(excelSheetData[i * ChunkSize.x + j][0] - '0');
-            }
-            chunkData.Add(ilist);
+				int index = i * ChunkSize.y + j;
+				if (index < excelSheetData.Length && !string.IsNullOrEmpty(excelSheetData[index]))
+				{
+					if (int.TryParse(excelSheetData[index], out int value))
+					{
+						sheetDataList.Add(value);
+					}
+					else
+					{
+						Logger.LogWarning($"Invalid data at index {index}: {excelSheetData[index]}");
+					}
+				}
+			}
+			InitChunk.chunkData.Add(sheetDataList);
         }
-
-		chunk.chunkData = chunkData;
     }
 
-	private void SetOreBlocks(ChunkSO chunk)
+	private void SetOreBlocks(ChunkSO InitChunk)
 	{
 		
 	}
 
-	private void SetInteractionBlocks(ChunkSO chunk)
+	private void SetInteractionBlocks(ChunkSO InitChunk)
 	{
 
 	}
 
-	private void CreateBlocks(ChunkSO chunk)
+	private void CreateBlocks(ChunkSO InitChunk)
 	{
-		List<List<int>> chunklist = chunk.chunkData;
-		Vector3 chunkPos = chunk.chunkPos;
-
-		for (int i = 0; i < chunklist.Count; i++) 
+		for (int i = 0; i < ChunkSize.x; i++) 
 		{
-			for(int j = 0; j < chunklist[i].Count; j++)
+			for(int j = 0; j < ChunkSize.y; j++)
 			{
-				if (chunklist[i][j] == 1)
-				{
-					AddBlock(chunkPos + new Vector3(i, 0 ,j), "BreakableBlock");
-
-				}
-
+				if (InitChunk.chunkData[i][j] == 0) continue;
+				AddBlock(InitChunk.BaseChunkPos + new Vector3(i, 0 ,j), "BreakableBlock");
 			}
 		}
 
@@ -190,9 +200,5 @@ public class MapManager : ManagerBase<MapManager>
 	{
 		mngs.PoolMng.Push(maps[position].Value, name);
 		maps.Remove(position);
-	}
-
-	private void BuildNavMesh()
-	{
 	}
 }
