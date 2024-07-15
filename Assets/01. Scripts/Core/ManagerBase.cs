@@ -6,7 +6,7 @@ public class ManagerBase<T> : MonoSingleton<T> where T : MonoSingleton<T>
 {
     [HideInInspector] public Managers mngs;
 
-	private void Start()
+	private void Awake()
 	{
 		Logger.Log($"{typeof(T).Name} is Start");
 		mngs = Managers.GetInstance();

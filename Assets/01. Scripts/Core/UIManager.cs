@@ -60,6 +60,7 @@ public class UIManager : ManagerBase<UIManager>
 		base.InitManager();
 		GameObject CanvasContainer = new GameObject();
 		CanvasContainer.name = "CanvasContainer";
+		CanvasContainer.AddComponent<RectTransform>();
 		DontDestroyOnLoad(CanvasContainer);
 
 		SetUpUICanvases(CanvasContainer);

@@ -15,7 +15,7 @@ public class MapManager : ManagerBase<MapManager>
 	[Header("Map Data Setting")]
 	public Vector2 MapSize = Vector2.one;
 	public Vector3 MapCenter = Vector3.zero;
-	public int GroundTileSize = 5;
+	public float GroundTileSize = 5;
 
 	public List<List<int>> BreakableMapData;
 	
@@ -46,18 +46,23 @@ public class MapManager : ManagerBase<MapManager>
 	{
 		float calcTileSize = 0.1f * GroundTileSize;
 
+		int HalfX = Mathf.RoundToInt(MapSize.x * 0.5f);
+		int HalfY = Mathf.RoundToInt(MapSize.y * 0.5f);
+
 		Vector3 TilePos = Vector3.zero;
 
-		for(int x = 0; x <= MapSize.x;  x += GroundTileSize)
+		for(int x = 0; x <= HalfX;  x++)
 		{
-			TilePos.x = x;
+			TilePos.x = TilePos.x + (calcTileSize) + (GroundTileSize * x);
 
-			for(int y = 0; y <= MapSize.y; y += GroundTileSize)
+			for(int y = 0; y <= HalfY; y++)
 			{
-				TilePos.z = y;
-
+				TilePos.z = TilePos.z + calcTileSize + (GroundTileSize * y);
+				//2.5f * x
 				mngs.PoolMng.Pop("GroundTile", TilePos).transform.localScale = new Vector3(calcTileSize, 1, calcTileSize);
 			}
+
+			TilePos.z = 0;
 		}
 
 		nms.BuildNavMesh();
@@ -73,20 +78,15 @@ public class MapManager : ManagerBase<MapManager>
 	//부서지지 않는 벽 설치
 	private void SetUnBreakableBlock()
 	{
-		float x = MapSize.x / 2f;
-		float y = 0;
-		float z = MapSize.y / 2f;
-		int loops = (int)MapSize.x - 1;
-		AddToDictionary(new Vector3(-x,  y, -z), "WallBlock");
-		AddToDictionary(new Vector3(-x,  y,  z), "WallBlock");
-		AddToDictionary(new Vector3( x,  y, -z), "WallBlock");
-		AddToDictionary(new Vector3( x,  y,  z), "WallBlock");
-		for(int i = 1; i <= loops; i++)
+		for(int x = 0; x <= MapSize.x; x++)
 		{
-			AddToDictionary(new Vector3( x,    y, i - z), "WallBlock");
-			AddToDictionary(new Vector3(-x,    y, i - z), "WallBlock");
-			AddToDictionary(new Vector3(i - x, y,     z), "WallBlock");
-			AddToDictionary(new Vector3(i - x, y,    -z), "WallBlock");
+			AddToDictionary(new Vector3(x, 0, 0), "WallBlock");
+			AddToDictionary(new Vector3(x, 0, MapSize.y), "WallBlock");
+		}
+		for(int y = 0; y <= MapSize.y; y++)
+		{
+			AddToDictionary(new Vector3(0, 0, y), "WallBlock");
+			AddToDictionary(new Vector3(MapSize.x , 0 , y), "WallBlock");
 		}
     }
 
@@ -171,7 +171,7 @@ public class MapManager : ManagerBase<MapManager>
 	private void AddToDictionary(Vector3 position, string poolObjectname)
 	{
 		PoolableMono poolObj = mngs.PoolMng.Pop(poolObjectname, position);
-        maps.Add(position,new(poolObj)); //new Lazy<PoolableMono>(poolObj)
+        maps.TryAdd(position,new(poolObj)); //new Lazy<PoolableMono>(poolObj)
 		if (maps[position].Value.TryGetComponent(out Blocks block))
 		{
 			block.Init(position, poolObj.gameObject, poolObjectname);
