@@ -29,6 +29,10 @@ public class UIManager : ManagerBase<UIManager>
 	} = false;
 
 	private Dictionary<string, PopupUI> popups = new Dictionary<string, PopupUI>();
+
+	private Canvas CurrentActiveCanvas = null;
+	private AsyncOperation asyncLoad;
+
 	private int beforeSelected = -1;
 
 	#endregion
@@ -94,7 +98,7 @@ public class UIManager : ManagerBase<UIManager>
 		if (UICanvases[index] == null) return;
 
 		UICanvases[index].enabled = true;
-
+		CurrentActiveCanvas = UICanvases[index];
 		beforeSelected = index;
 	}
 
@@ -144,7 +148,7 @@ public class UIManager : ManagerBase<UIManager>
 		IsWorkingLoading = true;
 		LoadProcessBar.enabled = IsWorkingLoading;
 
-		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+		asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 		asyncLoad.allowSceneActivation = false;
 		float percentage = 0f;
 
@@ -211,7 +215,7 @@ public class UIManager : ManagerBase<UIManager>
 		IsWorkingLoading = true;
 		LoadProcessBar.enabled = IsWorkingLoading;
 
-		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
+		asyncLoad = SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
 		asyncLoad.allowSceneActivation = true;
 		float percentage = 0f;
 
@@ -259,6 +263,7 @@ public class UIManager : ManagerBase<UIManager>
 		Debug.Log($"UnLoad Complete : {SceneManager.GetSceneByBuildIndex(index).name}");
 
 		IsWorkingLoading = false;
+
 	}
 
 	public void QuitGame()
@@ -271,5 +276,19 @@ public class UIManager : ManagerBase<UIManager>
 	}
 
 	#endregion
+
+	private RectTransform AddPopupContainer;
+	public void PopupAddItemUI(Sprite ItemSprite, int AddCount = 1)
+	{
+		if(AddPopupContainer == null) CurrentActiveCanvas.transform.Find("AddItemList").TryGetComponent(out AddPopupContainer);
+		Logger.Assert(AddPopupContainer != null, "Itme Popup Container is Null");
+		if (mngs.PoolMng.Pop("AddItemUI").TryGetComponent(out AddItemUI uiCompoenet))
+		{
+			uiCompoenet.transform.parent = AddPopupContainer;
+
+			uiCompoenet.InitData(ItemSprite, AddCount);
+		}
+		else return;
+	}
 
 }

@@ -55,9 +55,12 @@ class Pool<T> where T : PoolableMono
 
 		_pool.Push(obj);
 	}
-
-	public void DestroyPool(T obj)
+	public void DestroyAll()
 	{
-		GameObject.Destroy(obj.gameObject);
+		while (_pool.Count > 0)
+		{
+			T obj = _pool.Pop();
+			GameObject.Destroy(obj.gameObject);
+		}
 	}
 }

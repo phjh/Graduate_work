@@ -13,6 +13,8 @@ public class DropedItem : PoolableMono
 
     [Header("UI Variables")]
     [SerializeField][Range(0.0f, 1.0f)] private float infoDuration = 0.3f;
+    [SerializeField] private Vector3 MinScale = Vector3.zero;
+    [SerializeField] private Vector3 MaxScale = Vector3.one;
     
     private Managers mngs;
 
@@ -65,7 +67,7 @@ public class DropedItem : PoolableMono
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            ItemInfoCanvas.DOScale(Vector3.one, infoDuration).SetEase(Ease.OutBack);
+            ItemInfoCanvas.DOScale(MaxScale, infoDuration).SetEase(Ease.OutBack);
         }
 	}
 
@@ -74,6 +76,7 @@ public class DropedItem : PoolableMono
         if (other.gameObject.CompareTag("Player") && Input.GetKeyDown(KeyCode.F))
         {
             mngs.PlayerMng.AddOreInDictionary(ItemData.AddingStatType, ItemData.ItemAddingValue);
+            mngs.UIMng.PopupAddItemUI(ItemData.Image);
             mngs.PoolMng.Push(this, PoolName);
         }
     }
@@ -82,7 +85,7 @@ public class DropedItem : PoolableMono
 	{
         if (other.gameObject.CompareTag("Player"))
         {
-			ItemInfoCanvas.DOScale(Vector3.zero, infoDuration).SetEase(Ease.OutExpo);
+			ItemInfoCanvas.DOScale(MinScale, infoDuration).SetEase(Ease.OutExpo);
 		}
 	}
 
@@ -94,7 +97,7 @@ public class DropedItem : PoolableMono
 		}
 
 		if (mngs == null) mngs = Managers.GetInstance();
-		ItemInfoCanvas.localScale = Vector3.zero;
+		ItemInfoCanvas.localScale = MinScale;
 	}
 
 	public override void EnablePoolableMono()

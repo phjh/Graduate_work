@@ -8,6 +8,7 @@ public enum PoolableType
 	Object = 1,
 	Effect = 2,
 	Block = 3,
+	UI = 4,
 	End
 }
 

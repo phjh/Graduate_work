@@ -21,12 +21,8 @@ public class MapManager : ManagerBase<MapManager>
 	
 	private NavMeshSurface nms;
 
-	private int halfX = 0;
-	private int halfY = 0;
-
 	[Header("Chunk Data Setting")]
-	[SerializeField] private int chunkWidth;
-	[SerializeField] private int chunkHeight;
+	[SerializeField] private Vector2Int ChunkSize;
 	[SerializeField] private List<ChunkSO> ChunkDatas = new List<ChunkSO>(9);
 	[Range(1, 30)][SerializeField] private int PlaceOreBlockInCounter;
 
@@ -48,20 +44,19 @@ public class MapManager : ManagerBase<MapManager>
 
 	private void SetGroundTile()
 	{
-		halfX = ((MapSize.x * 0.5f) - (int)(MapSize.x * 0.5f)) >= 0.5f ? (int)(MapSize.x * 0.5f) + 1 : (int)(MapSize.x * 0.5f);
-		halfY = ((MapSize.y * 0.5f) - (int)(MapSize.y * 0.5f)) >= 0.5f ? (int)(MapSize.y * 0.5f) + 1 : (int)(MapSize.y * 0.5f);
+		float calcTileSize = 0.1f * GroundTileSize;
 
 		Vector3 TilePos = Vector3.zero;
 
-		for(int x = 0; x < MapSize.x;  x += GroundTileSize)
+		for(int x = 0; x <= MapSize.x;  x += GroundTileSize)
 		{
-			TilePos.x = halfX - x * 1f;
+			TilePos.x = x;
 
-			for(int y = 0; y < MapSize.y; y += GroundTileSize)
+			for(int y = 0; y <= MapSize.y; y += GroundTileSize)
 			{
-				TilePos.z = halfY - y * 1f;
+				TilePos.z = y;
 
-				mngs.PoolMng.Pop("GroundTile", TilePos);
+				mngs.PoolMng.Pop("GroundTile", TilePos).transform.localScale = new Vector3(calcTileSize, 1, calcTileSize);
 			}
 		}
 
@@ -129,13 +124,13 @@ public class MapManager : ManagerBase<MapManager>
 		//데이터값 2차원 리스트로 바꿔주기
 		List<List<int>> chunkData = new();
 
-        for (int i = 0; i < chunkWidth; i++)
+        for (int i = 0; i < ChunkSize.x; i++)
         {
             List<int> ilist = new List<int>();
-            for (int j = 0; j < chunkHeight; j++)
+            for (int j = 0; j < ChunkSize.y; j++)
             {
-                if (excelSheetData[i * chunkWidth + j][0] != 13)
-                    ilist.Add(excelSheetData[i * chunkWidth + j][0] - '0');
+                if (excelSheetData[i * ChunkSize.x + j][0] != 13)
+                    ilist.Add(excelSheetData[i * ChunkSize.x + j][0] - '0');
             }
             chunkData.Add(ilist);
         }

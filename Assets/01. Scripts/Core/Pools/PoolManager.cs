@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 using UnityEngine.InputSystem;
+using System;
 
 [System.Serializable]
 public struct FloorPoolList
@@ -17,6 +18,7 @@ public class PoolManager : ManagerBase<PoolManager>
 	[SerializeField] private Transform PoolParent_Object;
 	[SerializeField] private Transform PoolParent_Effect;
 	[SerializeField] private Transform PoolParent_Block;
+	[SerializeField] private Transform PoolParent_UI;
 
 	[Header("Pool Values")]
 	[SerializeField] private FloorPoolList[] DataStruct;
@@ -25,6 +27,7 @@ public class PoolManager : ManagerBase<PoolManager>
 	[SerializeField] private List<string> FloorNamesList;
 
 	private PoolListSO CurrentFloorPoolData;
+	public event Action OnPoolingComplete;
 
 	private Dictionary<string, PoolListSO> PoolListData = new Dictionary<string, PoolListSO>();
 	private Dictionary<string, Pool<PoolableMono>> CompletePoolableMonos = new Dictionary<string, Pool<PoolableMono>>();
@@ -50,11 +53,22 @@ public class PoolManager : ManagerBase<PoolManager>
 		}
 	}
 
-	public void SetDataOnFloor(string floorName)
+	public void SetDataOnFloor(string floorName, bool isReset = false)
 	{
+		if (isReset == true) ClearPreviousData();
+
 		CurrentFloorPoolData = PoolListData[floorName];
 
 		StartPooling();
+	}
+
+	private void ClearPreviousData()
+	{
+		foreach (var pool in CompletePoolableMonos.Values)
+		{
+			pool.DestroyAll();
+		}
+		CompletePoolableMonos.Clear();
 	}
 
 	private void StartPooling()
@@ -85,6 +99,11 @@ public class PoolManager : ManagerBase<PoolManager>
 						poolTemp = new Pool<PoolableMono>(pds.poolableMono, PoolParent_Block, pds.Count);
 						break;
 					}
+				case PoolableType.UI:
+					{
+						poolTemp = new Pool<PoolableMono>(pds.poolableMono, PoolParent_UI, pds.Count);
+						break;
+					}
 				case PoolableType.None:
 				case PoolableType.End:
 				default:
@@ -93,7 +112,10 @@ public class PoolManager : ManagerBase<PoolManager>
 			}
 
 			CompletePoolableMonos.TryAdd(pds.poolableName, poolTemp);
+
 		}
+		
+		OnPoolingComplete?.Invoke();
 	}
 
 	public PoolableMono Pop(string PoolableName)
