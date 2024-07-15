@@ -43,8 +43,6 @@ public class PlayerAttack : MonoBehaviour
         SetAim();
     }
 
-
-
     public void DoAttack()
     {
         //Vector3 dir = new Vector3(mousedir.x, 0, mousedir.y);

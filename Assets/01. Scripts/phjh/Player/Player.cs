@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
     public bool isAttacking { get; set; } = false;
     public bool isMoving { get; set; } = false;
     public bool isAniming { get; set; } = false;
+    public bool isImmunity { get; set; } = false;
     public bool isDead { get; set; } = false;
 
     public bool inputAble { get; set; } = true;
@@ -83,7 +84,7 @@ public class Player : MonoBehaviour
 
         //플레이어 쉴드 부분
         if (this.gameObject.TryGetComponent<PlayerShield>(out _playerShield))
-            _playerShield.Init();
+            _playerShield.Init(this);
         else
             Logger.LogWarning("Playershield is null");
 
@@ -94,6 +95,10 @@ public class Player : MonoBehaviour
 
     public void GetDamage(float damage)
     {
+        //뎀지 안받는 상태
+        if (isImmunity)
+            return;
+
         //카메라 흔들림 넣기
         if (_playerShield.canDefence)
         {
@@ -107,12 +112,23 @@ public class Player : MonoBehaviour
         }
     }
 
-    
 
 
     private void SetHealthBar()
     {
         
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            _playerShield.RegenDefence();
+        }
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            GetDamage(1);
+        }
     }
 
 }

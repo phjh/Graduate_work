@@ -30,8 +30,6 @@ public abstract class Blocks : PoolableMono
     public void DeleteBlock()
     {
         blockType = BlockType.None;
-        //풀매니저로 변경
-
         MapManager.Instance.DeleteFromDictionary(transform.position, blockname);
     }
 

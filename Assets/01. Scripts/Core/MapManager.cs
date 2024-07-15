@@ -44,6 +44,8 @@ public class MapManager : ManagerBase<MapManager>
 
 	public string[] excelstr;
 
+	public Action blockBreakEvent;
+
     public override void InitManager()
 	{
 		base.InitManager();
