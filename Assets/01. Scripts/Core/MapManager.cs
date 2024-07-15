@@ -49,18 +49,18 @@ public class MapManager : ManagerBase<MapManager>
 	{
 		float calcTileSize = 0.1f * GroundTileSize;
 
-		int HalfX = Mathf.RoundToInt(MapSize.x * 0.5f);
-		int HalfY = Mathf.RoundToInt(MapSize.y * 0.5f);
+		int DevideX = Mathf.FloorToInt(MapSize.x / GroundTileSize);
+		int DevideY = Mathf.FloorToInt(MapSize.y / GroundTileSize);
 
 		Vector3 TilePos = Vector3.zero;
 
-		for(int x = 0; x <= HalfX;  x++)
+		for(int x = 0; x < DevideX;  x++)
 		{
-			TilePos.x = TilePos.x + (calcTileSize) + (GroundTileSize * x);
+			TilePos.x = x == 0 ? (calcTileSize - 0.1f) * 5f + 1 : TilePos.x + GroundTileSize;
 
-			for(int y = 0; y <= HalfY; y++)
+			for(int y = 0; y < DevideY; y++)
 			{
-				TilePos.z = TilePos.z + calcTileSize + (GroundTileSize * y);
+				TilePos.z = y == 0 ? (calcTileSize - 0.1f) * 5f + 1 : TilePos.z + GroundTileSize;
 				//2.5f * x
 				mngs.PoolMng.Pop("GroundTile", TilePos).transform.localScale = new Vector3(calcTileSize, 1, calcTileSize);
 			}
@@ -83,12 +83,12 @@ public class MapManager : ManagerBase<MapManager>
 	{
 		for(int x = 0; x <= MapSize.x; x++)
 		{
-			AddBlock(new Vector3(x, 0, -1), "WallBlock");
+			AddBlock(new Vector3(x, 0, 0), "WallBlock");
 			AddBlock(new Vector3(x, 0, MapSize.y), "WallBlock");
 		}
 		for(int y = 0; y <= MapSize.y; y++)
 		{
-			AddBlock(new Vector3(-1, 0, y), "WallBlock");
+			AddBlock(new Vector3(0, 0, y), "WallBlock");
 			AddBlock(new Vector3(MapSize.x , 0 , y), "WallBlock");
 		}
     }
