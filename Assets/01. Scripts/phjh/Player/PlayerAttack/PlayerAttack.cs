@@ -16,6 +16,9 @@ public class PlayerAttack : MonoBehaviour
     //[SerializeField]
     //GameObject WeaponPivot;
 
+    [SerializeField]
+    private LayerMask layer;
+
     private Vector3 rot;
     
     private Camera mainCamera;
@@ -47,7 +50,7 @@ public class PlayerAttack : MonoBehaviour
     {
         //Vector3 dir = new Vector3(mousedir.x, 0, mousedir.y);
 
-        PlayerBullet bullet = (PlayerBullet)PoolManager.Instance.Pop(tempBullet.name, this.transform.position + Vector3.up);
+        PlayerBullet bullet = (PlayerBullet)PoolManager.Instance.Pop(tempBullet.name, this.transform.position + new Vector3(0, 0.75f, 0));
         //bullet.transform.forward = rot;
         Quaternion rotation = Quaternion.LookRotation(rot);
 
@@ -81,7 +84,7 @@ public class PlayerAttack : MonoBehaviour
     {
         var ray = mainCamera.ScreenPointToRay(_inputReader.AimPosition);
 
-        if (Physics.Raycast(ray, out var hitInfo))
+        if (Physics.Raycast(ray, out var hitInfo, 1000, layer))
         {
             // The Raycast hit something, return with the position.
             return (success: true, position: hitInfo.point);

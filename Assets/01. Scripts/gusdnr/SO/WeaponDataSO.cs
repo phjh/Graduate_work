@@ -18,6 +18,8 @@ public class WeaponDataSO : ScriptableObject
     public Sprite WeaponIcon;
 
     [Header("InGame Values")]
-	public float DamageFactor;
+	public float damageFactor;
 	public PoolableMono bullet;
+    public Transform leftHandTrm;
+    public Transform rightHandTrm;
 }

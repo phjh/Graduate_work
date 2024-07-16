@@ -81,12 +81,12 @@ public class MapManager : ManagerBase<MapManager>
 	//부서지지 않는 벽 설치
 	private void SetUnBreakableBlock()
 	{
-		for(int x = -1; x <= MapSize.x; x++)
+		for(int x = 0; x <= MapSize.x; x++)
 		{
 			AddBlock(new Vector3(x, 0, 0), "WallBlock");
 			AddBlock(new Vector3(x, 0, MapSize.y), "WallBlock");
 		}
-		for(int y = -1; y <= MapSize.y; y++)
+		for(int y = 0; y <= MapSize.y; y++)
 		{
 			AddBlock(new Vector3(0, 0, y), "WallBlock");
 			AddBlock(new Vector3(MapSize.x , 0 , y), "WallBlock");
@@ -96,8 +96,8 @@ public class MapManager : ManagerBase<MapManager>
 	private void SetMap()
 	{
 
-        //새로 생성할 청크 SO 제작 및 받기
-        ChunkDatas[0] = ChunkDatas[0].CreateChunk(Vector3.zero);
+		//새로 생성할 청크 SO 제작 및 받기
+		ChunkDatas[0] = ChunkDatas[0].CreateChunk(new Vector3(1, 0, 1));
 		SetChunks(ChunkDatas[0]);
 
 		//맵 다시 구워주기
@@ -132,6 +132,7 @@ public class MapManager : ManagerBase<MapManager>
             List<int> ilist = new List<int>();
             for (int j = 0; j < ChunkSize.y; j++)
             {
+				//13은 CR(carriage return)이라는 아스키코드 13번인데, 그거는 빼줘야해서 이렇게 했음
                 if (excelSheetData[i * ChunkSize.x + j][0] != 13)
                     ilist.Add(excelSheetData[i * ChunkSize.x + j][0] - '0');
             }
