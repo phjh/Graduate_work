@@ -34,7 +34,7 @@ class Pool<T> where T : PoolableMono
 
 			obj?.gameObject.SetActive(false);
 
-			Logger.Log(obj.name);
+			//Logger.Log(obj.name);
 		}
 		else
 		{

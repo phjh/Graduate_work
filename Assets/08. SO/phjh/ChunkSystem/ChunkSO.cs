@@ -7,7 +7,7 @@ public class ChunkSO : ScriptableObject
     [Header("Chunk Inspector")]
     public string chunkName;
     public TextAsset excelData;
-    [Range(1, 30)] public int PlaceOreBlockInCounter;
+    [Range(0f, 1f)] public float PlaceOreBlockEncounter;
 
     [HideInInspector] public Vector3 BaseChunkPos;
     public List<List<int>> chunkData;
@@ -17,7 +17,7 @@ public class ChunkSO : ScriptableObject
         ChunkSO CloneChunk = Instantiate(this);
         CloneChunk.excelData = excelData;
         CloneChunk.chunkData = new List<List<int>>();
-        CloneChunk.PlaceOreBlockInCounter = PlaceOreBlockInCounter;
+        CloneChunk.PlaceOreBlockEncounter = PlaceOreBlockEncounter;
         CloneChunk.BaseChunkPos = StartPos;
         return CloneChunk;
     }

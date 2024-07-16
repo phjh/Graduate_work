@@ -6,13 +6,15 @@ public class Managers : MonoBehaviour
 {
 	[Header("Base Manager Scripts")]
 	public FlowManager FlowMng;
-	public MapManager MapMng;
 	public UIManager UIMng;
 	public TimeManager TimeMng;
 	public PoolManager PoolMng;
 	
-	[Header("In Game Manager Scripts")]
+	[Header("In Lobby Manager Scripts")]
 	public PlayerManager PlayerMng;
+	
+	[Header("In Game Manager Scripts")]
+	public MapManager MapMng;
 
 	public static Managers instance;
 	public static Managers GetInstance()
@@ -26,6 +28,7 @@ public class Managers : MonoBehaviour
 		Init();
 
 		InItIntroManagers();
+		InItInGameManagers();
 	}
 
 	private static void Init()
@@ -60,24 +63,19 @@ public class Managers : MonoBehaviour
 		if (PoolMng == null) PoolMng = PoolManager.GetInstacne();
 		PoolMng.InitManager();
 
-		if (MapMng == null)	MapMng = MapManager.GetInstacne();
-		MapMng.InitManager();
-
 		if (TimeMng == null) TimeMng = TimeManager.GetInstacne();
 		TimeMng.InitManager();
 	}
 
 	public void InItLobbyManagers()
 	{
-		if (PlayerMng == null)
-		{
-			PlayerMng = PlayerManager.GetInstacne();
-			PlayerMng.InitManager();
-		}
+		if (PlayerMng == null) PlayerMng = PlayerManager.GetInstacne();
+		PlayerMng.InitManager();
 	}
 
 	public void InItInGameManagers()
 	{
-
+		if (MapMng == null) MapMng = MapManager.GetInstacne();
+		MapMng.InitManager();
 	}
 }

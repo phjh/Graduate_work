@@ -5,7 +5,7 @@ using UnityEngine;
 public enum GameState
 {
 	None	 = 0,
-	Title	 = 1,
+	Intro	 = 1,
 	Lobby	 = 2,
 	PlayGame = 3,
 	EndGame	 = 4,
@@ -24,7 +24,8 @@ public class FlowManager : ManagerBase<FlowManager>
 	public override void InitManager()
 	{
 		base.InitManager();
-		ChangeGameState(GameState.Title);
+
+		GetFlow();
 		mngs.UIMng.OnCompleteLoadScene += GetFlow;
 	}
 
@@ -44,17 +45,19 @@ public class FlowManager : ManagerBase<FlowManager>
 
 	private void WorkGameState(GameState InitState)
 	{
+		Logger.Assert(mngs != null, "Mangers is Null");
+		Logger.Assert(mngs.UIMng != null, "Mangers is Null");
+
 		switch (InitState)
 		{
-			case GameState.Title:
+			case GameState.Intro:
 				{
-					Logger.Assert(mngs != null, "Mangers is Null");
-					Logger.Assert(mngs.UIMng != null, "Mangers is Null");
-					mngs.UIMng.EnableSelectCanvas(1);
+					mngs.UIMng.EnableSelectCanvas(0);
 					break;
 				}
 			case GameState.Lobby:
 				{
+					mngs.UIMng.DisableSelectCanvas(0);
 					if (playerMng == null) AddPlayerManager();
 					mngs.InItLobbyManagers();
 					break;

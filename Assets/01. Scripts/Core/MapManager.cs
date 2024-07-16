@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using Unity.AI.Navigation;
 using UnityEngine;
 
@@ -13,31 +14,46 @@ struct ChunkInfo
 [RequireComponent(typeof(NavMeshSurface))]
 public class MapManager : ManagerBase<MapManager>
 {
+	enum BlockType
+	{
+		None = 0,
+		Breakable = 1,
+		Ore = 2,
+		Interaction = 3,
+		DangerZone = 4,
+		End
+	}
+
 	[Header("Map Data Setting")]
 	public Vector2 MapSize = Vector2.one;
 	public float GroundTileSize = 5;
 
 	public List<List<int>> BreakableMapData;
 
-    public Action blockBreakEvent;
-	
+	public Action blockBreakEvent;
+
 	private NavMeshSurface nms;
 
 	[Header("Chunk Data Setting")]
 	[SerializeField] private Vector2Int ChunkSize;
 	[SerializeField] private List<ChunkSO> ChunkDatas = new List<ChunkSO>(9);
-	[Range(1, 30)][SerializeField] private int PlaceOreBlockInCounter;
 
-	private string[] excelSheetData;
+	[Header("Block Datas")]
+	[SerializeField] private string WallPoolName = "WallBlock";
+	[SerializeField] private string BreakablePoolName = "BreakableBlock";
+	[SerializeField] private List<string> OrePoolName;
+	[SerializeField] private List<string> InteractionPoolName;
+	[SerializeField] private string DnagerZonePoolName = "DangerZoneBlock";
+
 	private Dictionary<Vector3, Lazy<PoolableMono>> maps = new();
 
 
-    public override void InitManager()
+	public override void InitManager()
 	{
 		base.InitManager();
 		Logger.Log($"Setted Map Size {MapSize.x} {MapSize.y}");
 
-		TryGetComponent(out nms); 
+		TryGetComponent(out nms);
 
 		SetGroundTile();
 		SetBlocks();
@@ -45,7 +61,7 @@ public class MapManager : ManagerBase<MapManager>
 		nms.BuildNavMesh();
 	}
 
-		private void SetGroundTile()
+	private void SetGroundTile()
 	{
 		float calcTileSize = 0.1f * GroundTileSize;
 
@@ -54,11 +70,11 @@ public class MapManager : ManagerBase<MapManager>
 
 		Vector3 TilePos = Vector3.zero;
 
-		for(int x = 0; x < DevideX;  x++)
+		for (int x = 0; x < DevideX; x++)
 		{
 			TilePos.x = x == 0 ? (calcTileSize - 0.1f) * 5f + 1 : TilePos.x + GroundTileSize;
 
-			for(int y = 0; y < DevideY; y++)
+			for (int y = 0; y < DevideY; y++)
 			{
 				TilePos.z = y == 0 ? (calcTileSize - 0.1f) * 5f + 1 : TilePos.z + GroundTileSize;
 				//2.5f * x
@@ -81,71 +97,103 @@ public class MapManager : ManagerBase<MapManager>
 	//부서지지 않는 벽 설치
 	private void SetUnBreakableBlock()
 	{
-		for(int x = 0; x <= MapSize.x; x++)
+		for (int x = 0; x < MapSize.x; x++)
 		{
-			AddBlock(new Vector3(x, 0, 0), "WallBlock");
-			AddBlock(new Vector3(x, 0, MapSize.y), "WallBlock");
+			AddBlock(new Vector3(x, 0, 0), WallPoolName);
+			AddBlock(new Vector3(x, 0, MapSize.y - 1), WallPoolName);
 		}
-		for(int y = 0; y <= MapSize.y; y++)
+		for (int y = 0; y < MapSize.y; y++)
 		{
-			AddBlock(new Vector3(0, 0, y), "WallBlock");
-			AddBlock(new Vector3(MapSize.x , 0 , y), "WallBlock");
+			AddBlock(new Vector3(0, 0, y), WallPoolName);
+			AddBlock(new Vector3(MapSize.x - 1, 0, y), WallPoolName);
 		}
-    }
+	}
 
 	private void SetMap()
 	{
-		int xChubkCount = Mathf.RoundToInt(MapSize.x - 2 / ChunkSize.x); 
-		int yChubkCount = Mathf.RoundToInt(MapSize.y - 2 / ChunkSize.y); 
+		//Calcurate Chunk Size (Need To Place Blocks)
+		int xChunkCount = Mathf.RoundToInt((MapSize.x - 2) / ChunkSize.x);
+		int yChunkCount = Mathf.RoundToInt((MapSize.y - 2) / ChunkSize.y) - 1;
 
 		Vector3 ChunkPos = Vector3.zero;
-		
-		for(int x = 0; x < xChubkCount; x++)
-		{
-			ChunkPos.x = (ChunkSize.x * x) + 1;
-			for(int y = 0; y < yChubkCount; y++)
-			{
-				ChunkPos.z = (ChunkSize.y * y) +1;
 
-				ChunkSO cloneChunk = ChunkDatas[(x * 3) + y].CreateCloneChunk(ChunkPos);
-				SetChunks(cloneChunk);
+		for (int y = yChunkCount; y >= 0; y--)
+		{
+			ChunkPos.z = (ChunkSize.y * y) + 1;
+
+			for (int x = 0; x < xChunkCount; x++)
+			{
+				ChunkPos.x = (ChunkSize.x * x) + 1;
+
+				if (ChunkDatas[((yChunkCount - y) * xChunkCount) + x] == null) break;
+				ChunkSO cloneChunk = ChunkDatas[((yChunkCount - y) * xChunkCount) + x].CreateCloneChunk(ChunkPos);
+				SetChunkData(cloneChunk);
 			}
 		}
 	}
 
-	private void SetChunks(ChunkSO chunkData)
+	private void SetChunkData(ChunkSO chunkData)
 	{
-		//청크데이터 생성 및 받아오기
-		SetChunkData(chunkData);
+		// Read And Copy Init Chunk Data
+		ReadChunkData(chunkData);
 
-        //데이터 값에 광석 블럭들 넣어주기
-        SetOreBlocks(chunkData);
+		// Add Interaction Blocks In Data
+		AddInteractionBlocks(chunkData);
 
-		//나중에 인터렉션 블럭 추가할거면 하기
-		SetInteractionBlocks(chunkData);
-
-		//청크대로 블럭 생성해주기
+		// Create Blocks by Init Chunk Data
 		CreateBlocks(chunkData);
 	}
 
-    private void SetChunkData(ChunkSO InitChunk)
+	private void ReadChunkData(ChunkSO InitChunk)
 	{
+		Logger.Log(InitChunk.chunkName);
+
 		// Read and Save Execl Sheet Data (To CSV)
-        excelSheetData = InitChunk.excelData.text.Split(new string[] { ",", "\n" }, System.StringSplitOptions.None);
+		string[] excelSheetData = InitChunk.excelData.text.Split(new string[] { ",", "\n" }, System.StringSplitOptions.None);
+
+		for (int y = 0; y < ChunkSize.y; y++)
+		{
+			StringBuilder debuging = new StringBuilder();
+
+			for (int x = 0; x < ChunkSize.x; x++)
+			{
+				int index = y * ChunkSize.x + x;
+				Logger.Log("Index : " + index + " X : " + x);
+				debuging.Append(excelSheetData[index]);
+				debuging.Append(",");
+			}
+
+			Logger.Log(debuging.ToString());
+		}
+
+		// Get Encounter Value In SO
+		float PlaceOreEncounter = InitChunk.PlaceOreBlockEncounter;
 
 		// Change Data Value Type to List<List<int>>
 		InitChunk.chunkData = new List<List<int>>();
 
-		for (int i = 0; i < ChunkSize.x; i++)
-        {
-            List<int> sheetDataList = new List<int>();
-            for (int j = 0; j < ChunkSize.y; j++)
-            {
-				int index = i * ChunkSize.y + j;
+		List<int> sheetDataList = null;
+
+		for (int y = 0; y < ChunkSize.y; y++)
+		{
+			sheetDataList = new List<int>();
+
+			for (int x = 0; x < ChunkSize.x; x++)
+			{
+				int index = y * ChunkSize.x + x;
+
 				if (index < excelSheetData.Length && !string.IsNullOrEmpty(excelSheetData[index]))
 				{
 					if (int.TryParse(excelSheetData[index], out int value))
 					{
+						if (value == (int)BlockType.DangerZone) // Add Data Boss Zone
+						{
+							sheetDataList.Add(value);
+							continue;
+						}
+
+						// Add Ore Blocks In Data or Keeping current value
+						//value = AddOreBlocks(value, PlaceOreEncounter);
 						sheetDataList.Add(value);
 					}
 					else
@@ -155,27 +203,88 @@ public class MapManager : ManagerBase<MapManager>
 				}
 			}
 			InitChunk.chunkData.Add(sheetDataList);
-        }
-    }
+		}
 
-	private void SetOreBlocks(ChunkSO InitChunk)
-	{
-		
+		/*
+		for (int x = 0; x < ChunkSize.x; x++)
+		{
+			sheetDataList = new List<int>();
+
+			// Reverse Y Values
+			for (int y = ChunkSize.y - 1; y >= 0; y--)
+			{
+				int index = x * ChunkSize.y + y;
+				if (index < excelSheetData.Length && !string.IsNullOrEmpty(excelSheetData[index]))
+				{
+					if (int.TryParse(excelSheetData[index], out int value))
+					{
+						if (value == (int)BlockType.DangerZone) // Add Data Boss Zone
+						{
+							sheetDataList.Add(value);
+							continue;
+						}
+
+						// Add Ore Blocks In Data or Keeping current value
+						//value = AddOreBlocks(value, PlaceOreEncounter);
+						sheetDataList.Add(value);
+					}
+					else
+					{
+						Logger.LogWarning($"Invalid data at index {index}: {excelSheetData[index]}");
+					}
+				}
+			}
+			InitChunk.chunkData.Add(sheetDataList);
+		}
+		*/
 	}
 
-	private void SetInteractionBlocks(ChunkSO InitChunk)
+	private int AddOreBlocks(int currentValue, float InitEncounterValue)
+	{
+		if (UnityEngine.Random.Range(0f, 1f) < InitEncounterValue)
+		{
+			return (int)BlockType.Ore;
+		}
+
+		return currentValue;
+	}
+
+	private void AddInteractionBlocks(ChunkSO InitChunk)
 	{
 
 	}
 
 	private void CreateBlocks(ChunkSO InitChunk)
 	{
-		for (int i = 0; i < ChunkSize.x; i++) 
+		Vector3 addPos = Vector3.zero;
+
+		for (int z = ChunkSize.y - 1; z >= 0; z--)
 		{
-			for(int j = 0; j < ChunkSize.y; j++)
+			for (int x = 0; x < ChunkSize.x; x++)
 			{
-				if (InitChunk.chunkData[i][j] == 0) continue;
-				AddBlock(InitChunk.BaseChunkPos + new Vector3(i, 0 ,j), "BreakableBlock");
+				addPos = new Vector3(x, 0, z);
+
+				Logger.Log($"Position = {x} , {z} / Block Data :{InitChunk.chunkData[x][z]}");
+
+				switch (InitChunk.chunkData[x][z])
+				{
+					case (int)BlockType.None:
+					default:
+						break;
+
+					case (int)BlockType.Breakable:
+						AddBlock(InitChunk.BaseChunkPos + addPos, BreakablePoolName);
+						break;
+
+					case (int)BlockType.Ore:
+						AddBlock(InitChunk.BaseChunkPos + addPos, OrePoolName[UnityEngine.Random.Range(0, OrePoolName.Count)]);
+						break;
+					case (int)BlockType.Interaction:
+						break;
+					case (int)BlockType.DangerZone:
+						AddBlock(InitChunk.BaseChunkPos + addPos, BreakablePoolName);
+						break;
+				}
 			}
 		}
 
@@ -184,7 +293,7 @@ public class MapManager : ManagerBase<MapManager>
 	private void AddBlock(Vector3 position, string poolObjectname)
 	{
 		PoolableMono poolObj = mngs.PoolMng.Pop(poolObjectname, position);
-        maps.TryAdd(position,new(poolObj)); //new Lazy<PoolableMono>(poolObj)
+		maps.TryAdd(position, new(poolObj)); //new Lazy<PoolableMono>(poolObj)
 		if (maps[position].Value.TryGetComponent(out Blocks block))
 		{
 			block.Init(position, poolObj.gameObject, poolObjectname);

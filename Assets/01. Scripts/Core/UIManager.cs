@@ -12,7 +12,7 @@ public class UIManager : ManagerBase<UIManager>
 
 	[Header("UI Canvases")]
 	public Canvas MainCanvas;
-	[Tooltip("[0 : Title] [1 : InGame] [2 : Result] [3 : Setting]")]
+	[Tooltip("[0 : Intro] [1 : InGame] [2 : Result] [3 : Setting]")]
 	public Canvas[] UICanvases;
 
 	[Header("UI Elements")]
@@ -63,8 +63,20 @@ public class UIManager : ManagerBase<UIManager>
 		CanvasContainer.AddComponent<RectTransform>();
 		DontDestroyOnLoad(CanvasContainer);
 
+		beforeSelected = -1;
+
 		SetUpUICanvases(CanvasContainer);
 		SetUpPopupUIs();
+
+		FadePanel.DOFade(0.0f, fadeDuration)
+			.OnComplete(() =>
+			{
+				FadePanel.raycastTarget = false;
+				this.IsWorkingLoading = false;
+
+				LoadProcessBar.enabled = IsWorkingLoading;
+				OnCompleteLoadScene?.Invoke();
+			});
 	}
 
 	#region UI Methods
@@ -133,6 +145,7 @@ public class UIManager : ManagerBase<UIManager>
 			.OnComplete(() =>
 			{
 				StartCoroutine(TransitionScene(sceneName));
+				DisableSelectCanvas(beforeSelected);
 				LoadProcessBar.gameObject.SetActive(true);
 			});
 	}
@@ -159,7 +172,7 @@ public class UIManager : ManagerBase<UIManager>
 
 			Logger.Log($"Loading : [{percentage}]%");
 
-			LoadProcessBar.fillAmount = 1f - asyncLoad.progress;
+			LoadProcessBar.fillAmount = percentage * 0.01f;
 			if (percentage < 90f)
 			{
 				percentage = Mathf.MoveTowards(percentage, asyncLoad.progress * 100, Time.deltaTime * 10f);
@@ -200,6 +213,7 @@ public class UIManager : ManagerBase<UIManager>
 			.OnComplete(() =>
 			{
 				StartCoroutine(TransitionScene(index));
+				DisableSelectCanvas(beforeSelected);
 				LoadProcessBar.gameObject.SetActive(true);
 			});
 	}
@@ -225,7 +239,8 @@ public class UIManager : ManagerBase<UIManager>
 			yield return null;
 
 			Logger.Log($"Loading : [{percentage}]%");
-			LoadProcessBar.fillAmount = 1f - asyncLoad.progress;
+
+			LoadProcessBar.fillAmount = percentage * 0.01f;
 			if (percentage < 90f)
 			{
 				percentage = Mathf.MoveTowards(percentage, asyncLoad.progress * 100, Time.deltaTime * 10f);
