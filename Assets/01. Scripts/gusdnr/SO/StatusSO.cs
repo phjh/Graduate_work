@@ -5,12 +5,18 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Status", menuName = "SO/Data/Status")]
 public class StatusSO : ScriptableObject
 {
-    public Stat MaxHP;
+	[SerializeField]
+    private Stat MaxHP;
+	public Stat NowHP;
     public Stat Attack;
+	public Stat CriticalChance;
+	public Stat CriticalDamage;
     public Stat AttackSpeed;
     public Stat MoveSpeed;
+	public Stat ShieldRegen;
+	public Stat ReloadSpeed;
 
-    public Dictionary<string, Stat> StatDictionary;
+    public Dictionary<string, Stat> StatDictionary = new();
 
     public List<Stat> GetAllStat()
     {
@@ -27,10 +33,15 @@ public class StatusSO : ScriptableObject
 
     public void SetUpDictionary()
     {
-		StatDictionary.Add("MaxHP", MaxHP);
+		NowHP = MaxHP;
+		StatDictionary.Add("NowHP", NowHP);
 		StatDictionary.Add("Attack", Attack);
 		StatDictionary.Add("AttackSpeed", AttackSpeed);
 		StatDictionary.Add("MoveSpeed", MoveSpeed);
+		StatDictionary.Add("CriticalChance", CriticalChance);
+		StatDictionary.Add("CriticalDamage", CriticalDamage);
+		StatDictionary.Add("ShieldRegen", ShieldRegen);
+		StatDictionary.Add("ReloadSpeed", ReloadSpeed);
 	}
 	
 	public void EditBaseStat(string StatName, float EditValue)

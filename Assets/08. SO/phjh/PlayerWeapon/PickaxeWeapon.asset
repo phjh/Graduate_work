@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponSO
   weapon: 0
   WeaponIcon: {fileID: 21300000, guid: 97ce2970bac03954c9c9f9299d20d03c, type: 3}
-  DamageFactor: 1
+  damageFactor: 0
   bullet: {fileID: 3993027108183574981, guid: 96a76c925af5e2246bb46ef8feea1dc6, type: 3}
+  Weapon: {fileID: 7220200670752573213, guid: b7afd159f2566684daa204980e186435, type: 3}
+  rightHandTrm: {fileID: 0}

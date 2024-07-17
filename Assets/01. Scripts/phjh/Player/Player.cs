@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    #region 유니티 인스펙터에서 세팅해줄 값들
+    #region 유니티 인스펙터에서 세팅해줄 값들 
 
     [SerializeField]
     private InputReader _inputReader;
+
     [SerializeField]
-    private SkeletonAnimation _skeletonAnimation;
+    private SkeletonAnimation _skeletonAnimation; //이건 몸쪽이다.
     //임시 무기
     [SerializeField]
     private WeaponDataSO _tempWeapon;
     //스탯
+    [SerializeField]
+    private StatusSO _stat;
 
     [SerializeField]
     private List<AnimationReferenceAsset> _moveAnimations;
@@ -25,15 +28,20 @@ public class Player : MonoBehaviour
     public InputReader inputReader {  get; private set; } 
     public SkeletonAnimation skeletonAnimation {  get; private set; }
     //임시 무기
-    public WeaponDataSO WeaponData { get; private set; }
-    //스텟 넣기
-    //public stat stat
+    public WeaponDataSO weaponData { get; private set; }
+    public StatusSO playerStat { get; private set; }
 
     #endregion
 
     #region 플레이어가 가지고 있을값들
 
+    [Space]
+
     private PlayerShield _playerShield;
+
+    [Header("Spine IK세팅")]
+    [SerializeField]
+    private PlayerHand _playerHand;
 
     #endregion
 
@@ -57,17 +65,41 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        SetSpineIK();
         Init();
+    }
+
+    private void SetSpineIK()
+    {
+        _playerHand = GetComponentInChildren<PlayerHand>();
+
+
+        if(_playerHand == null)
+        {
+            Logger.LogError("playerHand is null");
+            return;
+        }
+
+        _playerHand.Init(_tempWeapon.leftHandTrm, _tempWeapon.rightHandTrm);
+
+    }
+
+    private void SetPlayerStat()
+    {
+        playerStat = _stat;
+        playerStat.SetUpDictionary();
     }
 
     private void Init()
     {
+        SetPlayerStat();
+
         inputReader = _inputReader;
         skeletonAnimation = _skeletonAnimation;
 
 		//WeaponData = mngs?.PlayerMng?.SentWeaponData();
 
-		WeaponData = _tempWeapon;
+		weaponData = _tempWeapon;
 
         //인풋리더 활성화
         inputReader.SetActive(true);
@@ -81,7 +113,7 @@ public class Player : MonoBehaviour
             Logger.LogWarning("Playermove is null");
 
         if (this.gameObject.TryGetComponent(out PlayerAttack attack))
-            attack.Init(this, inputReader, WeaponData.bullet);
+            attack.Init(this, inputReader, weaponData.bullet);
         else
             Logger.LogWarning("Playerattack is null");
 
