@@ -31,7 +31,16 @@ public class PoolListSO : ScriptableObject
 	{
 		for(int count = 0; count < DataStruct.Length; count++)
 		{
-			if (DataStruct[count].poolableMono == null) continue;
+			if (DataStruct[count].poolableMono == null)
+			{
+				Logger.LogWarning($"{this.name}'s {count} PoolableMono Value is Null");
+				continue;
+			}
+			if (string.IsNullOrEmpty(DataStruct[count].poolableMono.PoolName))
+			{
+				Logger.LogWarning($"PoolableMono{DataStruct[count].poolableMono}'s PoolName is Null or Empty!");
+				continue;
+			}
 			// PoolableName is Null In Struct or Not Same PoolableMono's Name
 			if (string.IsNullOrEmpty(DataStruct[count].poolableName) == true || DataStruct[count].poolableName != DataStruct[count].poolableMono.PoolName)
 			DataStruct[count].poolableName = DataStruct[count].poolableMono.PoolName;
