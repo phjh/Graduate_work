@@ -59,6 +59,17 @@ public class EnemyMain : PoolableMono, IDamageable
 
 	#region IDamageable Methods
 
+	public void SetTarget(Vector3 TargetPos)
+	{
+		EnemyAgent.speed = MoveSpeed.GetValue();
+		EnemyAgent.SetDestination(TargetPos);
+	}
+
+	private void AttackNear()
+	{
+
+	}
+
 	public void TakeDamage(float dmg)
 	{
 		if(dmg < 0) IncreaseHP(dmg);
