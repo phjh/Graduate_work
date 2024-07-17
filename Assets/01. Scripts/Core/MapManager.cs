@@ -116,6 +116,7 @@ public class MapManager : ManagerBase<MapManager>
 		int yChunkCount = Mathf.RoundToInt((MapSize.y - 2) / ChunkSize.y) - 1;
 
 		Vector3 ChunkPos = Vector3.zero;
+		int index = 0;
 
 		for (int y = yChunkCount; y >= 0; y--)
 		{
@@ -125,9 +126,17 @@ public class MapManager : ManagerBase<MapManager>
 			{
 				ChunkPos.x = (ChunkSize.x * x) + 1;
 
-				if (ChunkDatas[((yChunkCount - y) * xChunkCount) + x] == null) break;
-				ChunkSO cloneChunk = ChunkDatas[((yChunkCount - y) * xChunkCount) + x].CreateCloneChunk(ChunkPos);
-				SetChunkData(cloneChunk);
+				index = ((yChunkCount - y) * xChunkCount) + x;
+
+				if (index >= 0 && index < ChunkDatas.Count)
+				{
+					ChunkSO cloneChunk = ChunkDatas[index].CreateCloneChunk(ChunkPos);
+					SetChunkData(cloneChunk);
+				}
+				else
+				{
+					Debug.LogError($"Index {index} is out of range for ChunkDatas array");
+				}
 			}
 		}
 	}
@@ -150,21 +159,6 @@ public class MapManager : ManagerBase<MapManager>
 
 		// Read and Save Execl Sheet Data (To CSV)
 		string[] excelSheetData = InitChunk.excelData.text.Split(new string[] { ",", "\n" }, System.StringSplitOptions.None);
-
-		for (int y = 0; y < ChunkSize.y; y++)
-		{
-			StringBuilder debuging = new StringBuilder();
-
-			for (int x = 0; x < ChunkSize.x; x++)
-			{
-				int index = y * ChunkSize.x + x;
-				Logger.Log("Index : " + index + " X : " + x);
-				debuging.Append(excelSheetData[index]);
-				debuging.Append(",");
-			}
-
-			Logger.Log(debuging.ToString());
-		}
 
 		// Get Encounter Value In SO
 		float PlaceOreEncounter = InitChunk.PlaceOreBlockEncounter;
@@ -258,11 +252,11 @@ public class MapManager : ManagerBase<MapManager>
 	{
 		Vector3 addPos = Vector3.zero;
 
-		for (int z = ChunkSize.y - 1; z >= 0; z--)
+		for (int x = 0; x < ChunkSize.x; x++)
 		{
-			for (int x = 0; x < ChunkSize.x; x++)
+			for (int z = 0; z < ChunkSize.y; z++)
 			{
-				addPos = new Vector3(x, 0, z);
+				addPos = new Vector3(z, 0, ChunkSize.x - 1 - x);
 
 				Logger.Log($"Position = {x} , {z} / Block Data :{InitChunk.chunkData[x][z]}");
 
