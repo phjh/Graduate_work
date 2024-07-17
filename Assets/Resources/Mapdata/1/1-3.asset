@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chunkName: 1-3
   excelData: {fileID: 4900000, guid: 2856786ab14eb0246b98fe1d9816a286, type: 3}
-  PlaceOreBlockEncounter: 0.33
+  PlaceOreBlockEncounter: 0.2
   BaseChunkPos: {x: 0, y: 0, z: 0}

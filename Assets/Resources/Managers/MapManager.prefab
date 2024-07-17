@@ -59,7 +59,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1f2e62048510e5f4c9da513d45aca9c1, type: 2}
   - {fileID: 11400000, guid: 1f2e62048510e5f4c9da513d45aca9c1, type: 2}
   - {fileID: 11400000, guid: 1f2e62048510e5f4c9da513d45aca9c1, type: 2}
-  PlaceOreBlockInCounter: 12
+  WallPoolName: WallBlock
+  BreakablePoolName: BreakableBlock
+  OrePoolName:
+  - OreBlock_Strength
+  - OreBlock_CriticalChance
+  - OreBlock_CriticalDamage
+  - OreBlock_Destructive
+  - OreBlock_AttackSpeed
+  - OreBlock_MoveSpeed
+  - OreBlock_ShiledResilience
+  InteractionPoolName: []
+  DangerZonePoolName: DangerZoneBlock
 --- !u!114 &9036491755161748188
 MonoBehaviour:
   m_ObjectHideFlags: 0

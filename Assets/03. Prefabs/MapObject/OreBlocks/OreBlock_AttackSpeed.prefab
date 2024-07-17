@@ -106,8 +106,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.95, y: 0.9164692, z: 0.8}
-  m_Center: {x: 0, y: 0.4923727, z: 0.4}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!54 &2565432731943266941
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -164,5 +164,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PoolName: OreBlock_AttackSpeed
-  MaxTimesToBreak: 1
+  MaxTimesToBreak: 7
+  ExposeToBreak: 3
   OreData: {fileID: 11400000, guid: c146e63623483e84885a654d30f090e2, type: 2}
+  OrePair:
+    Mesh: {fileID: -1692592120673912446, guid: 262b92d6bbeceb445aab96e5a01ec3c8, type: 3}
+    Material: {fileID: 2100000, guid: 2b20155e6dc3e8b4194c81c4b97ec364, type: 2}
+  BreakablePair:
+    Mesh: {fileID: -8605420179976273663, guid: 92114128ff70e144c94a252a4c5c4caa, type: 3}
+    Material: {fileID: 2100000, guid: 9c58ab732d615df4c816367ed88940ae, type: 2}
