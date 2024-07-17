@@ -25,5 +25,15 @@ public struct PoolDataStruct
 [CreateAssetMenu(fileName = "New Pool List", menuName = "SO/Data/Pool List")]
 public class PoolListSO : ScriptableObject
 {
-	public List<PoolDataStruct> DataStruct;
+	public PoolDataStruct[] DataStruct;
+
+	private void OnEnable()
+	{
+		for(int count = 0; count < DataStruct.Length; count++)
+		{
+			if (DataStruct[count].poolableMono == null) continue;
+			if (string.IsNullOrEmpty(DataStruct[count].poolableName) == false) continue;
+			DataStruct[count].poolableName = DataStruct[count].poolableMono.PoolName;
+		}
+	}
 }

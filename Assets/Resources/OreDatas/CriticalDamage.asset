@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daa53a97701a2bd47a7aecb281365e2e, type: 3}
   m_Name: CriticalDamage
   m_EditorClassIdentifier: 
-  Image: {fileID: 0}
-  Name: No Name
-  Description: 
-  ItemAddingValue: 0
+  Image: {fileID: 21300000, guid: 11c541a225717704caa7d9147ba637af, type: 3}
+  Name: "\uCFE0\uB974\uB2E4"
+  Description: "\uCE58\uBA85\uD0C0 \uB370\uBBF8\uC9C0 \uC99D\uAC00"
   AddingStatType: 3
+  minValue: 5
+  maxValue: 10

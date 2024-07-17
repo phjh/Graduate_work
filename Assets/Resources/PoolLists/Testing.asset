@@ -29,7 +29,7 @@ MonoBehaviour:
     poolableMono: {fileID: 3993027108183574981, guid: 96a76c925af5e2246bb46ef8feea1dc6, type: 3}
     poolableName: PickaxeBullet
     Count: 1
-  - poolableType: 4
-    poolableMono: {fileID: 3993027108183574981, guid: 96a76c925af5e2246bb46ef8feea1dc6, type: 3}
-    poolableName: PickaxeBullet
+  - poolableType: 3
+    poolableMono: {fileID: 7227120825567265216, guid: fcc1ed848bb05f5458f0cbe03889ffd6, type: 3}
+    poolableName: DangerZoneBlock
     Count: 1

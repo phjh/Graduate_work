@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daa53a97701a2bd47a7aecb281365e2e, type: 3}
   m_Name: Destructive
   m_EditorClassIdentifier: 
-  Image: {fileID: 0}
-  Name: No Name
-  Description: 
-  ItemAddingValue: 0
+  Image: {fileID: 21300000, guid: 0bde7df78c50c044db49e68f365f145d, type: 3}
+  Name: "\uB370\uC790\uC2A4\uD2B8"
+  Description: "\uD30C\uAD34\uB825 \uC99D\uAC00"
   AddingStatType: 2
+  minValue: 1
+  maxValue: 3

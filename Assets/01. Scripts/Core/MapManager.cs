@@ -43,10 +43,10 @@ public class MapManager : ManagerBase<MapManager>
 	[SerializeField] private string BreakablePoolName = "BreakableBlock";
 	[SerializeField] private List<string> OrePoolName;
 	[SerializeField] private List<string> InteractionPoolName;
-	[SerializeField] private string DnagerZonePoolName = "DangerZoneBlock";
+	[SerializeField] private string DangerZonePoolName = "DangerZoneBlock";
 
 	private Dictionary<Vector3, Lazy<PoolableMono>> maps = new();
-
+	private List<DangerZoneBlock> DangerZoneList = new List<DangerZoneBlock>();
 
 	public override void InitManager()
 	{
@@ -187,7 +187,7 @@ public class MapManager : ManagerBase<MapManager>
 						}
 
 						// Add Ore Blocks In Data or Keeping current value
-						//value = AddOreBlocks(value, PlaceOreEncounter);
+						value = AddOreBlocks(value, PlaceOreEncounter);
 						sheetDataList.Add(value);
 					}
 					else
@@ -198,39 +198,6 @@ public class MapManager : ManagerBase<MapManager>
 			}
 			InitChunk.chunkData.Add(sheetDataList);
 		}
-
-		/*
-		for (int x = 0; x < ChunkSize.x; x++)
-		{
-			sheetDataList = new List<int>();
-
-			// Reverse Y Values
-			for (int y = ChunkSize.y - 1; y >= 0; y--)
-			{
-				int index = x * ChunkSize.y + y;
-				if (index < excelSheetData.Length && !string.IsNullOrEmpty(excelSheetData[index]))
-				{
-					if (int.TryParse(excelSheetData[index], out int value))
-					{
-						if (value == (int)BlockType.DangerZone) // Add Data Boss Zone
-						{
-							sheetDataList.Add(value);
-							continue;
-						}
-
-						// Add Ore Blocks In Data or Keeping current value
-						//value = AddOreBlocks(value, PlaceOreEncounter);
-						sheetDataList.Add(value);
-					}
-					else
-					{
-						Logger.LogWarning($"Invalid data at index {index}: {excelSheetData[index]}");
-					}
-				}
-			}
-			InitChunk.chunkData.Add(sheetDataList);
-		}
-		*/
 	}
 
 	private int AddOreBlocks(int currentValue, float InitEncounterValue)
@@ -276,7 +243,7 @@ public class MapManager : ManagerBase<MapManager>
 					case (int)BlockType.Interaction:
 						break;
 					case (int)BlockType.DangerZone:
-						AddBlock(InitChunk.BaseChunkPos + addPos, BreakablePoolName);
+						AddBlock(InitChunk.BaseChunkPos + addPos, DangerZonePoolName);
 						break;
 				}
 			}
@@ -286,17 +253,31 @@ public class MapManager : ManagerBase<MapManager>
 
 	private void AddBlock(Vector3 position, string poolObjectname)
 	{
-		PoolableMono poolObj = mngs.PoolMng.Pop(poolObjectname, position);
-		maps.TryAdd(position, new(poolObj)); //new Lazy<PoolableMono>(poolObj)
+		PoolableMono PoolBlock = mngs.PoolMng.Pop(poolObjectname, position);
+		maps.TryAdd(position, new(PoolBlock)); //new Lazy<PoolableMono>(poolObj)
 		if (maps[position].Value.TryGetComponent(out Blocks block))
 		{
-			block.Init(position, poolObj.gameObject, poolObjectname);
+			block.Init(position, PoolBlock.gameObject, poolObjectname);
 		}
 		else
 		{
 			Logger.LogError("block is null");
 		}
+
+		if (PoolBlock.TryGetComponent(out DangerZoneBlock DangerZone))
+		{
+			DangerZoneList.Add(DangerZone);
+		}
+
 		//maps[position].Value.GetComponent<Blocks>().Init(position, poolObj.gameObject, poolObject);
+	}
+
+	public void ActvieDangerZone(int Phase)
+	{
+		foreach(DangerZoneBlock dz in DangerZoneList)
+		{
+			dz.ActiveDangerZone(Phase);
+		}
 	}
 
 	public void DeleteBlock(Vector3 position, string name)
