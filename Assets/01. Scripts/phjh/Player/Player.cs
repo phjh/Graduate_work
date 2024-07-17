@@ -73,6 +73,13 @@ public class Player : MonoBehaviour
     {
         _playerHand = GetComponentInChildren<PlayerHand>();
 
+
+        if(_playerHand == null)
+        {
+            Logger.LogError("playerHand is null");
+            return;
+        }
+
         _playerHand.Init(_tempWeapon.leftHandTrm, _tempWeapon.rightHandTrm);
 
     }

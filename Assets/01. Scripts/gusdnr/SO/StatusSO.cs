@@ -14,7 +14,7 @@ public class StatusSO : ScriptableObject
     public Stat AttackSpeed;
     public Stat MoveSpeed;
 	public Stat ShieldRegen;
-	public Stat WallBreakPower;
+	public Stat ReloadSpeed;
 
     public Dictionary<string, Stat> StatDictionary = new();
 
@@ -41,7 +41,7 @@ public class StatusSO : ScriptableObject
 		StatDictionary.Add("CriticalChance", CriticalChance);
 		StatDictionary.Add("CriticalDamage", CriticalDamage);
 		StatDictionary.Add("ShieldRegen", ShieldRegen);
-		StatDictionary.Add("WallBreakPower", WallBreakPower);
+		StatDictionary.Add("ReloadSpeed", ReloadSpeed);
 	}
 	
 	public void EditBaseStat(string StatName, float EditValue)

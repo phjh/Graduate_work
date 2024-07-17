@@ -9,7 +9,7 @@ public class PlayerHand : MonoBehaviour
 
     private Bone leftHandBone, rightHandBone;
 
-    public Transform leftHandTarget, rightHandTarget;
+    private Transform leftHandTarget, rightHandTarget;
 
     private SkeletonAnimation skeletonAnim;
 
