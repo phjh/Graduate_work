@@ -53,5 +53,6 @@ public class WeaponWheelUI : MonoBehaviour
     public void Deselected()
     {
         alreadySelected = false;
+        Logger.LogWarning("Deselected");
     }
 }

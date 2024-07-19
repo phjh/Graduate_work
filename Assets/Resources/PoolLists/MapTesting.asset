@@ -15,45 +15,53 @@ MonoBehaviour:
   DataStruct:
   - poolableType: 3
     poolableMono: {fileID: 1390448685863316615, guid: 0c22ad1127ee62c48a2fed62453e4008, type: 3}
-    poolableName: 
+    poolableName: BreakableBlock
     Count: 1
   - poolableType: 3
     poolableMono: {fileID: 7227120825567265216, guid: fcc1ed848bb05f5458f0cbe03889ffd6, type: 3}
-    poolableName: 
+    poolableName: DangerZoneBlock
     Count: 100
   - poolableType: 3
     poolableMono: {fileID: 4264733278310249070, guid: 8f2ebee9476e46649876c37c4e90deeb, type: 3}
-    poolableName: 
+    poolableName: GroundTile
     Count: 30
   - poolableType: 3
     poolableMono: {fileID: 2910933248462436684, guid: a1a3307e20a1a9a4e8c2e83fa139f40a, type: 3}
-    poolableName: 
+    poolableName: WallBlock
     Count: 1
   - poolableType: 3
     poolableMono: {fileID: 4587401298889460775, guid: fbeaedfe14abe7743a0d470f224f43ac, type: 3}
-    poolableName: 
+    poolableName: OreBlock_AttackSpeed
     Count: 1
   - poolableType: 3
     poolableMono: {fileID: 7340976593293685080, guid: 4f2a84e5c59000f459fc8a600c4dbe9b, type: 3}
-    poolableName: 
+    poolableName: OreBlock_CriticalChance
     Count: 1
   - poolableType: 3
     poolableMono: {fileID: 760737822431115378, guid: 3728860114861c243a5175a917a985d4, type: 3}
-    poolableName: 
+    poolableName: OreBlock_CriticalDamage
     Count: 1
   - poolableType: 3
     poolableMono: {fileID: 2284410921964227315, guid: 944b001de68d79943a98220a62344f9d, type: 3}
-    poolableName: 
+    poolableName: OreBlock_Destructive
     Count: 1
   - poolableType: 3
     poolableMono: {fileID: 2551044455462802511, guid: f5a52096aa242964fab0b9019fa5b28f, type: 3}
-    poolableName: 
+    poolableName: OreBlock_MoveSpeed
     Count: 1
   - poolableType: 3
     poolableMono: {fileID: 2950496785203020756, guid: f775161b7f08c2341bb50d3963123061, type: 3}
-    poolableName: 
+    poolableName: OreBlock_ShiledResilience
     Count: 1
   - poolableType: 3
     poolableMono: {fileID: 8724899653354271415, guid: 5cc89d06519c25d489f90cbb6fa446a2, type: 3}
-    poolableName: 
+    poolableName: OreBlock_Strength
+    Count: 1
+  - poolableType: 1
+    poolableMono: {fileID: 3993027108183574981, guid: 96a76c925af5e2246bb46ef8feea1dc6, type: 3}
+    poolableName: PickaxeBullet
+    Count: 1
+  - poolableType: 1
+    poolableMono: {fileID: 5608957443657115236, guid: 16e88d8fc8339f847b9eff9d840ae2c9, type: 3}
+    poolableName: DrillBullet
     Count: 1

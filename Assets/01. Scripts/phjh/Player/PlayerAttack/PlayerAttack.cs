@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Spine;
 using Spine.Unity;
 using System;
@@ -41,17 +42,20 @@ public class PlayerAttack : MonoBehaviour
         mainCamera = Camera.main;
     }
 
-    private void Update()
-    {
-        SetAim();
-    }
-
     public void DoAttack()
     {
         //Vector3 dir = new Vector3(mousedir.x, 0, mousedir.y);
+        rot = SetAim();
 
-        PlayerBullet bullet = (PlayerBullet)PoolManager.Instance.Pop(tempBullet.name, this.transform.position + new Vector3(0, 0.75f, 0));
+        if (rot == Vector3.up)
+        {
+            Debug.LogError("bug");
+            return;
+        }
+
+        PlayerBullet bullet = (PlayerBullet)PoolManager.Instance.Pop(tempBullet.name, this.transform.position + new Vector3(0, 0.4f, 0));
         //bullet.transform.forward = rot;
+
         Quaternion rotation = Quaternion.LookRotation(rot);
 
         bullet.Init(rotation);
@@ -61,13 +65,14 @@ public class PlayerAttack : MonoBehaviour
 
     #region AimingMethods
 
-    private void SetAim()
+    private Vector3 SetAim()
     {
         var (success, position) = GetMousePosition();
+
         if (success)
         {
             // Calculate the direction
-            var direction = position - transform.position;
+            var direction = position - transform.position + new Vector3(0,0,-1);
 
             // You might want to delete this line.
             // Ignore the height difference.
@@ -75,9 +80,14 @@ public class PlayerAttack : MonoBehaviour
 
             // Make the transform look in the direction.
             //transform.forward = direction;
-            rot = direction;
+            SetPlayerAnimation(position);
+            
+            return direction;
         }
-        SetPlayerAnimation(position);
+        else
+        {
+            return Vector3.up;
+        }
     }
 
     private (bool success, Vector3 position) GetMousePosition()
@@ -104,6 +114,27 @@ public class PlayerAttack : MonoBehaviour
 
 
     }
+
+    private void OnDrawGizmos()
+    {
+
+        if (Application.isPlaying)
+        {
+            var ray = mainCamera.ScreenPointToRay(_inputReader.AimPosition);
+
+            Gizmos.color = Color.red;
+            const float Radius = 0.15f;
+
+            if (Physics.Raycast(ray, out var hitInfo, 1000, layer))
+            {
+                Gizmos.DrawLine(hitInfo.point, mainCamera.transform.position);
+                Gizmos.DrawSphere(hitInfo.point, Radius);
+            }
+        }
+
+    }
+
+
 
     #endregion
 }

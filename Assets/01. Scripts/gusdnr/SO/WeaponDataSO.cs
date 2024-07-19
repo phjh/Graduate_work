@@ -21,10 +21,5 @@ public class WeaponDataSO : ScriptableObject
 	public float damageFactor;
 	public PoolableMono bullet;
 
-    public GameObject Weapon;
-    public Transform leftHandTrm;
-    public Transform rightHandTrm;
-
-
-
+    public PlayerWeapon playerWeapon;
 }
