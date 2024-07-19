@@ -35,13 +35,18 @@ public class Player : MonoBehaviour
 
     #region 플레이어가 가지고 있을값들
 
-    [Space]
 
     private PlayerShield _playerShield;
 
-    [Header("Spine IK세팅")]
-    [SerializeField]
     private PlayerHand _playerHand;
+
+    private PlayerHead _playerHead;
+
+    [SerializeField]
+    private Transform templefthand, temprighthand;
+
+    [SerializeField]
+    private Transform temphead;
 
     #endregion
 
@@ -72,16 +77,16 @@ public class Player : MonoBehaviour
     private void SetSpineIK()
     {
         _playerHand = GetComponentInChildren<PlayerHand>();
-
+        _playerHead = GetComponentInChildren<PlayerHead>();
 
         if(_playerHand == null)
         {
             Logger.LogError("playerHand is null");
             return;
         }
-
-        _playerHand.Init(_tempWeapon.leftHandTrm, _tempWeapon.rightHandTrm);
-
+        
+        _playerHand.Init(templefthand, temprighthand);
+        _playerHead.Init();
     }
 
     private void SetPlayerStat()
@@ -143,6 +148,7 @@ public class Player : MonoBehaviour
         else
         {
             //그대로 데미지 입게끔 해준다
+            playerStat.NowHP.SetBaseValue(playerStat.NowHP.GetValue() - damage);
             SetHealthBar();
         }
     }

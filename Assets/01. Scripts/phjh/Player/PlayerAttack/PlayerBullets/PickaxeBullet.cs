@@ -4,18 +4,27 @@ using UnityEngine;
 
 public class PickaxeBullet : PlayerBullet
 {
-    [SerializeField]
-    private float bulletDistance = 10f;
+    private Quaternion rotaterot;
 
-    protected override void Start()
+    [SerializeField]
+    private float rotateSpeed = 20;
+
+    public override void Init(Quaternion rot)
     {
-        base.Start();
-        Invoke(nameof(DestroyPickaxe), bulletDistance / speed);
+        base.Init(rot);
+        rotaterot = Quaternion.Euler(45, 0, rot.eulerAngles.y);
+        destroyCoroutine = StartCoroutine(DestroyBullet());
     }
 
-    private void DestroyPickaxe()
+    protected override void DestroyAndStopCoroutine()
     {
-        PoolManager.Instance.Push(this, this.gameObject.name);
+        base.DestroyAndStopCoroutine();
+    }
+
+    private void Update()
+    {
+        rotaterot = Quaternion.Euler(45, 0, rotaterot.eulerAngles.z + rotateSpeed);
+        transform.rotation = rotaterot;
     }
 
 }

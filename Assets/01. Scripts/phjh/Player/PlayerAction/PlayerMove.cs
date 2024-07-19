@@ -3,6 +3,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+enum LastMoveDir
+{ 
+    leftup = 0,
+    leftdown = 1,
+    rightup = 2,
+    rightdown = 3,
+}
+
 public class PlayerMove : MonoBehaviour
 {
     private Player _player;
@@ -11,10 +19,13 @@ public class PlayerMove : MonoBehaviour
 
     private Rigidbody _rb;
 
+
     private float _currentSpeed = 4f;
 
     private Vector3 _inputDirection;
     private Vector3 _movementVelocity;
+
+    private LastMoveDir _lastMoveDir;
 
     public void Init(Player player, InputReader inputReader)
     {
@@ -31,16 +42,22 @@ public class PlayerMove : MonoBehaviour
         _inputDirection.z = dir.y;
     }
 
+    private void SetLastMoveDir()
+    {
+
+    }
+
     private void CalculatePlayerMovement()
     {
+        SetLastMoveDir();
         _movementVelocity = _inputDirection * _currentSpeed * -1;
+        SetMoveAnimation();
     }
 
     public void StopImmediately()
     {
         _movementVelocity = Vector3.zero;
     }
-
 
     private void Move()
     {
@@ -53,6 +70,11 @@ public class PlayerMove : MonoBehaviour
         {
             _player.canMove = !_player.canMove;
         }
+    }
+
+    private void SetMoveAnimation()
+    {
+
     }
 
     private void FixedUpdate()

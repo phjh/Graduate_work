@@ -10,7 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a3198e6fcd261b478308cf0910ef76a, type: 3}
-  m_Name: PickaxData
+  m_Name: PickaxeData
   m_EditorClassIdentifier: 
   weapon: 0
   WeaponIcon: {fileID: 149551272, guid: 5321ef18d674c144dbef4d55f4a2bf1e, type: 3}
+  damageFactor: 1
+  bullet: {fileID: 3993027108183574981, guid: 96a76c925af5e2246bb46ef8feea1dc6, type: 3}
+  playerWeapon: {fileID: 2920694812051979200, guid: b7afd159f2566684daa204980e186435, type: 3}
