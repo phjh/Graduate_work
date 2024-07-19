@@ -72,7 +72,7 @@ public class PlayerHead : MonoBehaviour
     {
         int mult = (int)(rot / 90);
         rot -= mult * 90;
-        rot = 60 + rot/3;
+        rot = 60 + rot / 3;
         rot += mult * 90;
 
         if (seedir.y > 0)

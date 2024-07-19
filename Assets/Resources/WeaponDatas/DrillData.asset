@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: 1
   WeaponIcon: {fileID: -869701159, guid: 5321ef18d674c144dbef4d55f4a2bf1e, type: 3}
+  damageFactor: 1
+  bullet: {fileID: 5608957443657115236, guid: 16e88d8fc8339f847b9eff9d840ae2c9, type: 3}
+  playerWeapon: {fileID: 1838661153983799418, guid: cef40c9df665ae1449b18a258635c5f8, type: 3}

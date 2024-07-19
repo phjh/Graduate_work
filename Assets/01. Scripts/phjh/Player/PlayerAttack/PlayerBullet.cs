@@ -42,7 +42,7 @@ public abstract class PlayerBullet : PoolableMono
         PoolManager.Instance.Push(this, this.gameObject.name);
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.TryGetComponent<EnemyMain>(out EnemyMain enemy))
         {
