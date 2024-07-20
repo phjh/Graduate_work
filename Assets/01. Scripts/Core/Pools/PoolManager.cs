@@ -43,7 +43,10 @@ public class PoolManager : ManagerBase<PoolManager>
 		SetDataListInDictionary();
 		SetDataOnFloor("TESTING");
 		StartPooling();
+		SetBlockVisible(false);
 	}
+
+	public void SetBlockVisible(bool value) => PoolParent_Block.gameObject.SetActive(value);
 
 	public void SetDataListInDictionary()
 	{

@@ -10,6 +10,13 @@ public class LobbyFlow : SceneFlowBase
 	public override void ActiveFlowBase()
 	{
 		StartBtn?.onClick.RemoveAllListeners();
-		StartBtn?.onClick.AddListener(() => mngs.UIMng.SetSceneName(NextSceneName));
+		StartBtn?.onClick.AddListener(SetIngameScene);
 	}
+
+	private void SetIngameScene()
+	{
+		mngs.PoolMng.SetBlockVisible(true);
+		mngs.UIMng.SetSceneName(NextSceneName);
+    }
+
 }

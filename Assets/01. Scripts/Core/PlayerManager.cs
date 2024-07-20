@@ -11,12 +11,17 @@ public class PlayerManager : ManagerBase<PlayerManager>
 
 	public Dictionary<StatType, int> OreDictionary = new Dictionary<StatType, int>();
 
+	private GameObject nowWeapon;
+
+	public LobbyPlayer player;
+
 	public override void InitManager()
 	{
 		base.InitManager();
 		SelectedWeaponData = Resources.Load("Resources/WeaponDatas/PickaxData") as WeaponDataSO;
 		SetUpOreDictionary();
-		Logger.Log("Complete Active Player Manager");
+
+        Logger.Log("Complete Active Player Manager");
 	}
 
 	public void SetUpOreDictionary()
@@ -32,6 +37,27 @@ public class PlayerManager : ManagerBase<PlayerManager>
 	{
 		if(SettedData.weapon == WeaponEnum.None || SettedData.weapon == WeaponEnum.End) return;
 		SelectedWeaponData = SettedData;
+        SetPlayerWeaponVisible();
+	}
+
+	private void SetPlayerWeaponVisible()
+	{
+		Destroy(nowWeapon);
+		nowWeapon = Instantiate(SelectedWeaponData.playerWeapon.gameObject, new Vector2(0.1f,-0.62f), Quaternion.identity);
+		if(SelectedWeaponData.weapon == WeaponEnum.Pickaxe)
+		{
+			nowWeapon.transform.rotation = Quaternion.Euler(0, 180, 45);
+            Vector3 v = nowWeapon.transform.lossyScale;
+            nowWeapon.transform.localScale = new Vector3(v.x * -1, v.y, v.z);
+        }
+		if(SelectedWeaponData.weapon == WeaponEnum.Drill)
+		{
+			Vector3 v = nowWeapon.transform.lossyScale;
+			nowWeapon.transform.localScale = new Vector3(v.x * -1, v.y, v.z);
+		}
+        nowWeapon.SetActive(true);
+		PlayerWeapon weapon = nowWeapon.GetComponent<PlayerWeapon>();
+		player.SetSpineIK(weapon.leftHandIK, weapon.rightHandIK);
 	}
 
 	public void SetActiveXRay(bool active)
