@@ -65,3 +65,11 @@ MonoBehaviour:
     poolableMono: {fileID: 5608957443657115236, guid: 16e88d8fc8339f847b9eff9d840ae2c9, type: 3}
     poolableName: DrillBullet
     Count: 1
+  - poolableType: 2
+    poolableMono: {fileID: 1429072079549705027, guid: f7afccb6d98f668468231b3ee2796d1d, type: 3}
+    poolableName: DrillExplosionEffect
+    Count: 1
+  - poolableType: 2
+    poolableMono: {fileID: 6034287996170676040, guid: b3eafb45a43ba0b4d86c7e964bdf1188, type: 3}
+    poolableName: GroundEffect
+    Count: 1

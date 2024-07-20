@@ -1,9 +1,10 @@
 using Spine.Unity;
+using CustomSpineAnimator;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum LastMoveDir
+enum MoveDir
 { 
     leftup = 0,
     leftdown = 1,
@@ -19,18 +20,24 @@ public class PlayerMove : MonoBehaviour
 
     private Rigidbody _rb;
 
-
     private float _currentSpeed = 4f;
 
     private Vector3 _inputDirection;
     private Vector3 _movementVelocity;
 
-    private LastMoveDir _lastMoveDir;
+    private MoveDir _nowMoveDir;
+    private MoveDir _lastMoveDir;
 
-    public void Init(Player player, InputReader inputReader)
+    private SkeletonAnimation _body;
+
+    private List<AnimationReferenceAsset> _animations = new();
+
+    public void Init(Player player, InputReader inputReader, SkeletonAnimation body, List<AnimationReferenceAsset> anim)
     {
         _player = player;
         _inputReader = inputReader;
+        _body = body;
+        _animations = anim;
 
         _rb = GetComponent<Rigidbody>();
         _inputReader.MovementEvent += GetMoveDirection;
@@ -44,7 +51,15 @@ public class PlayerMove : MonoBehaviour
 
     private void SetLastMoveDir()
     {
+        bool right = _inputDirection.x < 0;
+        bool down = _inputDirection.z > 0;
+        int lastdir = 0;
+        if (right)
+            lastdir += 2;
+        if (down)
+            lastdir++;
 
+        _nowMoveDir = (MoveDir)lastdir;
     }
 
     private void CalculatePlayerMovement()
@@ -74,7 +89,10 @@ public class PlayerMove : MonoBehaviour
 
     private void SetMoveAnimation()
     {
-
+        if (_nowMoveDir == _lastMoveDir) return;
+        SpineAnimator.SetAnimation(_body, _animations[(int)_nowMoveDir]);
+        Debug.Log(_nowMoveDir);
+        _lastMoveDir = _nowMoveDir;
     }
 
     private void FixedUpdate()

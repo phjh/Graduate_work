@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace SpineAnimator
+namespace CustomSpineAnimator
 {
 
     public static class SpineAnimator

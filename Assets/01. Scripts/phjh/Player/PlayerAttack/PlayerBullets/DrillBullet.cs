@@ -1,15 +1,14 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DrillBullet : PlayerBullet
 {
     [SerializeField]
-    private float _attackSpreadRange = 3;
+    private float _attackSpreadRange = 1;
 
-    private bool drawGizmo = false;
-
-    void SetGizmotrue() => drawGizmo = true;
+    [SerializeField]
+    private string _bombEffectName;
 
     public override void Init(Quaternion rot)
     {
@@ -20,35 +19,45 @@ public class DrillBullet : PlayerBullet
 
     protected override IEnumerator DestroyBullet()
     {
-        yield return new WaitForSeconds(bulletDistance / speed - 0.2f);
-        SetGizmotrue();
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(bulletDistance / speed);
 
-        if (Physics.SphereCast(transform.position, _attackSpreadRange, Vector3.zero, out RaycastHit hitInfo)) 
-        {
-            Logger.Log(hitInfo.collider.name);
-
-            if(hitInfo.collider.TryGetComponent(out EnemyMain enemy))
-            {
-                //enemy.TakeDamage
-            }
-            if(hitInfo.collider.TryGetComponent(out Blocks block))
-            {
-                block.BlockEvent();
-            }
-        }
-
-        drawGizmo = false;
-        DestroyAndStopCoroutine();
+        BulletBomb();
     }
 
-    private void OnDrawGizmos()
+    private void BulletBomb()
     {
-        if (drawGizmo)
+        try
         {
-            Gizmos.color = Color.white;
-            Gizmos.DrawSphere(transform.position, _attackSpreadRange);
+            RaycastHit[] hits = new RaycastHit[100];
+            int i = Physics.SphereCastNonAlloc(transform.position, _attackSpreadRange, new Vector3(1, 1, 1).normalized, hits);
+
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.collider.gameObject.TryGetComponent(out EnemyMain enemy))
+                {
+                    //enemy.TakeDamage
+                }
+                else if (hit.collider.gameObject.TryGetComponent(out Blocks block))
+                {
+                    block.BlockEvent(hit.point);
+                    Debug.Log(hit.collider.name);
+                }
+            }
+
+            DestroyAndStopCoroutine();
         }
+        catch
+        {
+            DestroyAndStopCoroutine();
+        }
+        PoolManager.Instance.PopAndPushEffect(_bombEffectName, transform.position, 0.2f);
     }
+
+    protected override void OnTriggerEnter(Collider other)
+    {
+        if(!other.gameObject.CompareTag("Player"))
+            BulletBomb();
+    }
+
 
 }

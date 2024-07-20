@@ -58,7 +58,7 @@ public class MapManager : ManagerBase<MapManager>
 		SetGroundTile();
 		SetBlocks();
 
-		nms.BuildNavMesh();
+		//nms.BuildNavMesh();
 	}
 
 	private void SetGroundTile()
@@ -84,7 +84,7 @@ public class MapManager : ManagerBase<MapManager>
 			TilePos.z = 0;
 		}
 
-		nms.BuildNavMesh();
+		//nms.BuildNavMesh();
 	}
 
 

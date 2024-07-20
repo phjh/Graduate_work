@@ -32,12 +32,14 @@ public abstract class Blocks : PoolableMono
     //여기서 블럭을 세팅해준다
     public abstract void SetBlock();
 
-    public abstract void BlockEvent();
+    public virtual void BlockEvent() { }
 
-    protected void MiningEffect()
+    public virtual void BlockEvent(Vector3 pos) { }
+
+    protected void MiningEffect(Vector3 pos)
     {
         //풀매니저에서 이펙트 가져와서 해야함
-        //Managers.instance.PoolMng.Pop("miningeffect");
+        Managers.instance.PoolMng.PopAndPushEffect("GroundEffect", transform.position, 0.5f);
     }
 }
 
