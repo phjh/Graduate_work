@@ -1,2 +1,13 @@
-# Graduation_work
-GGM High School - Team.UDF work
+# 광전탈
+
+## 경기게임마이스터 고등학교 3기 UDF 팀 졸업작품 프로젝트
+
+# UDF
+--
+인원: 3명
+
+오지홍 : 팀장, 개발
+박현욱 : 개발, PM
+김보민 : 아트, 기획
+
+
