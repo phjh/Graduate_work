@@ -25,7 +25,7 @@
 ## 작업 폴더
 - 오지홍 :
 1. [플레이어 스크립트](https://github.com/phjh/Graduation_work/tree/main/Assets/01.%20Scripts/phjh)
-
+<hr/>
 - 박현욱 :
 1. [게임 관리 스크립트](https://github.com/phjh/Graduation_work/tree/main/Assets/01.%20Scripts/Core)
 2. [적, UI 등 인게임 요소 스크립트](https://github.com/phjh/Graduation_work/tree/main/Assets/01.%20Scripts/gusdnr)
