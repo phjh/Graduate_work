@@ -16,7 +16,7 @@
 >> 프로젝트 내 플레이어, 적 등의 리소스 제작
 ---
 # 프로젝트 소개
-### 사용 툴 :![Unity](https://img.shields.io/badge/Unity-2022.3-blue.svg) ![C#](https://img.shields.io/badge/C%23-7.0-green.svg)
+- ### 사용 툴 :![Unity](https://img.shields.io/badge/Unity-2022.3-blue.svg) ![C#](https://img.shields.io/badge/C%23-7.0-green.svg)
 - <br>졸업 작품 프로젝트로 현재 계속 개발이 진행되고 있습니다.
 <br>플레이어는 제시간 안에 무너지는 광산 안에서 탈출을 하기 위해 나타나는 적과 벽을 부수고, 광석을 얻어 강해져야하는
 **타임어택 X 로그라이크**
