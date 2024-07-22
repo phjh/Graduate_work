@@ -7,10 +7,13 @@
 # UDF 소개
 ## 인원: 3명
 
-### 오지홍 : 팀장, 개발
-### 박현욱 : 개발, PM
-### 김보민 : 아트, 기획
-___
+> ### 오지홍 : 팀장, 개발
+>> 주 개발 파트 : 플레이어
+> ### 박현욱 : 개발, PM
+>> 주 개발 파트 : 게임 관리 시스템, UI, 적
+> ### 김보민 : 아트, 기획
+>> 프로젝트 내 플레이어, 적 등의 리소스 제작
+---
 # 프로젝트 소개
 ### 사용 툴 : ![](https://img.shields.io/badge/Unity-100000?style=for-the-badge&logo=unity&logoColor=white) ![](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
 <br>졸업 작품 프로젝트로 현재 계속 개발이 진행되고 있습니다.
