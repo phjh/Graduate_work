@@ -7,7 +7,7 @@ using System;
 using DG.Tweening;
 
 [System.Serializable]
-public struct FloorPoolList
+public struct PoolListStruct
 {
 	public string FloorName;
 	public PoolListSO PoolData;
@@ -22,10 +22,8 @@ public class PoolManager : ManagerBase<PoolManager>
 	[SerializeField] private Transform PoolParent_UI;
 
 	[Header("Pool Values")]
-	[SerializeField] private FloorPoolList[] DataStruct;
-
-	[Header("Floor Names")]
-	[SerializeField] private List<string> FloorNamesList;
+	[SerializeField] private PoolListStruct[] DataStruct;
+	[SerializeField] private List<string> StructNamesList;
 
 	private PoolListSO CurrentFloorPoolData;
 	public event Action OnPoolingComplete;
@@ -42,7 +40,8 @@ public class PoolManager : ManagerBase<PoolManager>
 		DontDestroyOnLoad(PoolParent_Block.root);
 
 		SetDataListInDictionary();
-		SetDataOnFloor("TESTING");
+		SetDataOnStruct(StructNamesList[0]);
+		SetDataOnStruct(StructNamesList[1]);
 		StartPooling();
 	}
 
@@ -50,13 +49,13 @@ public class PoolManager : ManagerBase<PoolManager>
 
 	public void SetDataListInDictionary()
 	{
-		foreach (FloorPoolList floorList in DataStruct)
+		foreach (PoolListStruct floorList in DataStruct)
 		{
 			if(floorList.PoolData != null) PoolListData.Add(floorList.FloorName, floorList.PoolData);
 		}
 	}
 
-	public void SetDataOnFloor(string floorName, bool isReset = false)
+	public void SetDataOnStruct(string floorName, bool isReset = false)
 	{
 		if (isReset == true) ClearPreviousData();
 
@@ -174,7 +173,7 @@ public class PoolManager : ManagerBase<PoolManager>
 	private IEnumerator EffectCoroutine(string poolableName, Vector3 position, float time)
 	{
 		PoolableMono mono = Pop(poolableName, position);
-		if(TryGetComponent<ParticleSystem>(out ParticleSystem sys))
+		if(TryGetComponent(out ParticleSystem sys))
 		{
 			sys.Play();
 			yield return new WaitForSeconds(time);

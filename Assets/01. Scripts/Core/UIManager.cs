@@ -153,6 +153,7 @@ public class UIManager : ManagerBase<UIManager>
 	private IEnumerator TransitionScene(string sceneName)
 	{
 		Scene beforeScene = ActiveScene();
+		if(sceneName == "InGame") mngs.InItInGameManagers();
 		yield return LoadSceneAsync(sceneName);
 		yield return UnloadSceneAsync(beforeScene.buildIndex);
 	}
@@ -221,6 +222,7 @@ public class UIManager : ManagerBase<UIManager>
 	private IEnumerator TransitionScene(int index)
 	{
 		Scene beforeScene = ActiveScene();
+		if (index == 2) mngs.InItInGameManagers();
 		yield return LoadSceneAsync(index);
 		yield return UnloadSceneAsync(beforeScene.buildIndex);
 	}
