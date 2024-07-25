@@ -42,6 +42,7 @@ public class WeaponWheelUI : MonoBehaviour
 
     public void SelectThisWeapon()
     {
+        if (this.ThisWheelData == null) return;
         mngs?.PlayerMng.SetPlayerWeapon(ThisWheelData);
     }
 

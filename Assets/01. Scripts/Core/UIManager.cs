@@ -161,6 +161,7 @@ public class UIManager : ManagerBase<UIManager>
 	private IEnumerator LoadSceneAsync(string sceneName)
 	{
 		IsWorkingLoading = true;
+		LoadProcessBar.fillAmount = 0f;
 		LoadProcessBar.enabled = IsWorkingLoading;
 
 		asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -230,6 +231,7 @@ public class UIManager : ManagerBase<UIManager>
 	private IEnumerator LoadSceneAsync(int index)
 	{
 		IsWorkingLoading = true;
+		LoadProcessBar.fillAmount = 0f;
 		LoadProcessBar.enabled = IsWorkingLoading;
 
 		asyncLoad = SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);

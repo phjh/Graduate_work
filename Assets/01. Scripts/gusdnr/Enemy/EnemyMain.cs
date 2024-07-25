@@ -65,7 +65,7 @@ public class EnemyMain : PoolableMono, IDamageable
 		EnemyAgent.SetDestination(TargetPos);
 	}
 
-	private void AttackNear()
+	private void ActiveAttack()
 	{
 
 	}
