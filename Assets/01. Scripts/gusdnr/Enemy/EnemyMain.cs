@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyMain : PoolableMono, IDamageable
 {
 	[Header("Enemy Values")]
-	[Tooltip("This Enemys Pool Tag")]
-	public string EnemyName;
 	public StatusSO enemyData;
+	public float AttackRange;
 
 	[HideInInspector] public Stat MaxHP;
 	[HideInInspector] public Stat Attack;
@@ -16,7 +16,12 @@ public class EnemyMain : PoolableMono, IDamageable
 	[HideInInspector] public Stat MoveSpeed;
 	[HideInInspector] public bool isAlive = true;
 	
-	private NavMeshAgent EnemyAgent;
+	[HideInInspector] public NavMeshAgent EnemyAgent;
+
+	[HideInInspector] public Transform TargetTransform;
+
+	private EnemyMove ThisEnemyMove;
+	private EnemyAttackBase ThisEnemyAttack;
 
 	public float CurrentHp
 	{
@@ -41,8 +46,16 @@ public class EnemyMain : PoolableMono, IDamageable
 	public override void EnablePoolableMono()
 	{
 		if (EnemyAgent == null) TryGetComponent(out  EnemyAgent);
+		if (ThisEnemyMove == null) TryGetComponent(out ThisEnemyMove);
+		if (ThisEnemyAttack == null) TryGetComponent(out ThisEnemyAttack);
 
 		isAlive = true;
+
+		ThisEnemyMove.ActiveMove(this);
+		ThisEnemyAttack.ActiveAttack(this);
+
+		ThisEnemyMove.SetMoveSpeed();
+		ThisEnemyMove.StartChasing();
 
 		CurrentHp = MaxHP.GetValue();
 	}
@@ -54,21 +67,17 @@ public class EnemyMain : PoolableMono, IDamageable
 		AttackSpeed = enemyData.StatDictionary["AttackSpeed"];
 		MoveSpeed = enemyData.StatDictionary["MoveSpeed"];
 
-		this.gameObject.name = EnemyName;
+		this.gameObject.name = PoolName;
 	}
 
-	#region IDamageable Methods
-
-	public void SetTarget(Vector3 TargetPos)
-	{
-		EnemyAgent.speed = MoveSpeed.GetValue();
-		EnemyAgent.SetDestination(TargetPos);
-	}
 
 	private void ActiveAttack()
 	{
-
+		ThisEnemyMove.StopChaing();
+		ThisEnemyAttack.StartAttack();
 	}
+
+	#region IDamageable Methods
 
 	public void TakeDamage(float dmg)
 	{
@@ -96,7 +105,8 @@ public class EnemyMain : PoolableMono, IDamageable
 	public void DieObject()
 	{
 		isAlive = false;
-		PoolManager.Instance.Push(this, this.gameObject.name);
+		ThisEnemyMove.StopChaing();
+		PoolManager.Instance.Push(this, this.PoolName);
 	}
 
 	#endregion
