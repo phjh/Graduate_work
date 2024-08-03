@@ -153,6 +153,7 @@ public class UIManager : ManagerBase<UIManager>
 	private IEnumerator TransitionScene(string sceneName)
 	{
 		Scene beforeScene = ActiveScene();
+		if(sceneName == "InGame") mngs.InItInGameManagers();
 		yield return LoadSceneAsync(sceneName);
 		yield return UnloadSceneAsync(beforeScene.buildIndex);
 	}
@@ -160,6 +161,7 @@ public class UIManager : ManagerBase<UIManager>
 	private IEnumerator LoadSceneAsync(string sceneName)
 	{
 		IsWorkingLoading = true;
+		LoadProcessBar.fillAmount = 0f;
 		LoadProcessBar.enabled = IsWorkingLoading;
 
 		asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -221,6 +223,7 @@ public class UIManager : ManagerBase<UIManager>
 	private IEnumerator TransitionScene(int index)
 	{
 		Scene beforeScene = ActiveScene();
+		if (index == 2) mngs.InItInGameManagers();
 		yield return LoadSceneAsync(index);
 		yield return UnloadSceneAsync(beforeScene.buildIndex);
 	}
@@ -228,6 +231,7 @@ public class UIManager : ManagerBase<UIManager>
 	private IEnumerator LoadSceneAsync(int index)
 	{
 		IsWorkingLoading = true;
+		LoadProcessBar.fillAmount = 0f;
 		LoadProcessBar.enabled = IsWorkingLoading;
 
 		asyncLoad = SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);

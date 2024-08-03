@@ -53,19 +53,16 @@ public class FlowManager : ManagerBase<FlowManager>
 			case GameState.Intro:
 				{
 					mngs.UIMng.EnableSelectCanvas(0);
+					if (playerMng == null) AddPlayerManager();
 					break;
 				}
 			case GameState.Lobby:
 				{
 					mngs.UIMng.DisableSelectCanvas(0);
-					if (playerMng == null) AddPlayerManager();
-					mngs.InItLobbyManagers();
 					break;
 				}
 			case GameState.PlayGame:
 				{
-					if(playerMng == null) AddPlayerManager();
-					mngs.InItInGameManagers();
 					break;
 				}
 			case GameState.EndGame:
