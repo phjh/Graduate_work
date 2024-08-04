@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemyAttackBase : MonoBehaviour
+public abstract class EnemyAttackBase : ScriptableObject
 {
     protected EnemyMain E_Main;
 
-	public EnemyAttackBase ActiveAttack(EnemyMain SetMain)
+	public EnemyAttackBase InitEnemyData(EnemyMain SetMain)
 	{
 		E_Main = SetMain;
 		if (E_Main != null) Logger.Log("Set Complete : " + this.name);
@@ -15,13 +15,22 @@ public abstract class EnemyAttackBase : MonoBehaviour
 
 	public virtual void StartAttack()
 	{
-		ActiveAttack();
+		if (E_Main.isAlive)
+		{
+			ActiveAttack();
+		}
 	}
 
 	public virtual void ActiveAttack()
 	{
-		EndAttack();
+		if (E_Main.isAlive) // 적이 살아있는 경우에만 공격 시작
+		{
+			EndAttack();
+		}
 	}
 
-	public virtual void EndAttack() { }
+	public virtual void EndAttack()
+	{
+		E_Main.isAttack = false;
+	}
 }
