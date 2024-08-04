@@ -58,7 +58,7 @@ public class MapManager : ManagerBase<MapManager>
 		SetGroundTile();
 		SetBlocks();
 
-		//nms.BuildNavMesh();
+		nms.BuildNavMesh();
 	}
 
 	private void SetGroundTile()
@@ -237,11 +237,13 @@ public class MapManager : ManagerBase<MapManager>
 						AddBlock(InitChunk.BaseChunkPos + addPos, BreakablePoolName);
 						break;
 
-					//case (int)BlockType.Ore:
-					//	AddBlock(InitChunk.BaseChunkPos + addPos, OrePoolName[UnityEngine.Random.Range(0, OrePoolName.Count)]);
-						//break;
+					case (int)BlockType.Ore:
+						AddBlock(InitChunk.BaseChunkPos + addPos, OrePoolName[UnityEngine.Random.Range(0, OrePoolName.Count)]);
+						break;
+
 					case (int)BlockType.Interaction:
 						break;
+
 					case (int)BlockType.DangerZone:
 						AddBlock(InitChunk.BaseChunkPos + addPos, DangerZonePoolName);
 						break;

@@ -11,6 +11,7 @@ public class EnemyMain : PoolableMono, IDamageable
 	public StatusSO enemyData;
 	[Range(0.01f, 30f)]public float MinAttackRange;
 	[Range(0.01f, 30f)]public float MaxAttackRange;
+	public Transform TargetTransform;
 
 	[Header("Enemy Attack")]
 	[SerializeField] private EnemyAttackBase ThisEnemyAttack;
@@ -19,29 +20,20 @@ public class EnemyMain : PoolableMono, IDamageable
 
 	[HideInInspector] public Stat MaxHP;
 	[HideInInspector] public Stat Attack;
-	[HideInInspector] public Stat AttackSpeed;
+	[HideInInspector] public Stat AttackCoolDownTime;
 	[HideInInspector] public Stat MoveSpeed;
 	[HideInInspector] public bool isAlive = true;
 	[HideInInspector] public bool isAttack { get; set; } = false;
 
 	[HideInInspector] public NavMeshAgent EnemyAgent;
 
-	[HideInInspector] public Transform TargetTransform;
-
-	public float CurrentHp
-	{
-		get 
-		{
-			return CurrentHp;
-		}
-
-		set
-		{
-			CurrentHp = value;
-		}
-	}
-
 	private float DistanceToTarget => Vector3.Distance(transform.position, TargetTransform.position);
+
+	private void Awake()
+	{
+		ResetPoolableMono();
+		EnablePoolableMono();
+	}
 
 	private void FixedUpdate()
 	{
@@ -52,16 +44,21 @@ public class EnemyMain : PoolableMono, IDamageable
 			isAttack = true;
 			ActiveAttack();
 		}
-		else if (DistanceToTarget < MinAttackRange)
+		else if (DistanceToTarget < MinAttackRange && isAttack == false)
 		{
-			isAttack = false;
-			SetDestinationPos(); // Move to Target
+			SetDestinationPos();
 		}
-		else
+		else if (isAttack == false)
 		{
-			isAttack = false;
-			StartChasing();
+			SetDestinationPos();
 		}
+	}
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawWireSphere(transform.position, MinAttackRange);
+		Gizmos.DrawWireSphere(transform.position, MaxAttackRange);
 	}
 
 	private void ActiveAttack()
@@ -70,38 +67,48 @@ public class EnemyMain : PoolableMono, IDamageable
 		ThisEnemyAttack.StartAttack();
 	}
 
+	#region PoolableMono Methods
 
 	public override void ResetPoolableMono()
 	{
 		enemyData.SetUpDictionary();
-
+		
 		SetEnemyStat();
 	}
 
 	public override void EnablePoolableMono()
 	{
 		if (EnemyAgent == null) TryGetComponent(out  EnemyAgent);
+		EnemyAgent.updateRotation = false;
+
 		if (ThisEnemyAttack == null) TryGetComponent(out ThisEnemyAttack);
+		ThisEnemyAttack.InitEnemyData(this);
+
 
 		isAlive = true;
 		isAttack = false;
 
-		ThisEnemyAttack.InitEnemyData(this);
 
 		SetMoveSpeed();
-		StartChasing();
 
-		CurrentHp = MaxHP.GetValue();
+		enemyData.NowHP = MaxHP.GetValue();
 
-		TargetTransform = Managers.instance.PlayerMng.PlayerPos;
+		TargetTransform = Managers.instance?.PlayerMng?.PlayerPos;
 	}
+
+	#endregion
 
 	private void SetEnemyStat()
 	{
-		MaxHP = enemyData.StatDictionary["MaxHP"];
-		Attack = enemyData.StatDictionary["Attack"];
-		AttackSpeed = enemyData.StatDictionary["AttackSpeed"];
-		MoveSpeed = enemyData.StatDictionary["MoveSpeed"];
+		List<Stat> enemyDataStats = enemyData.GetAllStat();
+		MaxHP = enemyDataStats[0];
+		Logger.Assert(MaxHP != null, "MaxHP is Set Complete");
+		Attack = enemyDataStats[1];
+		Logger.Assert(Attack != null, "MaxHP is Set Complete");
+		AttackCoolDownTime = enemyDataStats[2];
+		Logger.Assert(AttackCoolDownTime != null, "AttackCoolDownTime is Set Complete");
+		MoveSpeed = enemyDataStats[3];
+		Logger.Assert(MoveSpeed != null, "MoveSpeed is Set Complete");
 
 		this.gameObject.name = PoolName;
 	}
@@ -118,17 +125,17 @@ public class EnemyMain : PoolableMono, IDamageable
 	private void IncreaseHP(float dmg)
 	{
 		//Start Heel Effect
-		CurrentHp = Mathf.Clamp(CurrentHp + dmg, 0, MaxHP.GetValue());
+		enemyData.NowHP = Mathf.Clamp(enemyData.NowHP + dmg, 0, MaxHP.GetValue());
 
-		if (CurrentHp <= 0) DieObject();
+		if (enemyData.NowHP <= 0) DieObject();
 	}
 
 	private void DecreaseHP(float dmg)
 	{
 		//Start Hit Effect
-		CurrentHp = Mathf.Clamp(CurrentHp - dmg, 0, MaxHP.GetValue());
+		enemyData.NowHP = Mathf.Clamp(enemyData.NowHP - dmg, 0, MaxHP.GetValue());
 
-		if (CurrentHp <= 0) DieObject();
+		if (enemyData.NowHP <= 0) DieObject();
 	}
 
 	public void DieObject()
@@ -140,17 +147,15 @@ public class EnemyMain : PoolableMono, IDamageable
 
 	#endregion
 
-	#region Enemy Move
+	#region Enemy Move Methods
 	private float DestinationRadius => UnityEngine.Random.Range(MinAttackRange + CorrectionAttackRange, MaxAttackRange - CorrectionAttackRange);
 	private Vector3 DestinationPos = Vector3.zero;
 
-	public void SetDestinationPos()
+	private void SetDestinationPos()
 	{
 		DestinationPos = GetClosestPointOnCircle(transform.position);
-		if (DestinationPos != null)
-		{
-			SetMoveDirection();
-		}
+		Logger.Log(DestinationPos);
+		EnemyAgent.SetDestination(DestinationPos);
 	}
 
 	private Vector3 GetClosestPointOnCircle(Vector3 point)
@@ -162,20 +167,9 @@ public class EnemyMain : PoolableMono, IDamageable
 		return ClosestPositon;
 	}
 
-	public void StartChasing()
-	{
-		SetMoveSpeed();
-		SetDestinationPos();
-	}
-
 	public void StopChaing() =>	EnemyAgent.SetDestination(this.transform.position);
 	public void SetMoveSpeed() => EnemyAgent.speed = MoveSpeed.GetValue();
 
-	private void SetMoveDirection()
-	{
-		SetMoveSpeed();
-		EnemyAgent.SetDestination(DestinationPos);
-	}
 	#endregion
 
 }

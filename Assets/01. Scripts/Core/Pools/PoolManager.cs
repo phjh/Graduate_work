@@ -40,8 +40,12 @@ public class PoolManager : ManagerBase<PoolManager>
 		DontDestroyOnLoad(PoolParent_Block.root);
 
 		SetDataListInDictionary();
-		SetDataOnStruct(StructNamesList[0]);
-		SetDataOnStruct(StructNamesList[1]);
+
+		StructNamesList.ForEach(name =>
+		{
+			SetDataOnStruct(name);
+		});
+
 		StartPooling();
 	}
 

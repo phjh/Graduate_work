@@ -6,7 +6,7 @@ public abstract class SceneFlowBase : MonoBehaviour
 {
     protected Managers mngs;
 	public GameState ThisSceneState;
-
+	
 	private void Awake()
 	{
 		mngs = Managers.GetInstance();

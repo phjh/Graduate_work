@@ -816,6 +816,111 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 604504806}
   m_CullTransparentMesh: 1
+--- !u!1 &685268294
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 685268298}
+  - component: {fileID: 685268297}
+  - component: {fileID: 685268296}
+  - component: {fileID: 685268295}
+  m_Layer: 0
+  m_Name: TestTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!65 &685268295
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685268294}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &685268296
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685268294}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &685268297
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685268294}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &685268298
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685268294}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 40.33, y: 0.5, z: 31.52}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &747467583
 GameObject:
   m_ObjectHideFlags: 0
@@ -1863,7 +1968,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &1262480910
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1915,7 +2020,7 @@ Transform:
   m_GameObject: {fileID: 1262480907}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 30.3, y: 0.5, z: 38.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1940,7 +2045,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1
+  m_Height: 0.3
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -1983,10 +2088,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea0632ba9b92adc46b5ca34d200b18d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoolName: 
-  enemyData: {fileID: 0}
-  MinAttackRange: 0
-  MaxAttackRange: 0
+  PoolName: TestEnemy
+  enemyData: {fileID: 11400000, guid: c6337358f37f3b7429c5d6a390dbfc00, type: 2}
+  MinAttackRange: 1
+  MaxAttackRange: 5
+  TargetTransform: {fileID: 685268298}
+  ThisEnemyAttack: {fileID: 11400000, guid: a67ca7e7c3685b64db07c3f478efe925, type: 2}
   TargetLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -1999,7 +2106,7 @@ MonoBehaviour:
     baseValue: 0
     fixedModifiers: []
     persentedModifiers: []
-  AttackSpeed:
+  AttackCoolDownTime:
     baseValue: 0
     fixedModifiers: []
     persentedModifiers: []
@@ -2009,7 +2116,6 @@ MonoBehaviour:
     persentedModifiers: []
   isAlive: 1
   EnemyAgent: {fileID: 0}
-  TargetTransform: {fileID: 0}
 --- !u!1 &1314393505
 GameObject:
   m_ObjectHideFlags: 0
@@ -3564,17 +3670,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 134390479}
     - target: {fileID: 5406252698822384476, guid: b23817c300560274d82af54301a79342, type: 3}
+      propertyPath: DataStruct.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5406252698822384476, guid: b23817c300560274d82af54301a79342, type: 3}
       propertyPath: StructNamesList.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5406252698822384476, guid: b23817c300560274d82af54301a79342, type: 3}
       propertyPath: StructNamesList.Array.data[0]
       value: TESTING
       objectReference: {fileID: 0}
     - target: {fileID: 5406252698822384476, guid: b23817c300560274d82af54301a79342, type: 3}
+      propertyPath: StructNamesList.Array.data[1]
+      value: ITEMTESTING
+      objectReference: {fileID: 0}
+    - target: {fileID: 5406252698822384476, guid: b23817c300560274d82af54301a79342, type: 3}
       propertyPath: DataStruct.Array.data[0].PoolData
       value: 
       objectReference: {fileID: 11400000, guid: dfc812d38fdbf19488d3caadf4b36be3, type: 2}
+    - target: {fileID: 5406252698822384476, guid: b23817c300560274d82af54301a79342, type: 3}
+      propertyPath: DataStruct.Array.data[1].PoolData
+      value: 
+      objectReference: {fileID: 11400000, guid: e9fd7fc74c0550e409e5c1a784dcfbd3, type: 2}
+    - target: {fileID: 5406252698822384476, guid: b23817c300560274d82af54301a79342, type: 3}
+      propertyPath: DataStruct.Array.data[1].FloorName
+      value: ITEMTESTING
+      objectReference: {fileID: 0}
     - target: {fileID: 6109522973493766239, guid: b23817c300560274d82af54301a79342, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3820,3 +3942,4 @@ SceneRoots:
   - {fileID: 99088652}
   - {fileID: 1262480912}
   - {fileID: 839203256}
+  - {fileID: 685268298}
