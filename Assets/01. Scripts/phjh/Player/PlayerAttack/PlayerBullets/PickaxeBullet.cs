@@ -27,4 +27,17 @@ public class PickaxeBullet : PlayerBullet
         transform.rotation = rotaterot;
     }
 
+    protected override void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.TryGetComponent<EnemyMain>(out EnemyMain enemy))
+        {
+            //enemy.TakeDamage()
+        }
+        if (other.gameObject.TryGetComponent<Blocks>(out Blocks block))
+        {
+            block.BlockEvent(transform.position);
+            DestroyAndStopCoroutine();
+        }
+    }
+
 }

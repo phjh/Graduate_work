@@ -19,7 +19,7 @@ public class PlayerManager : ManagerBase<PlayerManager>
 	public override void InitManager()
 	{
 		base.InitManager();
-		SelectedWeaponData = Resources.Load("Resources/WeaponDatas/PickaxData") as WeaponDataSO;
+		//SelectedWeaponData = Resources.Load("Resources/WeaponDatas/PickaxeData") as WeaponDataSO;
 		SetUpOreDictionary();
 
         Logger.Log("Complete Active Player Manager");

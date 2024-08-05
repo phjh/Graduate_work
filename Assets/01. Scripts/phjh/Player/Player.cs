@@ -53,12 +53,13 @@ public class Player : MonoBehaviour, IDamageable
 
     public bool canMove { get; set; } = true;
     public bool canAttack { get; set; } = true;
-    
+    public bool canDodge { get; set; } = true;
 
     public bool isAttacking { get; set; } = false;
     public bool isMoving { get; set; } = false;
     public bool isAniming { get; set; } = false;
     public bool isImmunity { get; set; } = false;
+    public bool isDodging { get; set; } = false;
     public bool isDead { get; set; } = false;
 
     public bool inputAble { get; set; } = true;
@@ -166,7 +167,7 @@ public class Player : MonoBehaviour, IDamageable
     public void TakeDamage(float dmg)
     {        
         //뎀지 안받는 상태
-        if (isImmunity)
+        if (isImmunity || isDodging)
             return;
 
         //카메라 흔들림 넣기

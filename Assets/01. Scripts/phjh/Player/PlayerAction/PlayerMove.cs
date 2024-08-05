@@ -3,6 +3,8 @@ using CustomSpineAnimator;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
+using Unity.VisualScripting;
 
 enum MoveDir
 { 
@@ -41,6 +43,7 @@ public class PlayerMove : MonoBehaviour
 
         _rb = GetComponent<Rigidbody>();
         _inputReader.MovementEvent += GetMoveDirection;
+        _inputReader.DodgeEvent += Dodge;
     }
 
     public void GetMoveDirection(Vector2 dir)
@@ -91,13 +94,15 @@ public class PlayerMove : MonoBehaviour
     private void SetMoveAnimation()
     {
         if (_nowMoveDir == _lastMoveDir) return;
-        SpineAnimator.SetAnimation(_body, _animations[(int)_nowMoveDir]);
+        SpineAnimator.SetAnimation(_body, _animations[(int)_nowMoveDir], loop: true);
         Debug.Log(_nowMoveDir);
         _lastMoveDir = _nowMoveDir;
     }
 
     private void FixedUpdate()
     {
+        if (_player.isDodging)
+            return;
 
         if (_player.canMove)
             CalculatePlayerMovement();
@@ -106,5 +111,20 @@ public class PlayerMove : MonoBehaviour
         Move();
     }
 
+    private void Dodge()
+    {
+        _player.isDodging = true;
+        StartCoroutine(DodgeCoroutine());
+    }
+
+    private IEnumerator DodgeCoroutine()
+    {
+        Debug.Log("dodgeStart");
+        _movementVelocity *= 1.5f;
+        _rb.velocity = _movementVelocity;
+        yield return new WaitForSeconds(1);
+        _player.isDodging = false;
+        Debug.Log("dodgeEnd");
+    }
 
 }

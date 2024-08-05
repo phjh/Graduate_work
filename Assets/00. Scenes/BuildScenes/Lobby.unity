@@ -1164,6 +1164,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ThisSceneState: 2
+  NeedPoolListName: 
+  ResetPool: 0
   StartBtn: {fileID: 630305187}
   NextSceneName: InGame
 --- !u!1 &828203106
@@ -1613,7 +1615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe08f296aa454d846ba8f1fa601658d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ThisWheelData: {fileID: 11400000, guid: 1feb62493e8940a4c834405ab82727be, type: 2}
+  ThisWheelData: {fileID: 11400000, guid: 01652762a5c104a4792b0a12d41ddb78, type: 2}
   WeaponIconImage: {fileID: 1013172586}
   DefaultColor: {r: 1, g: 1, b: 1, a: 1}
   SelectedColor: {r: 0.89433956, g: 0.77813816, b: 0.17380556, a: 1}

@@ -123,7 +123,7 @@ public class EnemyMain : PoolableMono, IDamageable
 
 		enemyData.NowHP = MaxHP.GetValue();
 
-		TargetTransform = Managers.instance?.PlayerMng?.PlayerPos;
+		TargetTransform = Managers.instance?.PlayerMng?.Player.transform;
 	}
 
 	#endregion
