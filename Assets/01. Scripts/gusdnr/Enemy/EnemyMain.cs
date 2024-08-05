@@ -32,6 +32,7 @@ public class EnemyMain : PoolableMono, IDamageable
 	[HideInInspector] public bool CanAttack { get; set; } = false;
 
 	[HideInInspector] public NavMeshAgent EnemyAgent;
+	[HideInInspector] public Animator EnemyAnimator;
 
 	private float DistanceToTarget => Vector3.Distance(transform.position, TargetTransform.position);
 
@@ -111,12 +112,12 @@ public class EnemyMain : PoolableMono, IDamageable
 		if (ThisEnemyAttack == null) TryGetComponent(out ThisEnemyAttack);
 		ThisEnemyAttack.InitEnemyData(this);
 
+		if (EnemyAnimator == null) transform.Find("Visual")?.TryGetComponent(out EnemyAnimator);
 
 		isAlive = true;
 		IsAttack = false;
 		IsMove = false;
 		CanAttack = true;
-
 
 		SetMoveSpeed();
 

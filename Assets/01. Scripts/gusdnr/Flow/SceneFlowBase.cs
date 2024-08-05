@@ -18,7 +18,10 @@ public abstract class SceneFlowBase : MonoBehaviour
 	public void SetFlowThisScene()
 	{
 		mngs?.FlowMng.ChangeGameState(ThisSceneState);
-		mngs?.PoolMng?.SetDataOnStruct(NeedPoolListName, ResetPool);
+		if(string.IsNullOrEmpty(NeedPoolListName))
+		{
+			mngs?.PoolMng?.SetDataOnStruct(NeedPoolListName, ResetPool);
+		}
 
 		this?.ActiveFlowBase();
 	}

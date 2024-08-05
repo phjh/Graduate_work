@@ -48,9 +48,7 @@ MonoBehaviour:
   MainCanvas: {fileID: 0}
   UICanvases:
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   FadePanel: {fileID: 0}
   fadeDuration: 0.5
-  LoadProcessBar: {fileID: 0}
+  LoadProcessObject: {fileID: 0}
+  LoadProcessFill: {fileID: 0}
