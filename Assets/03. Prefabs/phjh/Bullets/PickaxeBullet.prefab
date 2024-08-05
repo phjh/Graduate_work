@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -5431958697831161110}
   - component: {fileID: 3993027108183574981}
   - component: {fileID: 676689613974909824}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: PickaxeBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

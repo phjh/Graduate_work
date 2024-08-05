@@ -51,7 +51,7 @@ public abstract class PlayerBullet : PoolableMono
         }
         if (other.gameObject.TryGetComponent<Blocks>(out Blocks block))
         {
-            block.BlockEvent(transform.position);
+            block.BlockEvent();
             DestroyAndStopCoroutine();
         }
 

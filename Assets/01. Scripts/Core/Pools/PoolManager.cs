@@ -4,7 +4,6 @@ using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 using UnityEngine.InputSystem;
 using System;
-using DG.Tweening;
 
 [System.Serializable]
 public struct FloorPoolList
@@ -44,6 +43,7 @@ public class PoolManager : ManagerBase<PoolManager>
 		SetDataListInDictionary();
 		SetDataOnFloor("TESTING");
 		StartPooling();
+		SetBlockVisible(false);
 	}
 
 	public void SetBlockVisible(bool value) => PoolParent_Block.gameObject.SetActive(value);
@@ -164,43 +164,6 @@ public class PoolManager : ManagerBase<PoolManager>
 			return;
 		}
 		CompletePoolableMonos[PoolableName].Push(item);
-	}
-
-	public void PopAndPushEffect(string poolableName, Vector3 position, float time)
-	{
-		StartCoroutine(EffectCoroutine(poolableName, position, time));
-	}
-
-	private IEnumerator EffectCoroutine(string poolableName, Vector3 position, float time)
-	{
-		PoolableMono mono = Pop(poolableName, position);
-		if(TryGetComponent<ParticleSystem>(out ParticleSystem sys))
-		{
-			sys.Play();
-			yield return new WaitForSeconds(time);
-			sys.Stop();
-		}
-		else
-		{
-			List<ParticleSystem> particle = new();
-            foreach (var particles in mono.GetComponentsInChildren<ParticleSystem>())
-            {
-				particle.Add(particles);	
-            }
-
-			foreach(var psys in particle)
-			{
-				psys.Play();
-			}
-
-            yield return new WaitForSeconds(time);
-
-            foreach (var psys in particle)
-            {
-                psys.Stop();
-            }
-        }
-		Push(mono, poolableName);
 	}
 
 }

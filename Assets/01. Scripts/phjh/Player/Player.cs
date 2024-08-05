@@ -21,9 +21,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private List<AnimationReferenceAsset> _moveAnimations;
 
-    [SerializeField]
-    private Transform _weaponParent;
-
     #endregion
 
     #region 외부 코드에서 받아서 쓸 값들
@@ -45,7 +42,11 @@ public class Player : MonoBehaviour
 
     private PlayerHead _playerHead;
 
-    private PlayerWeapon weapon;
+    [SerializeField]
+    private Transform templefthand, temprighthand;
+
+    [SerializeField]
+    private Transform temphead;
 
     #endregion
 
@@ -69,15 +70,8 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        SetWeapon();
         SetSpineIK();
         Init();
-    }
-
-    private void SetWeapon()
-    {
-        weapon = Instantiate(_tempWeapon.playerWeapon.gameObject, transform.position, Quaternion.Euler(0, 0, 45), _weaponParent).GetComponent<PlayerWeapon>();
-        weapon.transform.localPosition = new Vector2(-0.1f, 0);
     }
 
     private void SetSpineIK()
@@ -90,8 +84,8 @@ public class Player : MonoBehaviour
             Logger.LogError("playerHand is null");
             return;
         }
-
-        _playerHand.Init(weapon.leftHandIK, weapon.rightHandIK);
+        
+        _playerHand.Init(templefthand, temprighthand);
         _playerHead.Init();
     }
 
@@ -119,7 +113,7 @@ public class Player : MonoBehaviour
 
         //플레이어 움직임 부분
         if (this.gameObject.TryGetComponent(out PlayerMove move))
-            move.Init(this, inputReader, _skeletonAnimation, _moveAnimations);
+            move.Init(this, inputReader);
         else
             Logger.LogWarning("Playermove is null");
 
