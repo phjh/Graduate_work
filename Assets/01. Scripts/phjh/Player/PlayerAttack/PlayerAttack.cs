@@ -44,10 +44,11 @@ public class PlayerAttack : MonoBehaviour
 
     public void DoAttack()
     {
-        if (CheckAmmo() == false)
+        CheckShoot();
+
+        if (!_player.canAttack)
             return;
 
-        //Vector3 dir = new Vector3(mousedir.x, 0, mousedir.y);
         rot = SetAim();
 
         if (rot == Vector3.up)
@@ -56,25 +57,48 @@ public class PlayerAttack : MonoBehaviour
             return;
         }
 
+        FireBullet();
+    }
+
+    private void FireBullet()
+    {
+        weapon.currentAmmo--;
+
         PlayerBullet bullet = (PlayerBullet)PoolManager.Instance.Pop(tempBullet.name, this.transform.position + new Vector3(0, 0.4f, 0));
         //bullet.transform.forward = rot;
 
         Quaternion rotation = Quaternion.LookRotation(rot);
 
         bullet.Init(rotation);
-        //bullet.transform.rotation = Quaternion.Slerp(bullet.transform.rotation, rotation, 1);
 
+        _lastFireTime = Time.time;
+        //bullet.transform.rotation = Quaternion.Slerp(bullet.transform.rotation, rotation, 1);
     }
 
-    private bool CheckAmmo()
+    private void CheckShoot()
     {
-        if(weapon.currentAmmo <= 0)
+        if (_lastFireTime + weapon.AttackCooltime < Time.time)
         {
-
+            _player.canAttack = false;
+            return;
         }
 
-        return true;
+        if (weapon.currentAmmo <= 0)
+        {
+            _player.canAttack = false;
+            Invoke(nameof(Reload), weapon.ReloadTime);
+            return;
+        }
+
+        _player.canAttack = true;
     }
+
+    private void Reload()
+    {
+        weapon.currentAmmo = weapon.maxAmmo;
+        _player.canAttack = true;
+    }
+
 
     #region AimingMethods
 
@@ -133,14 +157,14 @@ public class PlayerAttack : MonoBehaviour
 
         if (Application.isPlaying)
         {
-            var ray = mainCamera.ScreenPointToRay(_inputReader.AimPosition);
+            var ray = Camera.main.ScreenPointToRay(_inputReader.AimPosition);
 
             Gizmos.color = Color.red;
             const float Radius = 0.15f;
 
             if (Physics.Raycast(ray, out var hitInfo, 1000, layer))
             {
-                Gizmos.DrawLine(hitInfo.point, mainCamera.transform.position);
+                Gizmos.DrawLine(hitInfo.point, Camera.main.transform.position);
                 Gizmos.DrawSphere(hitInfo.point, Radius);
             }
         }

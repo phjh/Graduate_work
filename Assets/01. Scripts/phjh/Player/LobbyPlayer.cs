@@ -8,12 +8,12 @@ public class LobbyPlayer : MonoBehaviour
 
     private void Start()
     {
-        PlayerManager.Instance.player = this;
+        PlayerManager.Instance.LobbyPlayer = this;
     }
 
     private void Update()
     {
-        PlayerManager.Instance.player = this;
+        PlayerManager.Instance.LobbyPlayer = this;
     }
 
     public void SetSpineIK(Transform left, Transform right)
