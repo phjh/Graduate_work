@@ -1,0 +1,6 @@
+miner_hand.png
+size:16,16
+filter:Linear,Linear
+pma:true
+hand
+bounds:2,2,12,12

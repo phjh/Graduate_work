@@ -2,7 +2,7 @@ using Spine.Unity;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     #region 유니티 인스펙터에서 세팅해줄 값들 
 
@@ -65,9 +65,7 @@ public class Player : MonoBehaviour
 
     #endregion
 
-    private Managers mngs;
-
-    private void Awake()
+    private void Start()
     {
         SetWeapon();
         SetSpineIK();
@@ -76,13 +74,14 @@ public class Player : MonoBehaviour
 
     private void SetWeapon()
     {
-        //여기서 무기값을 받아온다
-        //
+        PlayerManager.Instance.Player = this;
+        _tempWeapon = PlayerManager.Instance.SentWeaponData();
+
         weapon = Instantiate(_tempWeapon.playerWeapon.gameObject, transform.position, Quaternion.Euler(0, 0, 45), _weaponParent).GetComponent<PlayerWeapon>();
         weapon.transform.localPosition = new Vector2(-0.1f, 0);
         if (_tempWeapon.weapon == WeaponEnum.Drill)
         {
-            weapon.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+            weapon.gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
 
@@ -114,8 +113,6 @@ public class Player : MonoBehaviour
         inputReader = _inputReader;
         skeletonAnimation = _skeletonAnimation;
 
-		//WeaponData = mngs?.PlayerMng?.SentWeaponData();
-
 		weaponData = _tempWeapon;
 
         //인풋리더 활성화
@@ -127,7 +124,10 @@ public class Player : MonoBehaviour
         if (this.gameObject.TryGetComponent(out PlayerMove move))
             move.Init(this, inputReader, _skeletonAnimation, _moveAnimations);
         else
+        {
             Logger.LogWarning("Playermove is null");
+            Debug.LogError("playermove is null");
+        }
 
         if (this.gameObject.TryGetComponent(out PlayerAttack attack))
             attack.Init(this, inputReader, weaponData.bullet, weapon);
@@ -145,27 +145,6 @@ public class Player : MonoBehaviour
 
     }
 
-    public void GetDamage(float damage)
-    {
-        //뎀지 안받는 상태
-        if (isImmunity)
-            return;
-
-        //카메라 흔들림 넣기
-        if (_playerShield.canDefence)
-        {
-            _playerShield.Defence();
-            
-        }
-        else
-        {
-            //그대로 데미지 입게끔 해준다
-            playerStat.NowHP.SetBaseValue(playerStat.NowHP.GetValue() - damage);
-            SetHealthBar();
-        }
-    }
-
-
 
     private void SetHealthBar()
     {
@@ -180,8 +159,32 @@ public class Player : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.X))
         {
-            GetDamage(1);
+            TakeDamage(1);
         }
     }
 
+    public void TakeDamage(float dmg)
+    {        
+        //뎀지 안받는 상태
+        if (isImmunity)
+            return;
+
+        //카메라 흔들림 넣기
+        if (_playerShield.canDefence)
+        {
+            _playerShield.Defence();
+
+        }
+        else
+        {
+            //그대로 데미지 입게끔 해준다
+            playerStat.NowHP.SetBaseValue(playerStat.NowHP.GetValue() - dmg);
+            SetHealthBar();
+        }
+    }
+
+    public void DieObject()
+    {
+        //넘어가게끔바꾸기
+    }
 }

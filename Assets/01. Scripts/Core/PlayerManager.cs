@@ -13,7 +13,8 @@ public class PlayerManager : ManagerBase<PlayerManager>
 
 	private GameObject nowWeapon;
 
-	public LobbyPlayer player;
+	public LobbyPlayer LobbyPlayer;
+	public Player Player;
 
 	public override void InitManager()
 	{
@@ -57,7 +58,7 @@ public class PlayerManager : ManagerBase<PlayerManager>
 		}
         nowWeapon.SetActive(true);
 		PlayerWeapon weapon = nowWeapon.GetComponent<PlayerWeapon>();
-		player.SetSpineIK(weapon.leftHandIK, weapon.rightHandIK);
+		LobbyPlayer.SetSpineIK(weapon.leftHandIK, weapon.rightHandIK);
 	}
 
 	public void SetActiveXRay(bool active)

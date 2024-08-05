@@ -131,6 +131,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHandIK: {fileID: 4435234324050297257}
   rightHandIK: {fileID: 5540690426236555946}
+  maxAmmo: 2
+  currentAmmo: 2
+  ReloadTime: 1
+  AttackCooltime: 0.5
 --- !u!1 &8132682102864509363
 GameObject:
   m_ObjectHideFlags: 0
