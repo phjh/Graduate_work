@@ -5,8 +5,11 @@ using UnityEngine;
 public abstract class SceneFlowBase : MonoBehaviour
 {
     protected Managers mngs;
+	[Header("FlowBase Default Values")]
 	public GameState ThisSceneState;
-	
+	[SerializeField] private string NeedPoolListName;
+	[SerializeField] private bool ResetPool = false;
+
 	private void Awake()
 	{
 		mngs = Managers.GetInstance();
@@ -15,6 +18,7 @@ public abstract class SceneFlowBase : MonoBehaviour
 	public void SetFlowThisScene()
 	{
 		mngs?.FlowMng.ChangeGameState(ThisSceneState);
+		mngs?.PoolMng?.SetDataOnStruct(NeedPoolListName, ResetPool);
 
 		this?.ActiveFlowBase();
 	}

@@ -23,13 +23,13 @@ public class PoolManager : ManagerBase<PoolManager>
 
 	[Header("Pool Values")]
 	[SerializeField] private PoolListStruct[] DataStruct;
-	[SerializeField] private List<string> StructNamesList;
 
 	private PoolListSO CurrentFloorPoolData;
 	public event Action OnPoolingComplete;
 
 	private Dictionary<string, PoolListSO> PoolListData = new Dictionary<string, PoolListSO>();
 	private Dictionary<string, Pool<PoolableMono>> CompletePoolableMonos = new Dictionary<string, Pool<PoolableMono>>();
+	private List<string> StructNamesList;
 
 	public override void InitManager()
 	{
@@ -53,14 +53,24 @@ public class PoolManager : ManagerBase<PoolManager>
 
 	public void SetDataListInDictionary()
 	{
-		foreach (PoolListStruct floorList in DataStruct)
+		StructNamesList.Clear();
+		foreach (PoolListStruct structData in DataStruct)
 		{
-			if(floorList.PoolData != null) PoolListData.Add(floorList.FloorName, floorList.PoolData);
+			if(structData.PoolData != null && string.IsNullOrEmpty(structData.FloorName) == false)
+			{
+				PoolListData.Add(structData.FloorName, structData.PoolData);
+				StructNamesList.Add(structData.FloorName);
+			}
 		}
 	}
 
 	public void SetDataOnStruct(string floorName, bool isReset = false)
 	{
+		if(StructNamesList.Contains(floorName) == false)
+		{
+			Logger.LogWarning("Init Name is Null! Please Check PoolingList's Name");
+			return;
+		}
 		if (isReset == true) ClearPreviousData();
 
 		CurrentFloorPoolData = PoolListData[floorName];

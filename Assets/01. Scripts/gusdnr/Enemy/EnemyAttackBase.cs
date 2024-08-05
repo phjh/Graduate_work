@@ -31,6 +31,7 @@ public abstract class EnemyAttackBase : ScriptableObject
 
 	public virtual void EndAttack()
 	{
-		E_Main.isAttack = false;
+		E_Main.IsAttack = false;
+		E_Main.Invoke("ActiveAttackCooldown", E_Main.AttackCoolDownTime.GetValue());
 	}
 }
