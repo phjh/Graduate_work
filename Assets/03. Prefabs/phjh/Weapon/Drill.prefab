@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingOrder: 2
   m_Sprite: {fileID: 1371611256, guid: 33f429376b2a2f34686788760f172da1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
@@ -100,10 +100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHandIK: {fileID: 2188738007761788997}
   rightHandIK: {fileID: 9046334335651579226}
-  maxAmmo: 0
-  currentAmmo: 0
-  ReloadTime: 0
-  AttackSpeed: 0
 --- !u!1 &6538987951581946919
 GameObject:
   m_ObjectHideFlags: 0

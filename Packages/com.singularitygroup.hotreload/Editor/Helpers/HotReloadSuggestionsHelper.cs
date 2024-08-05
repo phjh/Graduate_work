@@ -301,15 +301,9 @@ namespace SingularityGroup.HotReload.Editor {
             try {
                 checkingEditorsWihtoutHR = true;
                 var showSuggestion = await Task.Run(() => {
-                    try {
-                        var runningUnities = Process.GetProcessesByName("Unity").Length;
-                        var runningPatchers = Process.GetProcessesByName("CodePatcherCLI").Length;
-                        return runningUnities > runningPatchers;
-                    } catch (ArgumentException) {
-                        // On some devices GetProcessesByName throws ArgumentException for no good reason.
-                        // it happens rarely and the feature is not the most important so proper solution is not required
-                        return false;
-                    }
+                    var runningUnities = Process.GetProcessesByName("Unity").Length;
+                    var runningPatchers = Process.GetProcessesByName("CodePatcherCLI").Length;
+                    return runningUnities > runningPatchers;
                 });
                 if (!showSuggestion) {
                     HotReloadSuggestionsHelper.SetSuggestionInactive(HotReloadSuggestionKind.EditorsWithoutHRRunning);

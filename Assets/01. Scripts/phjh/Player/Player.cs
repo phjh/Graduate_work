@@ -76,14 +76,8 @@ public class Player : MonoBehaviour
 
     private void SetWeapon()
     {
-        //여기서 무기값을 받아온다
-        //
         weapon = Instantiate(_tempWeapon.playerWeapon.gameObject, transform.position, Quaternion.Euler(0, 0, 45), _weaponParent).GetComponent<PlayerWeapon>();
         weapon.transform.localPosition = new Vector2(-0.1f, 0);
-        if (_tempWeapon.weapon == WeaponEnum.Drill)
-        {
-            weapon.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
     }
 
     private void SetSpineIK()
@@ -130,7 +124,7 @@ public class Player : MonoBehaviour
             Logger.LogWarning("Playermove is null");
 
         if (this.gameObject.TryGetComponent(out PlayerAttack attack))
-            attack.Init(this, inputReader, weaponData.bullet, weapon);
+            attack.Init(this, inputReader, weaponData.bullet);
         else
             Logger.LogWarning("Playerattack is null");
 

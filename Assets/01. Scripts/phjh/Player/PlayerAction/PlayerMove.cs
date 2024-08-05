@@ -83,7 +83,6 @@ public class PlayerMove : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("set enabled/disabled move");
             _player.canMove = !_player.canMove;
         }
     }

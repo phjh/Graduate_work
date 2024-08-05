@@ -13,7 +13,7 @@ public class PlayerHead : MonoBehaviour
 
     private Bone headBone;
 
-    private float value = 0;
+    public float test = 0;
 
     private SkeletonAnimation skeletonAnim;
 
@@ -31,26 +31,26 @@ public class PlayerHead : MonoBehaviour
     private void LocalUpdate(ISkeletonAnimation animated)
     {
         Vector2 seedir = GetAnglePos();
-        value = Vector2.Angle(transform.position , seedir);
+        test = Vector2.Angle(transform.position , seedir);
 
-        transform.localScale = new Vector3((int)(value / 90) * -2 + 1, 1, 1);
+        transform.localScale = new Vector3((int)(test / 90) * -2 + 1, 1, 1);
         if(seedir.y > 0)
         {
-            value *= (int)(value / 90) * -2 + 1;
+            test *= (int)(test / 90) * -2 + 1;
         }
-        if((int)(value / 90) * -2 + 1 == 1)
+        if((int)(test / 90) * -2 + 1 == 1)
         {
             if (seedir.y < 0)
-                value *= -1;
+                test *= -1;
 
-            value += 180;
+            test += 180;
         }
 
-        weaponPivot.rotation = Quaternion.Euler(45, 0, (WeaponRevision(value, seedir)));
+        weaponPivot.rotation = Quaternion.Euler(45, 0, (WeaponRevision(test, seedir)));
 
-        value -= 90;
+        test -= 90;
 
-        headBone.Rotation = AngleRevision(value,seedir);
+        headBone.Rotation = AngleRevision(test,seedir);
         //dotwean 적용해주고 조금 더 자연스럽게 바꾸기
 
 

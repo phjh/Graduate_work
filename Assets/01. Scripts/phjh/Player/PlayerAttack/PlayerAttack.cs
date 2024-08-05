@@ -14,24 +14,24 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     private PoolableMono tempBullet;
 
+    //[SerializeField]
+    //GameObject WeaponPivot;
+
     [SerializeField]
     private LayerMask layer;
 
     private Vector3 rot;
     
     private Camera mainCamera;
-    private PlayerWeapon weapon;
+
     private List<Lazy<AnimationReferenceAsset>> _moveAnimation;
 
-    private float _lastFireTime;
-
-
-    public void Init(Player player, InputReader inputReader, PoolableMono bullet, PlayerWeapon weapon, List<AnimationReferenceAsset> animations = null)
+    public void Init(Player player, InputReader inputReader, PoolableMono bullet, List<AnimationReferenceAsset> animations = null)
     {
         _player = player;
         _inputReader = inputReader;
         this.tempBullet = bullet;
-        this.weapon = weapon;
+
 
         //foreach (var animation in animations)
         //{
@@ -44,9 +44,6 @@ public class PlayerAttack : MonoBehaviour
 
     public void DoAttack()
     {
-        if (CheckAmmo() == false)
-            return;
-
         //Vector3 dir = new Vector3(mousedir.x, 0, mousedir.y);
         rot = SetAim();
 
@@ -64,16 +61,6 @@ public class PlayerAttack : MonoBehaviour
         bullet.Init(rotation);
         //bullet.transform.rotation = Quaternion.Slerp(bullet.transform.rotation, rotation, 1);
 
-    }
-
-    private bool CheckAmmo()
-    {
-        if(weapon.currentAmmo <= 0)
-        {
-
-        }
-
-        return true;
     }
 
     #region AimingMethods
@@ -146,6 +133,8 @@ public class PlayerAttack : MonoBehaviour
         }
 
     }
+
+
 
     #endregion
 }
