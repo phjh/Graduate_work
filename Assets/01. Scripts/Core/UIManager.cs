@@ -18,7 +18,10 @@ public class UIManager : ManagerBase<UIManager>
 	[Header("UI Elements")]
 	[SerializeField] private Image FadePanel;
 	[SerializeField][Range(0.0f, 1.0f)] private float fadeDuration = 0.5f;
-	[SerializeField] private Image LoadProcessBar;
+	[SerializeField] private GameObject LoadProcessObject;
+	[SerializeField] private RectTransform LoadProcessFill;
+
+	private Vector2 FillAmountSize = Vector2.up;
 
 	public event Action OnCompleteLoadScene;
 
@@ -74,7 +77,7 @@ public class UIManager : ManagerBase<UIManager>
 				FadePanel.raycastTarget = false;
 				this.IsWorkingLoading = false;
 
-				LoadProcessBar.enabled = IsWorkingLoading;
+				LoadProcessObject.SetActive(IsWorkingLoading);
 				OnCompleteLoadScene?.Invoke();
 			});
 	}
@@ -146,7 +149,7 @@ public class UIManager : ManagerBase<UIManager>
 			{
 				StartCoroutine(TransitionScene(sceneName));
 				DisableSelectCanvas(beforeSelected);
-				LoadProcessBar.gameObject.SetActive(true);
+				LoadProcessFill.gameObject.SetActive(true);
 			});
 	}
 
@@ -160,9 +163,11 @@ public class UIManager : ManagerBase<UIManager>
 
 	private IEnumerator LoadSceneAsync(string sceneName)
 	{
+		FillAmountSize = Vector2.up;
+		
 		IsWorkingLoading = true;
-		LoadProcessBar.fillAmount = 0f;
-		LoadProcessBar.enabled = IsWorkingLoading;
+		LoadProcessFill.sizeDelta.Scale(FillAmountSize);
+		LoadProcessObject.SetActive(IsWorkingLoading);
 
 		asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 		asyncLoad.allowSceneActivation = false;
@@ -173,8 +178,8 @@ public class UIManager : ManagerBase<UIManager>
 			yield return null;
 
 			Logger.Log($"Loading : [{percentage}]%");
-
-			LoadProcessBar.fillAmount = percentage * 0.01f;
+			FillAmountSize.Set(Mathf.Clamp(percentage, 0f, 1f), 1);
+			LoadProcessFill.sizeDelta.Scale(FillAmountSize);
 			if (percentage < 90f)
 			{
 				percentage = Mathf.MoveTowards(percentage, asyncLoad.progress * 100, Time.deltaTime * 10f);
@@ -193,7 +198,7 @@ public class UIManager : ManagerBase<UIManager>
 				FadePanel.raycastTarget = false;
 				this.IsWorkingLoading = false;
 
-				LoadProcessBar.enabled = IsWorkingLoading;
+				LoadProcessObject.SetActive(IsWorkingLoading);
 				OnCompleteLoadScene?.Invoke();
 			});
 	}
@@ -216,7 +221,7 @@ public class UIManager : ManagerBase<UIManager>
 			{
 				StartCoroutine(TransitionScene(index));
 				DisableSelectCanvas(beforeSelected);
-				LoadProcessBar.gameObject.SetActive(true);
+				LoadProcessFill.gameObject.SetActive(true);
 			});
 	}
 
@@ -230,9 +235,11 @@ public class UIManager : ManagerBase<UIManager>
 
 	private IEnumerator LoadSceneAsync(int index)
 	{
+		FillAmountSize = Vector2.up;
+
 		IsWorkingLoading = true;
-		LoadProcessBar.fillAmount = 0f;
-		LoadProcessBar.enabled = IsWorkingLoading;
+		LoadProcessFill.sizeDelta.Scale(FillAmountSize);
+		LoadProcessObject.SetActive(IsWorkingLoading);
 
 		asyncLoad = SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
 		asyncLoad.allowSceneActivation = true;
@@ -243,8 +250,9 @@ public class UIManager : ManagerBase<UIManager>
 			yield return null;
 
 			Logger.Log($"Loading : [{percentage}]%");
-
-			LoadProcessBar.fillAmount = percentage * 0.01f;
+			
+			FillAmountSize.Set(Mathf.Clamp(percentage, 0f, 1f), 1);
+			LoadProcessFill.sizeDelta.Scale(FillAmountSize);
 			if (percentage < 90f)
 			{
 				percentage = Mathf.MoveTowards(percentage, asyncLoad.progress * 100, Time.deltaTime * 10f);
@@ -263,7 +271,7 @@ public class UIManager : ManagerBase<UIManager>
 				FadePanel.raycastTarget = false;
 				this.IsWorkingLoading = false;
 
-				LoadProcessBar.enabled = IsWorkingLoading;
+				LoadProcessObject.SetActive(IsWorkingLoading);
 				OnCompleteLoadScene?.Invoke();
 			});
 	}
@@ -272,7 +280,7 @@ public class UIManager : ManagerBase<UIManager>
 
 	private IEnumerator UnloadSceneAsync(int index)
 	{
-		LoadProcessBar.gameObject.SetActive(false);
+		LoadProcessFill.gameObject.SetActive(false);
 	
 		AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(index);
 		while (!asyncUnload.isDone)

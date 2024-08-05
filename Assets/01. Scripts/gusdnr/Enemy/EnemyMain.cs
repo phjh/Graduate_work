@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,73 +9,138 @@ public class EnemyMain : PoolableMono, IDamageable
 {
 	[Header("Enemy Values")]
 	public StatusSO enemyData;
-	public float AttackRange;
+	[Range(0.01f, 30f)] public float MinAttackRange;
+	[Range(0.01f, 30f)] public float MaxAttackRange;
+	public Transform TargetTransform;
+
+	[Header("Enemy Attack")]
+	[SerializeField] private EnemyAttackBase ThisEnemyAttack;
+	public LayerMask TargetLayer;
+	[Range(0.1f, 29.9f)] public float MinCorrectionAttackRange = 0.5f;
+	[Range(0.1f, 29.9f)] public float MaxCorrectionAttackRange = 1.0f;
+	
+	private float CorrectionMinRange = 0f;
+	private float CorrectionMaxRange= 0f;
 
 	[HideInInspector] public Stat MaxHP;
 	[HideInInspector] public Stat Attack;
-	[HideInInspector] public Stat AttackSpeed;
+	[HideInInspector] public Stat AttackCoolDownTime;
 	[HideInInspector] public Stat MoveSpeed;
 	[HideInInspector] public bool isAlive = true;
-	
+	[HideInInspector] public bool IsAttack { get; set; } = false;
+	[HideInInspector] public bool IsMove { get; set; } = false;
+	[HideInInspector] public bool CanAttack { get; set; } = false;
+
 	[HideInInspector] public NavMeshAgent EnemyAgent;
+	[HideInInspector] public Animator EnemyAnimator;
 
-	[HideInInspector] public Transform TargetTransform;
+	private float DistanceToTarget => Vector3.Distance(transform.position, TargetTransform.position);
 
-	private EnemyMove ThisEnemyMove;
-	private EnemyAttackBase ThisEnemyAttack;
-
-	public float CurrentHp
+	private void Awake()
 	{
-		get 
+		ResetPoolableMono();
+		EnablePoolableMono();
+	}
+
+	private void FixedUpdate()
+	{
+		if (isAlive == false || IsAttack == true) return;
+
+		if (DistanceToTarget <= CorrectionMaxRange && DistanceToTarget >= CorrectionMinRange)
 		{
-			return CurrentHp;
+			StopChaing();
 		}
 
-		set
+		if (CanAttack == true)
 		{
-			CurrentHp = value;
+			if(IsMove == false)
+			{
+				ActiveAttack();
+			}
+		}
+		else if (CanAttack == false)
+		{
+			if (IsAttack == false)
+			{
+				if (DistanceToTarget <= CorrectionMaxRange && DistanceToTarget >= CorrectionMinRange)
+				{
+					StopChaing();
+				}
+				else
+				{
+					SetDestinationPos();
+				}
+			}
 		}
 	}
+
+	private void ActiveAttack()
+	{
+		IsAttack = true;
+		CanAttack = false;
+
+		ThisEnemyAttack.StartAttack();
+	}
+
+	public void ActiveAttackCooldown()
+	{
+		// Active Cooldown Effect
+		CanAttack = true;
+	}
+
+	private void CalculateCorrectionRanges()
+	{
+		float CorrectionValue = UnityEngine.Random.Range(MinCorrectionAttackRange, MaxCorrectionAttackRange);
+		CorrectionMinRange = MinAttackRange + CorrectionValue;
+		CorrectionMaxRange = MaxAttackRange - CorrectionValue;
+	}
+
+	#region PoolableMono Methods
 
 	public override void ResetPoolableMono()
 	{
 		enemyData.SetUpDictionary();
-
+		
 		SetEnemyStat();
 	}
 
 	public override void EnablePoolableMono()
 	{
 		if (EnemyAgent == null) TryGetComponent(out  EnemyAgent);
-		if (ThisEnemyMove == null) TryGetComponent(out ThisEnemyMove);
+		EnemyAgent.updateRotation = false;
+
 		if (ThisEnemyAttack == null) TryGetComponent(out ThisEnemyAttack);
+		ThisEnemyAttack.InitEnemyData(this);
+
+		if (EnemyAnimator == null) transform.Find("Visual")?.TryGetComponent(out EnemyAnimator);
 
 		isAlive = true;
+		IsAttack = false;
+		IsMove = false;
+		CanAttack = true;
 
-		ThisEnemyMove.ActiveMove(this);
-		ThisEnemyAttack.ActiveAttack(this);
+		SetMoveSpeed();
 
-		ThisEnemyMove.SetMoveSpeed();
-		ThisEnemyMove.StartChasing();
+		enemyData.NowHP = MaxHP.GetValue();
 
-		CurrentHp = MaxHP.GetValue();
+		TargetTransform = Managers.instance?.PlayerMng?.PlayerPos;
 	}
+
+	#endregion
 
 	private void SetEnemyStat()
 	{
-		MaxHP = enemyData.StatDictionary["MaxHP"];
-		Attack = enemyData.StatDictionary["Attack"];
-		AttackSpeed = enemyData.StatDictionary["AttackSpeed"];
-		MoveSpeed = enemyData.StatDictionary["MoveSpeed"];
+		List<Stat> enemyDataStats = enemyData.GetAllStat();
+		MaxHP = enemyDataStats[0];
+		Logger.Assert(MaxHP != null, "MaxHP is Set Complete");
+		Attack = enemyDataStats[1];
+		Logger.Assert(Attack != null, "MaxHP is Set Complete");
+		AttackCoolDownTime = enemyDataStats[2];
+		Logger.Assert(AttackCoolDownTime != null, "AttackCoolDownTime is Set Complete");
+		MoveSpeed = enemyDataStats[3];
+		Logger.Assert(MoveSpeed != null, "MoveSpeed is Set Complete");
 
 		this.gameObject.name = PoolName;
-	}
-
-
-	private void ActiveAttack()
-	{
-		ThisEnemyMove.StopChaing();
-		ThisEnemyAttack.StartAttack();
 	}
 
 	#region IDamageable Methods
@@ -89,25 +155,57 @@ public class EnemyMain : PoolableMono, IDamageable
 	private void IncreaseHP(float dmg)
 	{
 		//Start Heel Effect
-		CurrentHp = Mathf.Clamp(CurrentHp + dmg, 0, MaxHP.GetValue());
+		enemyData.NowHP = Mathf.Clamp(enemyData.NowHP + dmg, 0, MaxHP.GetValue());
 
-		if (CurrentHp <= 0) DieObject();
+		if (enemyData.NowHP <= 0) DieObject();
 	}
 
 	private void DecreaseHP(float dmg)
 	{
 		//Start Hit Effect
-		CurrentHp = Mathf.Clamp(CurrentHp - dmg, 0, MaxHP.GetValue());
+		enemyData.NowHP = Mathf.Clamp(enemyData.NowHP - dmg, 0, MaxHP.GetValue());
 
-		if (CurrentHp <= 0) DieObject();
+		if (enemyData.NowHP <= 0) DieObject();
 	}
 
 	public void DieObject()
 	{
 		isAlive = false;
-		ThisEnemyMove.StopChaing();
+		StopChaing();
 		PoolManager.Instance.Push(this, this.PoolName);
 	}
+
+	#endregion
+
+	#region Enemy Move Methods
+	private float DestinationRadius => UnityEngine.Random.Range(CorrectionMinRange, CorrectionMaxRange);
+	private Vector3 DestinationPos = Vector3.zero;
+
+	private void SetDestinationPos()
+	{
+		DestinationPos = GetClosestPointOnCircle(transform.position);
+		EnemyAgent.SetDestination(DestinationPos);
+
+		IsMove = true;
+	}
+
+	private Vector3 GetClosestPointOnCircle(Vector3 point)
+	{
+		Vector3 direction = point - TargetTransform.position; // Calcurate Direction Vector
+		direction.Normalize(); // Normalized Direction Vector
+		CalculateCorrectionRanges();
+		Vector3 ClosestPositon = TargetTransform.position + direction * DestinationRadius;
+		ClosestPositon.y = point.y;
+		return ClosestPositon;
+	}
+
+	public void StopChaing()
+	{
+		IsMove = false;
+		EnemyAgent.SetDestination(this.transform.position);
+	}
+
+	public void SetMoveSpeed() => EnemyAgent.speed = MoveSpeed.GetValue();
 
 	#endregion
 

@@ -6,8 +6,8 @@ using UnityEngine;
 public class StatusSO : ScriptableObject
 {
 	[SerializeField]
-    private Stat MaxHP;
-	public Stat NowHP;
+    public Stat MaxHP;
+	public float NowHP { get; set; }
     public Stat Attack;
 	public Stat CriticalChance;
 	public Stat CriticalDamage;
@@ -33,8 +33,8 @@ public class StatusSO : ScriptableObject
 
     public void SetUpDictionary()
     {
-		NowHP = MaxHP;
-		StatDictionary.Add("NowHP", NowHP);
+		StatDictionary.Add("MaxHP", MaxHP);
+		NowHP = MaxHP.GetValue();
 		StatDictionary.Add("Attack", Attack);
 		StatDictionary.Add("AttackSpeed", AttackSpeed);
 		StatDictionary.Add("MoveSpeed", MoveSpeed);

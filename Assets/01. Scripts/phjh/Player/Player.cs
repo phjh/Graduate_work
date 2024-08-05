@@ -160,7 +160,7 @@ public class Player : MonoBehaviour
         else
         {
             //그대로 데미지 입게끔 해준다
-            playerStat.NowHP.SetBaseValue(playerStat.NowHP.GetValue() - damage);
+            playerStat.NowHP = playerStat.NowHP - damage;
             SetHealthBar();
         }
     }

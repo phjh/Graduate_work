@@ -24,7 +24,7 @@ MonoBehaviour:
   - poolableType: 3
     poolableMono: {fileID: 4264733278310249070, guid: 8f2ebee9476e46649876c37c4e90deeb, type: 3}
     poolableName: GroundTile
-    Count: 30
+    Count: 10
   - poolableType: 3
     poolableMono: {fileID: 2910933248462436684, guid: a1a3307e20a1a9a4e8c2e83fa139f40a, type: 3}
     poolableName: WallBlock

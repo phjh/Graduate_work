@@ -13,13 +13,11 @@ public enum WeaponEnum
 [CreateAssetMenu(fileName = "New WeaponData", menuName = "SO/Data/Weapon")]
 public class WeaponDataSO : ScriptableObject
 {
-    [Header("Lobby Values")]
+    [Header("Weapon Data Values")]
     public WeaponEnum weapon;
     public Sprite WeaponIcon;
-
-    [Header("InGame Values")]
 	public float damageFactor;
 	public PoolableMono bullet;
-
+    [Header("Weapon Visual")]
     public PlayerWeapon playerWeapon;
 }
