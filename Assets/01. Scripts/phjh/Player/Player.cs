@@ -178,7 +178,7 @@ public class Player : MonoBehaviour, IDamageable
         else
         {
             //그대로 데미지 입게끔 해준다
-            playerStat.NowHP.SetBaseValue(playerStat.NowHP.GetValue() - dmg);
+            playerStat.NowHP -= dmg;
             SetHealthBar();
         }
     }

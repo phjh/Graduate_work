@@ -53,7 +53,6 @@ public class FlowManager : ManagerBase<FlowManager>
 			case GameState.Intro:
 				{
 					mngs.UIMng.EnableSelectCanvas(0);
-					if (playerMng == null) AddPlayerManager();
 					break;
 				}
 			case GameState.Lobby:
@@ -82,15 +81,6 @@ public class FlowManager : ManagerBase<FlowManager>
 				Logger.LogErrorFormat("Flow Manager's Game State is Error!");
 				break;
 		}
-	}
-
-	private void AddPlayerManager()
-	{
-		GameObject go = new GameObject();
-		go.name = "PlayerManager";
-		go.transform.parent = transform.parent;
-
-		playerMng = go.AddComponent<PlayerManager>();
 	}
 
 	private void GetFlow()

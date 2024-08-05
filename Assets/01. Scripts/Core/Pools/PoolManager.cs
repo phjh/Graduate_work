@@ -29,7 +29,7 @@ public class PoolManager : ManagerBase<PoolManager>
 
 	private Dictionary<string, PoolListSO> PoolListData = new Dictionary<string, PoolListSO>();
 	private Dictionary<string, Pool<PoolableMono>> CompletePoolableMonos = new Dictionary<string, Pool<PoolableMono>>();
-	private List<string> StructNamesList;
+	private List<string> StructNamesList = new();
 
 	public override void InitManager()
 	{

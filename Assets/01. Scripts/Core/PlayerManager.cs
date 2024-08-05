@@ -6,15 +6,15 @@ public class PlayerManager : ManagerBase<PlayerManager>
 {
 	[Header("Player Data")]
 	public WeaponDataSO SelectedWeaponData;
-	public Transform PlayerPos;
 	public bool ActioveXRay = false;
+	public Player Player;
 
 	public Dictionary<StatType, int> OreDictionary = new Dictionary<StatType, int>();
 
 	private GameObject nowWeapon;
 
+	//only at lobby
 	public LobbyPlayer LobbyPlayer;
-	public Player Player;
 
 	public override void InitManager()
 	{

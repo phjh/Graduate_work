@@ -20,7 +20,7 @@ public class PlayerShield : MonoBehaviour
     private Animator _animator;
     private Player _player;
 
-    public bool canDefence => (_nowDefensive - _defenseCost) >= 1;
+    public bool canDefence => (_nowDefensive - _defenseCost) >= 0;
 
     public void Init(Player player)
     {
