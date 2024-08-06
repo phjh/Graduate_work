@@ -74,9 +74,4 @@ public class Managers : MonoBehaviour
 		if (MapMng == null) MapMng = MapManager.GetInstacne();
 		MapMng.InitManager();
 	}
-
-	public void UnInItInGameManagers()
-	{
-		if (MapMng != null) MapMng.enabled = false;
-	}
 }

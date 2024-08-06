@@ -923,7 +923,7 @@ GameObject:
   - component: {fileID: 1258225725}
   - component: {fileID: 1258225724}
   m_Layer: 0
-  m_Name: vcam
+  m_Name: FollowCam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -976,7 +976,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1258225723}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40683857, y: 0.000000021794412, z: -0.000000009706411, w: 0.9135001}
+  m_LocalRotation: {x: 0.40683857, y: 0.000000021922933, z: -0.0000000097636494, w: 0.9135001}
   m_LocalPosition: {x: 38.8, y: 5.25, z: 28.900002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1170,6 +1170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ThisSceneState: 3
+  NextSceneName: 
   NeedPoolListName: 
   ResetPool: 0
 --- !u!1001 &1689347447
@@ -1834,7 +1835,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2101187606}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40683857, y: 0.000000021794412, z: -0.000000009706411, w: 0.9135001}
+  m_LocalRotation: {x: 0.40683857, y: 0.000000021922933, z: -0.0000000097636494, w: 0.9135001}
   m_LocalPosition: {x: 38.8, y: 5.25, z: 28.900002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
