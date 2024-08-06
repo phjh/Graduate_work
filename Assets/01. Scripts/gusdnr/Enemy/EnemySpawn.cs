@@ -8,6 +8,8 @@ public class EnemySpawn : MonoBehaviour
     [Header("Spawn Values")]
     [Range(0.1f, 10f)]public float MinSpawnTick = 3f;
     [Range(0.1f, 10f)]public float MaxSpawnTick = 3f;
+	[Range(1, 10)]public int MinSpawnOnce = 3;
+    [Range(1, 10)]public int MaxSpawnOnce = 5;
 	[Range(1f, 25f)] public float SpawnDistance = 10f;
 	public LayerMask WhatIsGround;
 	public LayerMask WhatIsWall;
@@ -20,16 +22,31 @@ public class EnemySpawn : MonoBehaviour
     [Header("Enemy Setting")]
     public List<string> SpawnableMonsters;
 	
+	public bool IsSpanwing = false;
+	public bool OnRaid = false;
+
     private Managers mngs;
     private Transform PlayerTrm;
     private Vector3 LastEnemySpawnPosition = Vector3.zero;
-	private PoolableMono[] SpawnedEnemy = new PoolableMono[0];
+
+	private Coroutine EnemySpawnCoroutine = null;
 
     public void ActiveEnemySpawn()
     {
-        mngs = Managers.GetInstance();
-		PlayerTrm = mngs?.PlayerMng?.Player?.transform;
+		if (mngs == null) mngs = Managers.GetInstance();
+		if (PlayerTrm == null) PlayerTrm = mngs?.PlayerMng?.Player?.transform;
 
+		IsSpanwing = true;
+		OnRaid = false;
+
+		EnemySpawnCoroutine = StartCoroutine(EnemySpawning());
+	}
+
+	public void InActiveEnemySpawn()
+	{
+		if(EnemySpawnCoroutine != null) StopCoroutine(EnemySpawnCoroutine);
+
+		IsSpanwing = false ;
 	}
 
     private Vector3 CalculateSpawnPos()
@@ -69,18 +86,28 @@ public class EnemySpawn : MonoBehaviour
 		return CalculateSpawnPos();
 	}
 
+	private IEnumerator EnemySpawning()
+	{
+		while (IsSpanwing)
+		{
+			if(OnRaid == true) SpawnEnemy(CalculateSpawnPos(), Random.Range(MinSpawnOnce, MaxSpawnOnce));
+			if(OnRaid == false) SpawnEnemy(CalculateSpawnPos(), Random.Range(MaxSpawnOnce, MaxSpawnOnce * 3));
+
+			yield return new WaitForSeconds(Random.Range(MinSpawnTick, MaxSpawnTick));
+		}
+
+		InActiveEnemySpawn();
+	}
+
     public void SpawnEnemy(Vector3 SpawnPos, int SpawnCount)
     {
         int SpawnMonster = Random.Range(0, SpawnableMonsters.Count - 1);
-        for(int count = 0; count < SpawnCount; count++)
+
+		for (int count = 0; count < SpawnCount; count++)
         {
             mngs.PoolMng.Pop(SpawnableMonsters[SpawnMonster], SpawnPos);
         }
     }
 
-    public void SpawnRaid()
-    {
-
-    }
 
 }
