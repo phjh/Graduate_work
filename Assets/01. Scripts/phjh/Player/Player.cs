@@ -1,4 +1,5 @@
 using Spine.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +24,9 @@ public class Player : MonoBehaviour, IDamageable
 
     [SerializeField]
     private Transform _weaponParent;
+
+    [SerializeField]
+    private float _immuniateTime;
 
     #endregion
 
@@ -180,8 +184,20 @@ public class Player : MonoBehaviour, IDamageable
         {
             //그대로 데미지 입게끔 해준다
             playerStat.NowHP -= dmg;
+            StartCoroutine(TakeDamage());
             SetHealthBar();
         }
+    }
+
+    private IEnumerator TakeDamage()
+    {
+        isImmunity = true;
+        //여기서 맞았을때 피드백을준다
+
+        yield return new WaitForSeconds(_immuniateTime);
+
+
+        isImmunity = false;
     }
 
     public void DieObject()

@@ -12,9 +12,9 @@ public class StatusSO : ScriptableObject
 	public Stat CriticalChance;
 	public Stat CriticalDamage;
     public Stat AttackSpeed;
+	public Stat ReloadSpeed;
     public Stat MoveSpeed;
 	public Stat ShieldRegen;
-	public Stat ReloadSpeed;
 
     public Dictionary<string, Stat> StatDictionary = new();
 
@@ -36,12 +36,12 @@ public class StatusSO : ScriptableObject
 		StatDictionary.Add("MaxHP", MaxHP);
 		NowHP = MaxHP.GetValue();
 		StatDictionary.Add("Attack", Attack);
-		StatDictionary.Add("AttackSpeed", AttackSpeed);
-		StatDictionary.Add("MoveSpeed", MoveSpeed);
 		StatDictionary.Add("CriticalChance", CriticalChance);
 		StatDictionary.Add("CriticalDamage", CriticalDamage);
-		StatDictionary.Add("ShieldRegen", ShieldRegen);
+		StatDictionary.Add("AttackSpeed", AttackSpeed);
 		StatDictionary.Add("ReloadSpeed", ReloadSpeed);
+		StatDictionary.Add("MoveSpeed", MoveSpeed);
+		StatDictionary.Add("ShieldRegen", ShieldRegen);
 	}
 	
 	public void EditBaseStat(string StatName, float EditValue)

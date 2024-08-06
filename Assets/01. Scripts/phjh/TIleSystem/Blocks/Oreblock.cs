@@ -64,9 +64,11 @@ public class OreBlock : Blocks
 
 	private void DropOre()
 	{
-		for (int c = 0; c < Random.Range(1, 3); c++)
+		int dropOreCount = Random.Range(1, 3);
+        for (int c = 0; c < dropOreCount ; c++)
 		{
-			if (PoolManager.Instance.Pop("DropedItem", transform).TryGetComponent(out DropedItem item))
+			Vector3 randdir = Random.onUnitSphere;
+			if (PoolManager.Instance.Pop("DropedItem", transform.position + new Vector3(randdir.x, 0.5f, randdir.z)).TryGetComponent(out DropedItem item)) 
 				item.InitializeItemData(OreData);
 		}
 	}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7154582002716861862}
   - component: {fileID: 7336757905456135327}
   - component: {fileID: 5137205322071290399}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: InfoBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 8279032077947058765}
   - component: {fileID: 6862698440660207}
   - component: {fileID: 3890676586181008565}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: DropedItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,6 +179,9 @@ MonoBehaviour:
   ItemName: {fileID: 5503971362108318228}
   ItemDescription: {fileID: 4330872630579002891}
   infoDuration: 0.4
+  MinScale: {x: 0, y: 0, z: 0}
+  MaxScale: {x: 1, y: 1, z: 1}
+  ItemData: {fileID: 0}
 --- !u!135 &3890676586181008565
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -212,7 +215,7 @@ GameObject:
   - component: {fileID: 1077894917912450370}
   - component: {fileID: 7353913005516776780}
   - component: {fileID: 6322570564799787806}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ItemInfoCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -311,7 +314,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8829925005863427534}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Set
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -351,7 +354,7 @@ GameObject:
   - component: {fileID: 7969749335695966222}
   - component: {fileID: 2534393459789877602}
   - component: {fileID: 4330872630579002891}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,8 +410,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: No Stat
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8882ef10953f15a4f90e394d8b68c827, type: 2}
+  m_sharedMaterial: {fileID: 1448418316580891813, guid: 8882ef10953f15a4f90e394d8b68c827, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -485,7 +488,7 @@ GameObject:
   - component: {fileID: 4606278003762907736}
   - component: {fileID: 3581113149444387920}
   - component: {fileID: 5503971362108318228}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -541,8 +544,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: No Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8882ef10953f15a4f90e394d8b68c827, type: 2}
+  m_sharedMaterial: {fileID: 1448418316580891813, guid: 8882ef10953f15a4f90e394d8b68c827, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

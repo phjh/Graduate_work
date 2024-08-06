@@ -18,41 +18,23 @@ public class DropedItem : PoolableMono
     
     private Managers mngs;
 
-    public ItemDataSO ItemData
-    {
-        get
-        {
-            if(ItemData == null)
-            {   
-                Logger.LogError($"{this.name}'s Data is Null. Can't Get Data");
-                return null;
-            }
-            return ItemData;
-        }
-        set
-        {
-            ItemData = value;
-        }
-    }
+    public ItemDataSO ItemData;
 
     private SpriteRenderer ItemRenderer;
-
-	private void Start()
-	{
-		ResetPoolableMono();
-		EnablePoolableMono();
-	}
 
 	public void InitializeItemData(ItemDataSO InitData)
     {
         if (InitData.CheckingInitData() == false)
         {
+            Logger.LogError("error");
             Logger.LogError($"{InitData.name}'s Data is null! Please checking Inspector");
             return;
         }
 
         ItemData = InitData;
         ItemData.SetRandomAddingValue();
+
+        SetItemObject();
 	}
 
 	private void SetItemObject()
@@ -103,6 +85,5 @@ public class DropedItem : PoolableMono
 	public override void EnablePoolableMono()
 	{
 		if (ItemInfoCanvas.TryGetComponent(out Canvas itemCanvas)) itemCanvas.worldCamera = Camera.main;
-		SetItemObject();
 	}
 }

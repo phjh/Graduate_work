@@ -43,7 +43,8 @@ public class PlayerManager : ManagerBase<PlayerManager>
 
 	private void SetPlayerWeaponVisible()
 	{
-		Destroy(nowWeapon);
+		if (nowWeapon != null)
+			Destroy(nowWeapon);
 		nowWeapon = Instantiate(SelectedWeaponData.playerWeapon.gameObject, new Vector2(0.1f,-0.62f), Quaternion.identity);
 		if(SelectedWeaponData.weapon == WeaponEnum.Pickaxe)
 		{

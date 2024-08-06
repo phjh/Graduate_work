@@ -1112,8 +1112,44 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
+      propertyPath: ChunkDatas.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 60eb8fc911467d24ebc7571cc2ed85db, type: 2}
+    - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
+      propertyPath: ChunkDatas.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 342b3229cead35c4482651ecd955b78f, type: 2}
+    - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
+      propertyPath: ChunkDatas.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: c2ce31b6521a5c542958f393303aa323, type: 2}
+    - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
+      propertyPath: ChunkDatas.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 342b3229cead35c4482651ecd955b78f, type: 2}
+    - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
+      propertyPath: ChunkDatas.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: c2ce31b6521a5c542958f393303aa323, type: 2}
+    - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
+      propertyPath: ChunkDatas.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b0e270496fc9bf4fbcd906f9631c472, type: 2}
+    - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
+      propertyPath: ChunkDatas.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 452b4d4ad23c9824db467a07fface49c, type: 2}
+    - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
+      propertyPath: ChunkDatas.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: f6f80dac87a639e40a1ef7dde5f0065e, type: 2}
+    - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
+      propertyPath: ChunkDatas.Array.data[8]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b0e270496fc9bf4fbcd906f9631c472, type: 2}
+    - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
       propertyPath: OrePoolName.Array.data[0]
-      value: StrengthOreBlock
+      value: OreBlock_Strength
       objectReference: {fileID: 0}
     - target: {fileID: 4070534479692307145, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
       propertyPath: m_Name
@@ -1909,7 +1945,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mngs: {fileID: 1670293318}
-  SelectedWeaponData: {fileID: 11400000, guid: 1feb62493e8940a4c834405ab82727be, type: 2}
+  SelectedWeaponData: {fileID: 11400000, guid: 01652762a5c104a4792b0a12d41ddb78, type: 2}
   ActioveXRay: 0
   Player: {fileID: 0}
   LobbyPlayer: {fileID: 0}

@@ -6,10 +6,10 @@ public enum StatType
 {
 	None = 0,
 	Strength = 1,
-	Destructive = 2,
+	CriticalChance = 2,
 	CriticalDamage = 3,
-	CriticalChance = 4,
-	AttackSpeed = 5,
+	AttackSpeed = 4,
+	ReloadSpeed = 5,
 	MoveSpeed = 6,
 	ShiledResilience = 7,
 	End = 8

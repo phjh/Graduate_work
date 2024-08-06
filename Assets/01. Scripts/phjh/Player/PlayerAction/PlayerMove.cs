@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEditor;
+using DG.Tweening;
+using Spine;
+using TreeEditor;
 
 enum MoveDir
 { 
@@ -26,13 +30,23 @@ public class PlayerMove : MonoBehaviour
 
     private Vector3 _inputDirection;
     private Vector3 _movementVelocity;
+    private Vector3 _lastMovementVelocity;
 
     private MoveDir _nowMoveDir;
     private MoveDir _lastMoveDir;
 
     private SkeletonAnimation _body;
-
     private List<AnimationReferenceAsset> _animations = new();
+
+    [SerializeField]
+    private float _dodgeTime;
+    [SerializeField]
+    private float _resolveTime;
+    [SerializeField]
+    private float _dodgeCooltime;
+
+    [SerializeField]
+    private Transform _afterImage;
 
     public void Init(Player player, InputReader inputReader, SkeletonAnimation body, List<AnimationReferenceAsset> anim)
     {
@@ -70,6 +84,9 @@ public class PlayerMove : MonoBehaviour
         SetLastMoveDir();
         _movementVelocity = _inputDirection * _currentSpeed * -1;
         SetMoveAnimation();
+
+        if (_movementVelocity != Vector3.zero)
+            _lastMovementVelocity = _movementVelocity;
     }
 
     public void StopImmediately()
@@ -113,18 +130,50 @@ public class PlayerMove : MonoBehaviour
 
     private void Dodge()
     {
+        if (!_player.canDodge)
+            return;
+
         _player.isDodging = true;
+        _player.canDodge = false;
         StartCoroutine(DodgeCoroutine());
     }
 
     private IEnumerator DodgeCoroutine()
     {
         Debug.Log("dodgeStart");
-        _movementVelocity *= 1.5f;
-        _rb.velocity = _movementVelocity;
-        yield return new WaitForSeconds(1);
+        _lastMovementVelocity *= 1.4f;
+        _rb.velocity = _lastMovementVelocity;
+        StartCoroutine(AfterImage());
+        yield return new WaitForSeconds(_dodgeTime);
+        //회피 지속시간
         _player.isDodging = false;
         Debug.Log("dodgeEnd");
+
+        yield return new WaitForSeconds(_dodgeCooltime);
+        //쿨타임
+        _player.canDodge = true;
+    }
+
+    private IEnumerator AfterImage()
+    {
+        float time = 0;
+        _afterImage.gameObject.SetActive(true);
+        _afterImage.transform.position = this.transform.position;
+        SkeletonAnimation[] skeletonanims = _afterImage.GetComponentsInChildren<SkeletonAnimation>();
+        bool isleft = transform.position.x > _inputReader.AimPosition.x;
+
+        _afterImage.transform.rotation = Quaternion.Euler(0, 180 * (isleft == true ? 1 : 0), 0);
+
+        while (time < _resolveTime)
+        {
+            foreach(var skeleton in skeletonanims)
+            {
+                skeleton.skeleton.A = Mathf.Lerp(1, 0, time / _resolveTime);
+            }
+            time += Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        _afterImage.gameObject.SetActive(false);
     }
 
 }
