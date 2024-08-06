@@ -18,7 +18,7 @@ public class StatusSO : ScriptableObject
 
     public Dictionary<string, Stat> StatDictionary = new();
 
-    public List<Stat> GetAllStat()
+    public List<Stat> GetBasicStats() // Use in Enemy
     {
         List<Stat> stats = new List<Stat>
 		{
@@ -53,10 +53,35 @@ public class StatusSO : ScriptableObject
     {
 		StatDictionary[StatName]?.AddModifier(EditValue,isPersent);
     }
+	public void AddModifierStat(StatType StatType, float EditValue, bool isPersent)
+	{
+		StatDictionary[StatTypeToString(StatType)]?.AddModifier(EditValue, isPersent);
+	}
 
 	public void RemoveModifierStat(string StatName, float EditValue, bool isPersent)
 	{
 		StatDictionary[StatName]?.RemoveModifier(EditValue, isPersent);
 	}
+	public void RemoveModifierStat(StatType StatType, float EditValue, bool isPersent)
+	{
+		StatDictionary[StatTypeToString(StatType)]?.RemoveModifier(EditValue, isPersent);
+	}
 
+	private string StatTypeToString(StatType type)
+	{
+		switch (type)
+		{
+			case StatType.None: return "None";
+			case StatType.Strength: return "Strength";
+			case StatType.Destructive: return "Destructive";
+			case StatType.CriticalDamage: return "CriticalDamage";
+			case StatType.CriticalChance: return "CriticalChance";
+			case StatType.AttackSpeed: return "AttackSpeed";
+			case StatType.MoveSpeed: return "MoveSpeed";
+			case StatType.ShiledResilience: return "ShiledResilience";
+			case StatType.End: return "End";
+		}
+
+		return null;
+	}
 }

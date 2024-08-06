@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum StatType
@@ -13,6 +14,7 @@ public enum StatType
 	MoveSpeed = 6,
 	ShiledResilience = 7,
 	End = 8
+
 }
 
 [CreateAssetMenu(fileName = "New Item Data", menuName = "SO/Data/Item")]
@@ -28,7 +30,7 @@ public class ItemDataSO : ScriptableObject
 	[SerializeField] private float minValue = 5f;
 	[SerializeField] private float maxValue = 10f;
 
-	public float ItemAddingValue {  get; private set; } = 5f;
+	public float ItemAddingValue { get; private set; } = 5f;
 
 	public bool CheckingInitData() //Checking SO Data
 	{

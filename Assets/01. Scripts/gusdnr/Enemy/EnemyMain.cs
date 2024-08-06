@@ -130,7 +130,7 @@ public class EnemyMain : PoolableMono, IDamageable
 
 	private void SetEnemyStat()
 	{
-		List<Stat> enemyDataStats = enemyData.GetAllStat();
+		List<Stat> enemyDataStats = enemyData.GetBasicStats();
 		MaxHP = enemyDataStats[0];
 		Logger.Assert(MaxHP != null, "MaxHP is Set Complete");
 		Attack = enemyDataStats[1];
