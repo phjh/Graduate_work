@@ -7,6 +7,7 @@ public abstract class SceneFlowBase : MonoBehaviour
     protected Managers mngs;
 	[Header("FlowBase Default Values")]
 	public GameState ThisSceneState;
+	public string NextSceneName;
 	[SerializeField] private string NeedPoolListName;
 	[SerializeField] private bool ResetPool = false;
 
@@ -18,9 +19,13 @@ public abstract class SceneFlowBase : MonoBehaviour
 	public void SetFlowThisScene()
 	{
 		mngs?.FlowMng.ChangeGameState(ThisSceneState);
-		if(string.IsNullOrEmpty(NeedPoolListName))
+		if(string.IsNullOrEmpty(NeedPoolListName) == false)
 		{
 			mngs?.PoolMng?.SetDataOnStruct(NeedPoolListName, ResetPool);
+		}
+		else if(string.IsNullOrEmpty(NeedPoolListName) == true && ResetPool == true)
+		{
+			mngs?.PoolMng?.ClearPreviousData();
 		}
 
 		this?.ActiveFlowBase();

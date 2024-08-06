@@ -5,7 +5,6 @@ public class LobbyFlow : SceneFlowBase
 {
 	[Header("UI Elements")]
 	[SerializeField] private Button StartBtn;
-	[SerializeField] private string NextSceneName; 
 
 	public override void ActiveFlowBase()
 	{

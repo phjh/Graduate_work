@@ -61,6 +61,15 @@ public class MapManager : ManagerBase<MapManager>
 		nms.BuildNavMesh();
 	}
 
+	public void ResetMapDatas()
+	{
+		if (maps != null) maps.Clear();
+		maps = new();
+
+		if (DangerZoneList != null) DangerZoneList.Clear();
+		DangerZoneList = new();
+	}
+
 	private void SetGroundTile()
 	{
 		float calcTileSize = 0.1f * GroundTileSize;
@@ -83,8 +92,6 @@ public class MapManager : ManagerBase<MapManager>
 
 			TilePos.z = 0;
 		}
-
-		//nms.BuildNavMesh();
 	}
 
 

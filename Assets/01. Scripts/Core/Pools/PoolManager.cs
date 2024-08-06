@@ -78,7 +78,7 @@ public class PoolManager : ManagerBase<PoolManager>
 		StartPooling();
 	}
 
-	private void ClearPreviousData()
+	public void ClearPreviousData()
 	{
 		foreach (var pool in CompletePoolableMonos.Values)
 		{
