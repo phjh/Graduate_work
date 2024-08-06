@@ -35,7 +35,7 @@ public class PickaxeBullet : PlayerBullet
         }
         if (other.gameObject.TryGetComponent<Blocks>(out Blocks block))
         {
-            block.BlockEvent(transform.position);
+            block.BlockEvent(transform.position, 2);
             DestroyAndStopCoroutine();
         }
     }

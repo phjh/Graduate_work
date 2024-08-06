@@ -138,7 +138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &105000438
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1910,10 +1910,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mngs: {fileID: 1670293318}
   SelectedWeaponData: {fileID: 11400000, guid: 1feb62493e8940a4c834405ab82727be, type: 2}
-  PlayerPos: {fileID: 0}
   ActioveXRay: 0
-  LobbyPlayer: {fileID: 0}
   Player: {fileID: 0}
+  LobbyPlayer: {fileID: 0}
 --- !u!222 &987928996846554285
 CanvasRenderer:
   m_ObjectHideFlags: 0

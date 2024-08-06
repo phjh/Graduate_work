@@ -238,7 +238,9 @@ public class MapManager : ManagerBase<MapManager>
 						break;
 
 					case (int)BlockType.Ore:
-						AddBlock(InitChunk.BaseChunkPos + addPos, OrePoolName[UnityEngine.Random.Range(0, OrePoolName.Count)]);
+						string oreName = OrePoolName[UnityEngine.Random.Range(0, OrePoolName.Count)];
+                        AddBlock(InitChunk.BaseChunkPos + addPos, oreName);
+						//여기서 다른 2차원 맵에 광석 추가해준다(광석시야)
 						break;
 
 					case (int)BlockType.Interaction:

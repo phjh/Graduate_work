@@ -39,9 +39,9 @@ public class OreBlock : Blocks
 		TimesToBreak = MaxTimesToBreak;
 	}
 
-	public override void BlockEvent(Vector3 pos)
-	{
-		TimesToBreak--;
+	public override void BlockEvent(Vector3 pos, int breaks = 1)
+    {
+		TimesToBreak -= breaks;
 		MiningEffect(pos);
 		if(alreadyExposed == false && TimesToBreak <= ExposeToBreak)
 		{

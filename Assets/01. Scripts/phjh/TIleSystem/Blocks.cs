@@ -34,7 +34,7 @@ public abstract class Blocks : PoolableMono
 
     public virtual void BlockEvent() { }
 
-    public virtual void BlockEvent(Vector3 pos) { }
+    public virtual void BlockEvent(Vector3 pos, int breaks = 1) { }
 
     protected void MiningEffect(Vector3 pos)
     {

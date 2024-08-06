@@ -11,10 +11,10 @@ public class BreakableBlock : Blocks
 		TimesToBreak = MaxTimesToBreak;
     }
 
-    public override void BlockEvent(Vector3 pos)
+    public override void BlockEvent(Vector3 pos, int breaks = 1)
     {
         MapManager.Instance.blockBreakEvent?.Invoke();
-        TimesToBreak--;
+        TimesToBreak -= breaks;
         MiningEffect(pos);
         if (TimesToBreak <= 0)
         {

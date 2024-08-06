@@ -24,7 +24,7 @@ public class PlayerAttack : MonoBehaviour
     private List<Lazy<AnimationReferenceAsset>> _moveAnimation;
 
     private float _lastFireTime;
-
+    private bool _isReloading = false;
 
     public void Init(Player player, InputReader inputReader, PoolableMono bullet, PlayerWeapon weapon, List<AnimationReferenceAsset> animations = null)
     {
@@ -77,7 +77,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void CheckShoot()
     {
-        if (_lastFireTime + weapon.AttackCooltime < Time.time)
+        if (_lastFireTime + weapon.AttackCooltime > Time.time)
         {
             _player.canAttack = false;
             return;
@@ -85,10 +85,17 @@ public class PlayerAttack : MonoBehaviour
 
         if (weapon.currentAmmo <= 0)
         {
+            if (!_isReloading)
+            {
+                _isReloading = true;
+                Invoke(nameof(Reload), weapon.ReloadTime);
+            }
             _player.canAttack = false;
-            Invoke(nameof(Reload), weapon.ReloadTime);
             return;
         }
+
+        if (_player.isDodging)
+            return;
 
         _player.canAttack = true;
     }
@@ -97,6 +104,7 @@ public class PlayerAttack : MonoBehaviour
     {
         weapon.currentAmmo = weapon.maxAmmo;
         _player.canAttack = true;
+        _isReloading = false;
     }
 
 
@@ -129,7 +137,7 @@ public class PlayerAttack : MonoBehaviour
 
     private (bool success, Vector3 position) GetMousePosition()
     {
-        var ray = mainCamera.ScreenPointToRay(_inputReader.AimPosition);
+        var ray = Camera.main.ScreenPointToRay(_inputReader.AimPosition);
 
         if (Physics.Raycast(ray, out var hitInfo, 1000, layer))
         {
