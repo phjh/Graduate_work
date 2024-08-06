@@ -27,6 +27,8 @@ public class PlayerManager : ManagerBase<PlayerManager>
 
 	public void SetUpOreDictionary()
 	{
+		OreDictionary = new Dictionary<StatType, int>();
+
 		for (int count = 0; count < (int)StatType.End; count++)
 		{
 			if ((StatType)count == StatType.None || (StatType)count == StatType.End) continue;
@@ -83,6 +85,11 @@ public class PlayerManager : ManagerBase<PlayerManager>
 		if (!OreDictionary.ContainsKey(type)) return; //If Non value in Dictionary to same type, return
 
 		OreDictionary[type] = OreDictionary[type]++;
-		//Call Add PlayerStatValue
+		Player?.playerStat?.AddModifierStat(type, addValue, false);
+	}
+
+	public int RetrunOreCount(StatType type)
+	{
+		return OreDictionary[type];
 	}
 }

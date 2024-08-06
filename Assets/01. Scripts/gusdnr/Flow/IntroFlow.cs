@@ -8,7 +8,6 @@ public class IntroFlow : SceneFlowBase
 	[Header("UI Elements")]
 	[Tooltip("Start Btn")]
 	[SerializeField] private Button StartBtn;
-	[SerializeField] private string NextSceneName;
 	[Tooltip("Option Btn")]
 	[SerializeField] private Button OptionBtn;
 	[Tooltip("Quit Btn")]

@@ -15,10 +15,10 @@ public enum GameState
 
 public class FlowManager : ManagerBase<FlowManager>
 {
-	[HideInInspector] public PlayerManager playerMng;
+	[HideInInspector] public bool isGameClear = false;
 
 	public GameState CurrentGameState;
-	
+
 	private SceneFlowBase CurrentSceneFlow;
 
 	public override void InitManager()
