@@ -123,6 +123,62 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &16258531
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 16258532}
+  - component: {fileID: 16258533}
+  m_Layer: 0
+  m_Name: EnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &16258532
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16258531}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &16258533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16258531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc64ace8164c86740b47b4b3b8b12658, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MinSpawnTick: 1
+  MaxSpawnTick: 5
+  SpawnDistance: 10
+  WhatIsGround:
+    serializedVersion: 2
+    m_Bits: 256
+  WhatIsWall:
+    serializedVersion: 2
+    m_Bits: 128
+  MapOutLine: {x: 0, y: 77}
+  BossArea: {x: 26, y: 50}
+  SpawnableMonsters: []
 --- !u!1 &100066647
 GameObject:
   m_ObjectHideFlags: 0
@@ -1298,7 +1354,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1258225723}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.41132614, y: -0.000000015683415, z: 0.0000000070774333, w: 0.9114883}
+  m_LocalRotation: {x: 0.41132614, y: 0.000000015683414, z: -0.000000007077433, w: 0.9114883}
   m_LocalPosition: {x: 34.8, y: 3.65, z: 30.464787}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1492,6 +1548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ThisSceneState: 3
+  NextSceneName: 
   NeedPoolListName: 
   ResetPool: 0
 --- !u!1001 &1689347447
@@ -1624,10 +1681,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7730d59a88df2f7459cea03cfe190317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dodgeTime: 0.5
-  _resolveTime: 1
-  _dodgeCooltime: 4
-  _afterImage: {fileID: 595503673}
+  _dodgeTime: 0
+  _resolveTime: 0
+  _dodgeCooltime: 0
+  _afterImage: {fileID: 0}
 --- !u!136 &1732037702
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1700,7 +1757,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 145e8185242007c4aa3787479d1fec27, type: 2}
   - {fileID: 11400000, guid: b4c1828f204662f4285373db53ce4257, type: 2}
   _weaponParent: {fileID: 1988163932}
-  _immuniateTime: 0.5
+  _immuniateTime: 0
 --- !u!4 &1732037705
 Transform:
   m_ObjectHideFlags: 0
@@ -2323,7 +2380,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2101187606}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.41132614, y: -0.000000015683415, z: 0.0000000070774333, w: 0.9114883}
+  m_LocalRotation: {x: 0.41132614, y: 0.000000015683414, z: -0.000000007077433, w: 0.9114883}
   m_LocalPosition: {x: 34.8, y: 3.65, z: 30.464787}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2373,3 +2430,4 @@ SceneRoots:
   - {fileID: 1653163799}
   - {fileID: 1732037705}
   - {fileID: 595503673}
+  - {fileID: 16258532}

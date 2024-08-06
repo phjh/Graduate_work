@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 501864872036241026}
   - component: {fileID: 5168615283934140895}
   - component: {fileID: 6186509913435731770}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: OreBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,4 +165,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PoolName: OreBlock
   MaxTimesToBreak: 1
+  ExposeToBreak: 1
   OreData: {fileID: 0}
+  OrePair:
+    Mesh: {fileID: 0}
+    Material: {fileID: 0}
+  BreakablePair:
+    Mesh: {fileID: 0}
+    Material: {fileID: 0}
