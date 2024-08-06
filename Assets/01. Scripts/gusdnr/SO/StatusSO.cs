@@ -73,7 +73,6 @@ public class StatusSO : ScriptableObject
 		{
 			case StatType.None: return "None";
 			case StatType.Strength: return "Strength";
-			case StatType.Destructive: return "Destructive";
 			case StatType.CriticalDamage: return "CriticalDamage";
 			case StatType.CriticalChance: return "CriticalChance";
 			case StatType.AttackSpeed: return "AttackSpeed";
