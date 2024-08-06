@@ -1,3 +1,4 @@
+using Cinemachine;
 using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
@@ -50,6 +51,8 @@ public class Player : MonoBehaviour, IDamageable
     private PlayerHead _playerHead;
 
     private PlayerWeapon weapon;
+
+    public CinemachineVirtualCamera VirtualCam;
 
     #endregion
 
@@ -115,6 +118,9 @@ public class Player : MonoBehaviour, IDamageable
     {
         SetPlayerStat();
 
+        PlayerManager.Instance.perlin = VirtualCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+
         inputReader = _inputReader;
         skeletonAnimation = _skeletonAnimation;
 
@@ -174,7 +180,7 @@ public class Player : MonoBehaviour, IDamageable
         if (isImmunity || isDodging)
             return;
 
-        //카메라 흔들림 넣기
+
         if (_playerShield.canDefence)
         {
             _playerShield.Defence();
@@ -193,7 +199,9 @@ public class Player : MonoBehaviour, IDamageable
     {
         isImmunity = true;
         //여기서 맞았을때 피드백을준다
-
+        PoolManager.Instance.PopAndPushEffect("PlayerHitbloodEffect", transform.position + Vector3.up/2, 1f);
+        
+        PlayerManager.Instance.ShakeCamera(waitTime: _immuniateTime);
         yield return new WaitForSeconds(_immuniateTime);
 
 

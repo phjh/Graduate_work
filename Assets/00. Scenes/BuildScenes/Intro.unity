@@ -1343,10 +1343,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ThisSceneState: 1
+  NextSceneName: Lobby
   NeedPoolListName: 
   ResetPool: 0
   StartBtn: {fileID: 7312236587541534308}
-  NextSceneName: Lobby
   OptionBtn: {fileID: 9046994367917621659}
   QuitBtn: {fileID: 475326123}
 --- !u!1 &1310920858
@@ -1949,6 +1949,7 @@ MonoBehaviour:
   ActioveXRay: 0
   Player: {fileID: 0}
   LobbyPlayer: {fileID: 0}
+  perlin: {fileID: 0}
 --- !u!222 &987928996846554285
 CanvasRenderer:
   m_ObjectHideFlags: 0

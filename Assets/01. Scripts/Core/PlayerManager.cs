@@ -1,5 +1,7 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using TreeEditor;
 using UnityEngine;
 
 public class PlayerManager : ManagerBase<PlayerManager>
@@ -16,7 +18,10 @@ public class PlayerManager : ManagerBase<PlayerManager>
 	//only at lobby
 	public LobbyPlayer LobbyPlayer;
 
-	public override void InitManager()
+
+    public CinemachineBasicMultiChannelPerlin perlin;
+
+    public override void InitManager()
 	{
 		base.InitManager();
 		//SelectedWeaponData = Resources.Load("Resources/WeaponDatas/PickaxeData") as WeaponDataSO;
@@ -92,4 +97,19 @@ public class PlayerManager : ManagerBase<PlayerManager>
 	{
 		return OreDictionary[type];
 	}
+
+    public void ShakeCamera(float shakeIntencity = 3, float waitTime = 0.2f)
+    {
+        float frequency = 1f;
+        perlin.m_AmplitudeGain = shakeIntencity * 0.5f;
+        perlin.m_FrequencyGain = frequency;
+        Invoke(nameof(CameraShakingOff), waitTime);
+    }
+
+    void CameraShakingOff()
+    {
+        perlin.m_FrequencyGain = 0;
+        perlin.m_AmplitudeGain = 0;
+    }
+
 }

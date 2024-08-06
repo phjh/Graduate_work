@@ -10,10 +10,16 @@ public class InputReader : ScriptableObject, IPlayerActions
     public event Action<Vector2> MovementEvent;
     public event Action AttackEvent;
     public event Action DodgeEvent;
+    public event Action ReloadEvent;
+
+    public Texture2D normalCursor;
+    public Texture2D FiringCursor;
 
     public Vector2 AimPosition { get; private set; } //마우스는 이벤트방식이 아니기 때문에
 
     private Controls _inputAction;
+
+    private bool isactived = false;
 
     private void OnEnable()
     {
@@ -33,6 +39,7 @@ public class InputReader : ScriptableObject, IPlayerActions
             _inputAction.Player.Enable();
         else if(!active)
             _inputAction.Player.Disable();
+        isactived = active;
     }
 
     #region Player Inputs
@@ -49,9 +56,19 @@ public class InputReader : ScriptableObject, IPlayerActions
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        //attack Event
-        if(context.performed)
-            AttackEvent?.Invoke();
+        if (isactived)
+        {
+            //attack Event
+            if (context.performed)
+            {
+                AttackEvent?.Invoke();
+                Cursor.SetCursor(FiringCursor, Vector2.zero, CursorMode.Auto);
+            }
+            if (context.canceled)
+            {
+                Cursor.SetCursor(normalCursor, Vector2.zero, CursorMode.Auto);
+            }
+        }
     }
 
     public void OnDodge(InputAction.CallbackContext context)
@@ -59,6 +76,16 @@ public class InputReader : ScriptableObject, IPlayerActions
         DodgeEvent?.Invoke();
     }
 
+    public void OnReload(InputAction.CallbackContext context)
+    {
+        ReloadEvent?.Invoke();
+    }
+
     #endregion
+
+    public void ResetCursor()
+    {
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+    }
 
 }

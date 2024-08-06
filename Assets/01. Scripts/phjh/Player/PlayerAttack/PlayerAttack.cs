@@ -39,6 +39,7 @@ public class PlayerAttack : MonoBehaviour
         //}
 
         _inputReader.AttackEvent += DoAttack;
+        _inputReader.ReloadEvent += ReloadWeapon;
         mainCamera = Camera.main;
     }
 
@@ -87,10 +88,8 @@ public class PlayerAttack : MonoBehaviour
         {
             if (!_isReloading)
             {
-                _isReloading = true;
-                Invoke(nameof(Reload), weapon.ReloadTime);
+                ReloadWeapon();
             }
-            _player.canAttack = false;
             return;
         }
 
@@ -98,6 +97,13 @@ public class PlayerAttack : MonoBehaviour
             return;
 
         _player.canAttack = true;
+    }
+
+    private void ReloadWeapon()
+    {
+        _isReloading = true;
+        _player.canAttack = false;
+        Invoke(nameof(Reload), weapon.ReloadTime);
     }
 
     private void Reload()

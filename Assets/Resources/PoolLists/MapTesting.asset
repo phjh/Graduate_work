@@ -73,3 +73,7 @@ MonoBehaviour:
     poolableMono: {fileID: 6034287996170676040, guid: b3eafb45a43ba0b4d86c7e964bdf1188, type: 3}
     poolableName: GroundEffect
     Count: 1
+  - poolableType: 2
+    poolableMono: {fileID: -3308240605483498186, guid: 02e86e33d3ce9a64cbcc60804bc518cf, type: 3}
+    poolableName: PlayerHitbloodEffect
+    Count: 1

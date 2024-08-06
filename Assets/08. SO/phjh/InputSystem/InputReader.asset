@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 727b3ab4e8fe1ab46829c90390874e6f, type: 3}
   m_Name: InputReader
   m_EditorClassIdentifier: 
+  normalCursor: {fileID: 2800000, guid: 4c1ffec33fb767f4da8ecaa267437f4d, type: 3}
+  FiringCursor: {fileID: 2800000, guid: 7aaa0f631aa4bdf4b9708a697d4278ae, type: 3}
