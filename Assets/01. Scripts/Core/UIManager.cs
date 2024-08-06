@@ -72,12 +72,15 @@ public class UIManager : ManagerBase<UIManager>
 		SetUpPopupUIs();
 
 		FadePanel.DOFade(0.0f, fadeDuration)
+			.OnStart(() =>
+			{
+				this.IsWorkingLoading = false;
+				LoadProcessObject.SetActive(IsWorkingLoading);
+			})
 			.OnComplete(() =>
 			{
 				FadePanel.raycastTarget = false;
-				this.IsWorkingLoading = false;
 
-				LoadProcessObject.SetActive(IsWorkingLoading);
 				OnCompleteLoadScene?.Invoke();
 			});
 	}
@@ -163,10 +166,10 @@ public class UIManager : ManagerBase<UIManager>
 
 	private IEnumerator LoadSceneAsync(string sceneName)
 	{
-		FillAmountSize = Vector2.up;
+		FillAmountSize = new Vector3(0, 1, 1);
 		
 		IsWorkingLoading = true;
-		LoadProcessFill.sizeDelta.Scale(FillAmountSize);
+		LoadProcessFill.localScale = FillAmountSize;
 		LoadProcessObject.SetActive(IsWorkingLoading);
 
 		asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -178,8 +181,8 @@ public class UIManager : ManagerBase<UIManager>
 			yield return null;
 
 			Logger.Log($"Loading : [{percentage}]%");
-			FillAmountSize.Set(Mathf.Clamp(percentage, 0f, 1f), 1);
-			LoadProcessFill.sizeDelta.Scale(FillAmountSize);
+			FillAmountSize.x = Mathf.Clamp(percentage * 0.01f, 0f, 1f);
+			LoadProcessFill.localScale = FillAmountSize;
 			if (percentage < 90f)
 			{
 				percentage = Mathf.MoveTowards(percentage, asyncLoad.progress * 100, Time.deltaTime * 10f);
@@ -193,12 +196,16 @@ public class UIManager : ManagerBase<UIManager>
 		}
 
 		FadePanel.DOFade(0.0f, fadeDuration)
+			.OnStart(() =>
+			{
+				this.IsWorkingLoading = false;
+				LoadProcessObject.SetActive(IsWorkingLoading);
+				LoadProcessFill.localScale = new Vector3(0, 1, 1);
+			})
 			.OnComplete(() =>
 			{
 				FadePanel.raycastTarget = false;
-				this.IsWorkingLoading = false;
 
-				LoadProcessObject.SetActive(IsWorkingLoading);
 				OnCompleteLoadScene?.Invoke();
 			});
 	}
@@ -235,10 +242,10 @@ public class UIManager : ManagerBase<UIManager>
 
 	private IEnumerator LoadSceneAsync(int index)
 	{
-		FillAmountSize = Vector2.up;
+		FillAmountSize = new Vector3(0, 1, 1);
 
 		IsWorkingLoading = true;
-		LoadProcessFill.sizeDelta.Scale(FillAmountSize);
+		LoadProcessFill.localScale = FillAmountSize;
 		LoadProcessObject.SetActive(IsWorkingLoading);
 
 		asyncLoad = SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
@@ -251,8 +258,8 @@ public class UIManager : ManagerBase<UIManager>
 
 			Logger.Log($"Loading : [{percentage}]%");
 			
-			FillAmountSize.Set(Mathf.Clamp(percentage, 0f, 1f), 1);
-			LoadProcessFill.sizeDelta.Scale(FillAmountSize);
+			FillAmountSize.x = Mathf.Clamp(percentage * 0.01f, 0f, 1f);
+			LoadProcessFill.localScale = FillAmountSize;
 			if (percentage < 90f)
 			{
 				percentage = Mathf.MoveTowards(percentage, asyncLoad.progress * 100, Time.deltaTime * 10f);
@@ -266,12 +273,16 @@ public class UIManager : ManagerBase<UIManager>
 		}
 
 		FadePanel.DOFade(0.0f, fadeDuration)
+			.OnStart(() =>
+			{
+				this.IsWorkingLoading = false;
+				LoadProcessObject.SetActive(IsWorkingLoading);
+				LoadProcessFill.localScale = new Vector3(0, 1, 1);
+			})
 			.OnComplete(() =>
 			{
 				FadePanel.raycastTarget = false;
-				this.IsWorkingLoading = false;
 
-				LoadProcessObject.SetActive(IsWorkingLoading);
 				OnCompleteLoadScene?.Invoke();
 			});
 	}
