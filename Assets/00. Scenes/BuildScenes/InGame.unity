@@ -169,6 +169,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinSpawnTick: 1
   MaxSpawnTick: 5
+  MinSpawnOnce: 3
+  MaxSpawnOnce: 5
   SpawnDistance: 10
   WhatIsGround:
     serializedVersion: 2
@@ -178,7 +180,10 @@ MonoBehaviour:
     m_Bits: 128
   MapOutLine: {x: 0, y: 77}
   BossArea: {x: 26, y: 50}
-  SpawnableMonsters: []
+  SpawnableMonsters:
+  - 
+  IsSpanwing: 0
+  OnRaid: 0
 --- !u!1 &100066647
 GameObject:
   m_ObjectHideFlags: 0
