@@ -355,7 +355,7 @@ GameObject:
   - component: {fileID: 99299612}
   - component: {fileID: 99299611}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1164,10 +1164,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ThisSceneState: 2
+  NextSceneName: InGame
   NeedPoolListName: 
   ResetPool: 0
   StartBtn: {fileID: 630305187}
-  NextSceneName: InGame
 --- !u!1 &828203106
 GameObject:
   m_ObjectHideFlags: 0

@@ -191,6 +191,11 @@ public class Player : MonoBehaviour, IDamageable
         {
             //그대로 데미지 입게끔 해준다
             playerStat.NowHP -= dmg;
+            if(playerStat.NowHP <= 0)
+            {
+				isImmunity = true;
+				Managers.instance.FlowMng.ChangeSceneInFlow();
+			}
             StartCoroutine(TakeDamageEffects());
             SetHealthBar();
         }

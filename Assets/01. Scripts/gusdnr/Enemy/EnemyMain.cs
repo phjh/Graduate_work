@@ -36,12 +36,6 @@ public class EnemyMain : PoolableMono, IDamageable
 
 	private float DistanceToTarget => Vector3.Distance(transform.position, TargetTransform.position);
 
-	private void Awake()
-	{
-		ResetPoolableMono();
-		EnablePoolableMono();
-	}
-
 	private void FixedUpdate()
 	{
 		if (isAlive == false || IsAttack == true || TargetTransform == null) return;

@@ -10,14 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d4e75579e2d63c4592af055737ee5b2, type: 3}
-  m_Name: ItemObjList
+  m_Name: ObjectList
   m_EditorClassIdentifier: 
   DataStruct:
   - poolableType: 1
     poolableMono: {fileID: 6862698440660207, guid: 6b22c191361006c4584a8bef41d3103c, type: 3}
-    poolableName: 
+    poolableName: DropedItem
     Count: 1
   - poolableType: 4
     poolableMono: {fileID: 7685195246521349963, guid: 80eb4e5bdab55134dad2a3f61d22b4ea, type: 3}
-    poolableName: 
+    poolableName: AddItemUI
     Count: 1
+  - poolableType: 1
+    poolableMono: {fileID: 2323055639523970824, guid: d5a9f3f17fe1e724781c96b8e395f4eb, type: 3}
+    poolableName: AddItemUI
+    Count: 50
