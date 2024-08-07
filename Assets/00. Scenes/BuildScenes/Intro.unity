@@ -3264,6 +3264,7 @@ MonoBehaviour:
   Player: {fileID: 0}
   LobbyPlayer: {fileID: 0}
   perlin: {fileID: 0}
+  PlayerHealth: {fileID: 1475625324}
 --- !u!222 &987928996846554285
 CanvasRenderer:
   m_ObjectHideFlags: 0

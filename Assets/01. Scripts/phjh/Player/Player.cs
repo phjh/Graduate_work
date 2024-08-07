@@ -160,6 +160,7 @@ public class Player : MonoBehaviour, IDamageable
     private void SetHealthBar()
     {
         Logger.Log(playerStat.NowHP / playerStat.MaxHP.GetValue());
+        PlayerManager.Instance.SetPlayerHealth(playerStat.NowHP / playerStat.MaxHP.GetValue());
     }
 
     private void Update()
@@ -170,7 +171,7 @@ public class Player : MonoBehaviour, IDamageable
         }
         if(Input.GetKeyDown(KeyCode.X))
         {
-            TakeDamage(1);
+            TakeDamage(5);
         }
     }
 
