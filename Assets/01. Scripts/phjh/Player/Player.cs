@@ -165,14 +165,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Z))
-        {
-            _playerShield.RegenDefence();
-        }
-        if(Input.GetKeyDown(KeyCode.X))
-        {
-            TakeDamage(5);
-        }
+
     }
 
     public void TakeDamage(float dmg)

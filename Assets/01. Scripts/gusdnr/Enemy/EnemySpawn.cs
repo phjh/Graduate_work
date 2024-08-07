@@ -101,11 +101,9 @@ public class EnemySpawn : MonoBehaviour
 
     public void SpawnEnemy(Vector3 SpawnPos, int SpawnCount)
     {
-        int SpawnMonster = Random.Range(0, SpawnableMonsters.Count - 1);
-
 		for (int count = 0; count < SpawnCount; count++)
         {
-            mngs.PoolMng.Pop(SpawnableMonsters[SpawnMonster], SpawnPos);
+            mngs.PoolMng.Pop(SpawnableMonsters[0], SpawnPos);
         }
     }
 

@@ -33,15 +33,15 @@ public class StatusSO : ScriptableObject
 
     public void SetUpDictionary()
     {
-		StatDictionary.Add("MaxHP", MaxHP);
+		StatDictionary.TryAdd("MaxHP", MaxHP);
 		NowHP = MaxHP.GetValue();
-		StatDictionary.Add("Strength", Attack);
-		StatDictionary.Add("CriticalChance", CriticalChance);
-		StatDictionary.Add("CriticalDamage", CriticalDamage);
-		StatDictionary.Add("AttackSpeed", AttackSpeed);
-		StatDictionary.Add("ReloadSpeed", ReloadSpeed);
-		StatDictionary.Add("MoveSpeed", MoveSpeed);
-		StatDictionary.Add("ShiledResilience", ShieldRegen);
+		StatDictionary.TryAdd("Strength", Attack);
+		StatDictionary.TryAdd("CriticalChance", CriticalChance);
+		StatDictionary.TryAdd("CriticalDamage", CriticalDamage);
+		StatDictionary.TryAdd("AttackSpeed", AttackSpeed);
+		StatDictionary.TryAdd("ReloadSpeed", ReloadSpeed);
+		StatDictionary.TryAdd("MoveSpeed", MoveSpeed);
+		StatDictionary.TryAdd("ShiledResilience", ShieldRegen);
 	}
 	
 	public void EditBaseStat(string StatName, float EditValue)
