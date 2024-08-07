@@ -56,10 +56,11 @@ public class EnemySpawn : MonoBehaviour
 
 		Vector3 SpawnPosition = PlayerTrm.position + RandomDirection; // Create Random Position by PlayerPosition
 
-		bool isInBossArea = (SpawnPosition.x >= BossArea.x && SpawnPosition.x <= BossArea.y) || (SpawnPosition.z >= BossArea.x && SpawnPosition.z <= BossArea.y);
+		bool isInBossAreaX = SpawnPosition.x >= BossArea.x && SpawnPosition.x <= BossArea.y;
+		bool isInBossAreaY = SpawnPosition.z >= BossArea.x && SpawnPosition.z <= BossArea.y;
 		bool isOutMap = SpawnPosition.x <= MapOutLine.x || SpawnPosition.z <= MapOutLine.x || SpawnPosition.x >= MapOutLine.y || SpawnPosition.z >= MapOutLine.y;
 
-		if (isInBossArea || isOutMap) // If meet the Condition one of both, Explore again
+		if (isInBossAreaX || isInBossAreaY || isOutMap) // If meet the Condition one of both, Explore again
 		{
 			return CalculateSpawnPos();
 		}

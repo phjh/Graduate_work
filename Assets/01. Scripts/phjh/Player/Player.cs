@@ -193,6 +193,7 @@ public class Player : MonoBehaviour, IDamageable
             if(playerStat.NowHP <= 0)
             {
 				isImmunity = true;
+                Managers.instance.FlowMng.isGameClear = false;
 				Managers.instance.FlowMng.ChangeSceneInFlow();
 			}
             StartCoroutine(TakeDamageEffects());
