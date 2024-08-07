@@ -19,12 +19,15 @@ public abstract class PlayerBullet : PoolableMono
 
     protected Coroutine destroyCoroutine;
 
-    public virtual void Init(Quaternion rot)
+    private float damage = 1;
+
+    public virtual void Init(Quaternion rot, float damage)
     {
         this.rot = rot;
         if(rb == null)
             rb = GetComponent<Rigidbody>();
-        rb.velocity = rot * Vector3.forward * speed;        
+        rb.velocity = rot * Vector3.forward * speed;
+        this.damage = damage;
     }
 
     private void Start()
@@ -46,7 +49,7 @@ public abstract class PlayerBullet : PoolableMono
     {
         if(other.gameObject.TryGetComponent<EnemyMain>(out EnemyMain enemy))
         {
-            //enemy.TakeDamage()
+            enemy.TakeDamage(damage);
             DestroyAndStopCoroutine();
         }
         if (other.gameObject.TryGetComponent<Blocks>(out Blocks block))

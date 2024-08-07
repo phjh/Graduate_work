@@ -89,7 +89,7 @@ public class PlayerManager : ManagerBase<PlayerManager>
 		if (!OreDictionary.ContainsKey(type)) return; //If Non value in Dictionary to same type, return
 
 		OreDictionary[type] = OreDictionary[type]++;
-		Player?.playerStat?.AddModifierStat(type, addValue, false);
+		Player.playerStat.AddModifierStat(type, addValue, false);
 	}
 
 	public int RetrunOreCount(StatType type)

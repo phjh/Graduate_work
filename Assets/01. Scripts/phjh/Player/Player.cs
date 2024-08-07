@@ -191,6 +191,11 @@ public class Player : MonoBehaviour, IDamageable
         {
             //그대로 데미지 입게끔 해준다
             playerStat.NowHP -= dmg;
+            if(playerStat.NowHP <= 0)
+            {
+                DieObject();
+			}
+			}
             StartCoroutine(TakeDamageEffects());
             SetHealthBar();
         }
@@ -212,5 +217,7 @@ public class Player : MonoBehaviour, IDamageable
     public void DieObject()
     {
         //넘어가게끔바꾸기
+        isImmunity = true;
+        Managers.instance.FlowMng.ChangeSceneInFlow();
     }
 }
