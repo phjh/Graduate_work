@@ -43,14 +43,21 @@ public class Player : MonoBehaviour, IDamageable
 
     #region 플레이어가 가지고 있을값들
 
-
-    private PlayerShield _playerShield;
+    [HideInInspector]
+    public PlayerShield _playerShield;
 
     private PlayerHand _playerHand;
 
     private PlayerHead _playerHead;
 
-    private PlayerWeapon weapon;
+    [HideInInspector]
+    public PlayerWeapon weapon;
+
+    [HideInInspector]
+    public PlayerMove _move;
+
+    [HideInInspector]
+    public PlayerAttack _attack;
 
     public CinemachineVirtualCamera VirtualCam;
 
@@ -132,16 +139,16 @@ public class Player : MonoBehaviour, IDamageable
         #region 플레이어 컴포넌트 세팅
 
         //플레이어 움직임 부분
-        if (this.gameObject.TryGetComponent(out PlayerMove move))
-            move.Init(this, inputReader, _skeletonAnimation, _moveAnimations);
+        if (this.gameObject.TryGetComponent(out _move))
+            _move.Init(this, inputReader, _skeletonAnimation, _moveAnimations);
         else
         {
             Logger.LogWarning("Playermove is null");
             Debug.LogError("playermove is null");
         }
 
-        if (this.gameObject.TryGetComponent(out PlayerAttack attack))
-            attack.Init(this, inputReader, weaponData.bullet, weapon);
+        if (this.gameObject.TryGetComponent(out _attack))
+            _attack.Init(this, inputReader, weaponData.bullet, weapon);
         else
             Logger.LogWarning("Playerattack is null");
 

@@ -16,35 +16,31 @@ MonoBehaviour:
     baseValue: 100
     fixedModifiers: []
     persentedModifiers: []
-  NowHP:
-    baseValue: 0
-    fixedModifiers: []
-    persentedModifiers: []
   Attack:
-    baseValue: 0
+    baseValue: 2
     fixedModifiers: []
     persentedModifiers: []
   CriticalChance:
-    baseValue: 0
+    baseValue: 10
     fixedModifiers: []
     persentedModifiers: []
   CriticalDamage:
-    baseValue: 0
+    baseValue: 100
     fixedModifiers: []
     persentedModifiers: []
   AttackSpeed:
-    baseValue: 0
+    baseValue: 1
+    fixedModifiers: []
+    persentedModifiers: []
+  ReloadSpeed:
+    baseValue: 1
     fixedModifiers: []
     persentedModifiers: []
   MoveSpeed:
-    baseValue: 0
+    baseValue: 3
     fixedModifiers: []
     persentedModifiers: []
   ShieldRegen:
-    baseValue: 0
-    fixedModifiers: []
-    persentedModifiers: []
-  WallBreakPower:
-    baseValue: 0
+    baseValue: 0.2
     fixedModifiers: []
     persentedModifiers: []

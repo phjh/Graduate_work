@@ -55,8 +55,8 @@ public class StatusSO : ScriptableObject
     }
 	public void AddModifierStat(StatType StatType, float EditValue, bool isPersent)
 	{
-		Debug.Log(StatTypeToString(StatType) + ',' + EditValue);
 		StatDictionary[StatTypeToString(StatType)].AddModifier(EditValue, isPersent);
+		SetStats(StatType);
 	}
 
 	public void RemoveModifierStat(string StatName, float EditValue, bool isPersent)
@@ -66,6 +66,7 @@ public class StatusSO : ScriptableObject
 	public void RemoveModifierStat(StatType StatType, float EditValue, bool isPersent)
 	{
 		StatDictionary[StatTypeToString(StatType)]?.RemoveModifier(EditValue, isPersent);
+		SetStats(StatType);
 	}
 
 	private string StatTypeToString(StatType type)
@@ -85,4 +86,35 @@ public class StatusSO : ScriptableObject
 			default: return null;
 		}
 	}
+
+    private void SetStats(StatType type)
+    {
+        switch (type)
+        {
+            case StatType.None: break;
+            case StatType.Strength:
+				PlayerManager.Instance.Player._attack.strength = Attack.GetValue();
+				break;
+            case StatType.CriticalDamage:
+                PlayerManager.Instance.Player._attack.criticalDamage = CriticalDamage.GetValue();
+                break;
+            case StatType.CriticalChance: 
+                PlayerManager.Instance.Player._attack.criticalChance = CriticalChance.GetValue();
+				break;
+            case StatType.AttackSpeed:
+                PlayerManager.Instance.Player._attack.attackSpeed = AttackSpeed.GetValue();
+				break;
+            case StatType.MoveSpeed:
+				PlayerManager.Instance.Player._move.SetPlayerSpeed(MoveSpeed.GetValue());
+				break;
+            case StatType.ShiledResilience: 
+                PlayerManager.Instance.Player._playerShield._defensiveRegenRate = ShieldRegen.GetValue();
+				break;
+            case StatType.ReloadSpeed: 
+                PlayerManager.Instance.Player._attack.reloadCoolReduce = ReloadSpeed.GetValue();
+
+				break;
+            case StatType.End: break;
+        }
+    }
 }
