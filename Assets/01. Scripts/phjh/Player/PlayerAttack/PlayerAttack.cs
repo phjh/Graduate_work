@@ -68,7 +68,7 @@ public class PlayerAttack : MonoBehaviour
 
         if (rot == Vector3.up)
         {
-            Debug.LogError("bug");
+            Debug.LogWarning("Ground Layer not detected at mouse");
             return;
         }
 

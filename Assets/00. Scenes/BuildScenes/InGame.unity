@@ -307,7 +307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 3.4, z: -3}
+  m_FollowOffset: {x: 0, y: 3.4, z: -2}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -1287,7 +1287,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 1732037705}
+  m_LookAt: {fileID: 0}
   m_Follow: {fileID: 1732037705}
   m_Lens:
     FieldOfView: 60.000004
@@ -1316,14 +1316,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1258225723}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.41132614, y: 0.000000015683414, z: -0.0000000070774333, w: 0.9114883}
-  m_LocalPosition: {x: 34.8, y: 3.65, z: 30.464787}
+  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
+  m_LocalPosition: {x: 34.8, y: 3.65, z: 31.464787}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 480770083}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 26.565, y: 0.285, z: 0}
+  m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
 --- !u!1001 &1443475701
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1605,6 +1605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b44c06cb5012e54ab3f2ee7b6b8ef12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _defensiveRegenRate: 0.5
   _immuniateTime: 1
   _shieldObj: {fileID: 1138782183}
 --- !u!114 &1732037700
@@ -1623,6 +1624,11 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 256
+  strength: 0
+  criticalChance: 0
+  criticalDamage: 0
+  reloadCoolReduce: 0
+  attackSpeed: 0
 --- !u!114 &1732037701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1712,6 +1718,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b4c1828f204662f4285373db53ce4257, type: 2}
   _weaponParent: {fileID: 1988163932}
   _immuniateTime: 0.5
+  _playerShield: {fileID: 0}
+  weapon: {fileID: 0}
+  _move: {fileID: 0}
+  _attack: {fileID: 0}
   VirtualCam: {fileID: 1258225724}
 --- !u!4 &1732037705
 Transform:
@@ -2233,8 +2243,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2101187606}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.41132614, y: 0.000000015683414, z: -0.0000000070774333, w: 0.9114883}
-  m_LocalPosition: {x: 34.8, y: 3.65, z: 30.464787}
+  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
+  m_LocalPosition: {x: 34.8, y: 3.65, z: 31.464787}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
