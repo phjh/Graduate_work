@@ -8,7 +8,7 @@ public class EnemySpawn : MonoBehaviour
     [Header("Spawn Values")]
     [Range(0.1f, 10f)]public float MinSpawnTick = 3f;
     [Range(0.1f, 10f)]public float MaxSpawnTick = 3f;
-	[Range(1, 10)]public int MinSpawnOnce = 3;
+	[Range(1, 10)]public int MinSpawnOnce = 1;
     [Range(1, 10)]public int MaxSpawnOnce = 5;
 	[Range(1f, 25f)] public float SpawnDistance = 10f;
 	public LayerMask WhatIsGround;
@@ -90,10 +90,10 @@ public class EnemySpawn : MonoBehaviour
 	{
 		while (IsSpanwing)
 		{
-			if(OnRaid == true) SpawnEnemy(CalculateSpawnPos(), Random.Range(MinSpawnOnce, MaxSpawnOnce));
-			if(OnRaid == false) SpawnEnemy(CalculateSpawnPos(), Random.Range(MaxSpawnOnce, MaxSpawnOnce * 3));
-
 			yield return new WaitForSeconds(Random.Range(MinSpawnTick, MaxSpawnTick));
+
+			if(OnRaid == false) SpawnEnemy(CalculateSpawnPos(), Random.Range(MinSpawnOnce, MaxSpawnOnce));
+			if(OnRaid == true) SpawnEnemy(CalculateSpawnPos(), Random.Range(MaxSpawnOnce, MaxSpawnOnce * 3));
 		}
 
 		InActiveEnemySpawn();
