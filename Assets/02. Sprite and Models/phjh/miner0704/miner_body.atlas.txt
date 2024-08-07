@@ -1,8 +1,0 @@
-miner_body.png
-size:65,38
-filter:Linear,Linear
-pma:true
-body_sb
-bounds:34,2,29,34
-body_sf
-bounds:2,2,30,34
