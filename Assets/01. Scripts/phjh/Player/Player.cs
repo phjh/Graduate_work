@@ -159,7 +159,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private void SetHealthBar()
     {
-        
+        Logger.Log(playerStat.NowHP / playerStat.MaxHP.GetValue());
     }
 
     private void Update()
