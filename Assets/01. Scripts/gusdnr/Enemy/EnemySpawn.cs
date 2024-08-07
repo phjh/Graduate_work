@@ -56,10 +56,10 @@ public class EnemySpawn : MonoBehaviour
 
 		Vector3 SpawnPosition = PlayerTrm.position + RandomDirection; // Create Random Position by PlayerPosition
 
-		bool isInBossAreaX = SpawnPosition.x >= BossArea.x && SpawnPosition.x <= BossArea.y && SpawnPosition.x <= MapOutLine.x && SpawnPosition.x >= MapOutLine.y;
-		bool isInBossAreaZ = SpawnPosition.z >= BossArea.x && SpawnPosition.z <= BossArea.y && SpawnPosition.z <= MapOutLine.x && SpawnPosition.z >= MapOutLine.y;
+		bool isInBossArea = SpawnPosition.x >= BossArea.x || SpawnPosition.x <= BossArea.y || SpawnPosition.z >= BossArea.x || SpawnPosition.z <= BossArea.y;
+		bool isOutMap = SpawnPosition.x <= MapOutLine.x || SpawnPosition.z <= MapOutLine.x || SpawnPosition.x >= MapOutLine.y || SpawnPosition.z >= MapOutLine.y;
 
-		if (isInBossAreaX || isInBossAreaZ) // If meet the Condition one of both, Explore again
+		if (isInBossArea || isOutMap) // If meet the Condition one of both, Explore again
 		{
 			return CalculateSpawnPos();
 		}
@@ -75,9 +75,7 @@ public class EnemySpawn : MonoBehaviour
 				// Check Wall is not this Position (using Layer)
 				if (!Physics.CheckSphere(SampleSpawnPosition.position, 0.5f, WhatIsWall))
 				{
-					LastEnemySpawnPosition.x = SampleSpawnPosition.position.x;
-					LastEnemySpawnPosition.z = SampleSpawnPosition.position.z;
-					return LastEnemySpawnPosition; // If meet the conditions, return Vector
+					return new Vector3(SampleSpawnPosition.position.x, 0.5f, SampleSpawnPosition.position.z); // If meet the conditions, return Vector
 				}
 			}
 		}
@@ -92,20 +90,19 @@ public class EnemySpawn : MonoBehaviour
 		{
 			yield return new WaitForSeconds(Random.Range(MinSpawnTick, MaxSpawnTick));
 
-			if(OnRaid == false) SpawnEnemy(CalculateSpawnPos(), Random.Range(MinSpawnOnce, MaxSpawnOnce));
-			if(OnRaid == true) SpawnEnemy(CalculateSpawnPos(), Random.Range(MaxSpawnOnce, MaxSpawnOnce * 3));
+			if(OnRaid == false) SpawnEnemy(Random.Range(MinSpawnOnce, MaxSpawnOnce));
+			if(OnRaid == true) SpawnEnemy(Random.Range(MaxSpawnOnce, MaxSpawnOnce * 3));
 		}
 
 		InActiveEnemySpawn();
 	}
 
-    public void SpawnEnemy(Vector3 SpawnPos, int SpawnCount)
+    public void SpawnEnemy(int SpawnCount)
     {
-        int SpawnMonster = Random.Range(0, SpawnableMonsters.Count - 1);
-
+		LastEnemySpawnPosition = CalculateSpawnPos();
 		for (int count = 0; count < SpawnCount; count++)
         {
-            mngs.PoolMng.Pop(SpawnableMonsters[SpawnMonster], SpawnPos);
+            mngs.PoolMng.Pop(SpawnableMonsters[0], LastEnemySpawnPosition);
         }
     }
 
