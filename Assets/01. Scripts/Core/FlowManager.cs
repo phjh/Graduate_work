@@ -18,8 +18,7 @@ public class FlowManager : ManagerBase<FlowManager>
 	[HideInInspector] public bool isGameClear = false;
 
 	public GameState CurrentGameState;
-
-	private SceneFlowBase CurrentSceneFlow;
+	public SceneFlowBase CurrentSceneFlow;
 
 	public override void InitManager()
 	{
@@ -88,5 +87,10 @@ public class FlowManager : ManagerBase<FlowManager>
 	{
 		CurrentSceneFlow = FindFirstObjectByType<SceneFlowBase>();
 		CurrentSceneFlow?.SetFlowThisScene();
+	}
+
+	public void ChangeSceneInFlow()
+	{
+		mngs.UIMng.SetSceneName(CurrentSceneFlow.NextSceneName);
 	}
 }
