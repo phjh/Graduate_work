@@ -113,6 +113,7 @@ public static class Logger
     public static void LogException(System.Exception exception, Object context) {}
     public static void Assert(bool condition) {}
     public static void Assert(bool condition, Object context) {}
+    public static void Assert(bool condition, string text) {}
     public static void AssertFormat(bool condition, string message, params object[] args) {}
     public static void AssertFormat(bool condition, Object context, string message, params object[] args) {}
 #endif
