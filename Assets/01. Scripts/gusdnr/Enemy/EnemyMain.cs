@@ -160,6 +160,7 @@ public class EnemyMain : PoolableMono, IDamageable
 	{
 		//Start Hit Effect
 		enemyData.NowHP = Mathf.Clamp(enemyData.NowHP - dmg, 0, MaxHP.GetValue());
+		Debug.Log(enemyData.NowHP);
 
 		if (enemyData.NowHP <= 0) DieObject();
 	}

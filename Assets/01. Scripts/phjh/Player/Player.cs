@@ -186,8 +186,7 @@ public class Player : MonoBehaviour, IDamageable
             playerStat.NowHP -= dmg;
             if(playerStat.NowHP <= 0)
             {
-				isImmunity = true;
-				Managers.instance.FlowMng.ChangeSceneInFlow();
+                DieObject();
 			}
             StartCoroutine(TakeDamageEffects());
             SetHealthBar();
@@ -210,5 +209,7 @@ public class Player : MonoBehaviour, IDamageable
     public void DieObject()
     {
         //넘어가게끔바꾸기
+        isImmunity = true;
+        Managers.instance.FlowMng.ChangeSceneInFlow();
     }
 }

@@ -9,9 +9,9 @@ public class PickaxeBullet : PlayerBullet
     [SerializeField]
     private float rotateSpeed = 20;
 
-    public override void Init(Quaternion rot)
+    public override void Init(Quaternion rot, float damage)
     {
-        base.Init(rot);
+        base.Init(rot, damage);
         rotaterot = Quaternion.Euler(45, 0, rot.eulerAngles.y);
         destroyCoroutine = StartCoroutine(DestroyBullet());
     }

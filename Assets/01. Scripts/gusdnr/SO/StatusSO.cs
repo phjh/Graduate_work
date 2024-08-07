@@ -55,7 +55,8 @@ public class StatusSO : ScriptableObject
     }
 	public void AddModifierStat(StatType StatType, float EditValue, bool isPersent)
 	{
-		StatDictionary[StatTypeToString(StatType)]?.AddModifier(EditValue, isPersent);
+		Debug.Log(StatTypeToString(StatType) + ',' + EditValue);
+		StatDictionary[StatTypeToString(StatType)].AddModifier(EditValue, isPersent);
 	}
 
 	public void RemoveModifierStat(string StatName, float EditValue, bool isPersent)
