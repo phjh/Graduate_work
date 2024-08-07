@@ -17,16 +17,16 @@ public class PlayerManager : ManagerBase<PlayerManager>
 	//only at lobby
 	public LobbyPlayer LobbyPlayer;
 
+	public CinemachineBasicMultiChannelPerlin perlin;
+	public RectTransform PlayerHealth;
 
-    public CinemachineBasicMultiChannelPerlin perlin;
-
-    public override void InitManager()
+	public override void InitManager()
 	{
 		base.InitManager();
 		//SelectedWeaponData = Resources.Load("Resources/WeaponDatas/PickaxeData") as WeaponDataSO;
 		SetUpOreDictionary();
 
-        Logger.Log("Complete Active Player Manager");
+		Logger.Log("Complete Active Player Manager");
 	}
 
 	public void SetUpOreDictionary()
@@ -42,28 +42,28 @@ public class PlayerManager : ManagerBase<PlayerManager>
 
 	public void SetPlayerWeapon(WeaponDataSO SettedData)
 	{
-		if(SettedData.weapon == WeaponEnum.None || SettedData.weapon == WeaponEnum.End) return;
+		if (SettedData.weapon == WeaponEnum.None || SettedData.weapon == WeaponEnum.End) return;
 		SelectedWeaponData = SettedData;
-        SetPlayerWeaponVisible();
+		SetPlayerWeaponVisible();
 	}
 
 	private void SetPlayerWeaponVisible()
 	{
 		if (nowWeapon != null)
 			Destroy(nowWeapon);
-		nowWeapon = Instantiate(SelectedWeaponData.playerWeapon.gameObject, new Vector2(0.1f,-0.62f), Quaternion.identity);
-		if(SelectedWeaponData.weapon == WeaponEnum.Pickaxe)
+		nowWeapon = Instantiate(SelectedWeaponData.playerWeapon.gameObject, new Vector2(0.1f, -0.62f), Quaternion.identity);
+		if (SelectedWeaponData.weapon == WeaponEnum.Pickaxe)
 		{
 			nowWeapon.transform.rotation = Quaternion.Euler(0, 180, 45);
-            Vector3 v = nowWeapon.transform.lossyScale;
-            nowWeapon.transform.localScale = new Vector3(v.x * -1, v.y, v.z);
-        }
-		if(SelectedWeaponData.weapon == WeaponEnum.Drill)
+			Vector3 v = nowWeapon.transform.lossyScale;
+			nowWeapon.transform.localScale = new Vector3(v.x * -1, v.y, v.z);
+		}
+		if (SelectedWeaponData.weapon == WeaponEnum.Drill)
 		{
 			Vector3 v = nowWeapon.transform.lossyScale;
 			nowWeapon.transform.localScale = new Vector3(v.x * -1, v.y, v.z);
 		}
-        nowWeapon.SetActive(true);
+		nowWeapon.SetActive(true);
 		PlayerWeapon weapon = nowWeapon.GetComponent<PlayerWeapon>();
 		LobbyPlayer.SetSpineIK(weapon.leftHandIK, weapon.rightHandIK);
 	}
@@ -72,7 +72,7 @@ public class PlayerManager : ManagerBase<PlayerManager>
 	{
 		ActioveXRay = active;
 
-		if(ActioveXRay)
+		if (ActioveXRay)
 		{
 
 		}
@@ -89,7 +89,7 @@ public class PlayerManager : ManagerBase<PlayerManager>
 		if (!OreDictionary.ContainsKey(type)) return; //If Non value in Dictionary to same type, return
 
 		OreDictionary[type] = OreDictionary[type]++;
-		Player?.playerStat?.AddModifierStat(type, addValue, false);
+		Player.playerStat.AddModifierStat(type, addValue, false);
 	}
 
 	public int RetrunOreCount(StatType type)
@@ -97,18 +97,24 @@ public class PlayerManager : ManagerBase<PlayerManager>
 		return OreDictionary[type];
 	}
 
-    public void ShakeCamera(float shakeIntencity = 3, float waitTime = 0.2f)
-    {
-        float frequency = 1f;
-        perlin.m_AmplitudeGain = shakeIntencity * 0.5f;
-        perlin.m_FrequencyGain = frequency;
-        Invoke(nameof(CameraShakingOff), waitTime);
-    }
+	public void ShakeCamera(float shakeIntencity = 3, float waitTime = 0.2f)
+	{
+		float frequency = 1f;
+		perlin.m_AmplitudeGain = shakeIntencity * 0.5f;
+		perlin.m_FrequencyGain = frequency;
+		Invoke(nameof(CameraShakingOff), waitTime);
+	}
 
-    void CameraShakingOff()
-    {
-        perlin.m_FrequencyGain = 0;
-        perlin.m_AmplitudeGain = 0;
-    }
+	void CameraShakingOff()
+	{
+		perlin.m_FrequencyGain = 0;
+		perlin.m_AmplitudeGain = 0;
+	}
+
+	public void SetPlayerHealth(float percent)
+	{
+		PlayerHealth.localScale = new Vector3(percent, 1, 1);
+	}
+
 
 }

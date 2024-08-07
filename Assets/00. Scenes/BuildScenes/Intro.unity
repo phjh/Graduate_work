@@ -494,7 +494,7 @@ PrefabInstance:
     - target: {fileID: 5406252698822384476, guid: b23817c300560274d82af54301a79342, type: 3}
       propertyPath: DataStruct.Array.data[2].PoolData
       value: 
-      objectReference: {fileID: 11400000, guid: e9fd7fc74c0550e409e5c1a784dcfbd3, type: 2}
+      objectReference: {fileID: 11400000, guid: ad4fe8e258aaaf64782a88464f639994, type: 2}
     - target: {fileID: 5406252698822384476, guid: b23817c300560274d82af54301a79342, type: 3}
       propertyPath: DataStruct.Array.data[3].PoolData
       value: 
@@ -1678,6 +1678,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1670293317}
     m_Modifications:
     - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
+      propertyPath: ChunkDatas.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
       propertyPath: OrePoolName.Array.size
       value: 7
       objectReference: {fileID: 0}
@@ -1692,15 +1696,15 @@ PrefabInstance:
     - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
       propertyPath: ChunkDatas.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: c2ce31b6521a5c542958f393303aa323, type: 2}
+      objectReference: {fileID: 11400000, guid: 452b4d4ad23c9824db467a07fface49c, type: 2}
     - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
       propertyPath: ChunkDatas.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: 342b3229cead35c4482651ecd955b78f, type: 2}
+      objectReference: {fileID: 11400000, guid: c2ce31b6521a5c542958f393303aa323, type: 2}
     - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
       propertyPath: ChunkDatas.Array.data[4]
       value: 
-      objectReference: {fileID: 11400000, guid: c2ce31b6521a5c542958f393303aa323, type: 2}
+      objectReference: {fileID: 11400000, guid: 4cfac47f40715224190785261acb8b98, type: 2}
     - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
       propertyPath: ChunkDatas.Array.data[5]
       value: 
@@ -1708,7 +1712,7 @@ PrefabInstance:
     - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
       propertyPath: ChunkDatas.Array.data[6]
       value: 
-      objectReference: {fileID: 11400000, guid: 452b4d4ad23c9824db467a07fface49c, type: 2}
+      objectReference: {fileID: 11400000, guid: de587f3175df9d643bb88845575d9cdc, type: 2}
     - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
       propertyPath: ChunkDatas.Array.data[7]
       value: 
@@ -1716,7 +1720,11 @@ PrefabInstance:
     - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
       propertyPath: ChunkDatas.Array.data[8]
       value: 
-      objectReference: {fileID: 11400000, guid: 7b0e270496fc9bf4fbcd906f9631c472, type: 2}
+      objectReference: {fileID: 11400000, guid: c6abbb3564fa8df45b990472f97aca96, type: 2}
+    - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
+      propertyPath: ChunkDatas.Array.data[9]
+      value: 
+      objectReference: {fileID: 11400000, guid: de587f3175df9d643bb88845575d9cdc, type: 2}
     - target: {fileID: 3023434692861226608, guid: f8aeb4103e294cf49ab3d1db66c2545b, type: 3}
       propertyPath: OrePoolName.Array.data[0]
       value: OreBlock_Strength
@@ -3284,6 +3292,7 @@ MonoBehaviour:
   Player: {fileID: 0}
   LobbyPlayer: {fileID: 0}
   perlin: {fileID: 0}
+  PlayerHealth: {fileID: 1475625324}
 --- !u!222 &987928996846554285
 CanvasRenderer:
   m_ObjectHideFlags: 0

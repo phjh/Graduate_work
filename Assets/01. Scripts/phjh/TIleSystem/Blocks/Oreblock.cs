@@ -37,6 +37,7 @@ public class OreBlock : Blocks
 
 		blockType = BlockType.OreBlock;
 		TimesToBreak = MaxTimesToBreak;
+        transform.rotation = Quaternion.Euler(0, 0, 0);
 	}
 
 	public override void BlockEvent(Vector3 pos, int breaks = 1)
@@ -47,7 +48,8 @@ public class OreBlock : Blocks
 		{
 			alreadyExposed = true;
 			SetMesh(OrePair);
-		}
+            transform.rotation = Quaternion.Euler(45, 0, 0);
+        }
 
 		if (TimesToBreak <= 0)
 		{

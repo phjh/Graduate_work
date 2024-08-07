@@ -73,7 +73,7 @@ public class PlayerAttack : MonoBehaviour
 
         Quaternion rotation = Quaternion.LookRotation(rot);
 
-        bullet.Init(rotation);
+        bullet.Init(rotation, _player.playerStat.Attack.GetValue());
 
         _lastFireTime = Time.time;
         //bullet.transform.rotation = Quaternion.Slerp(bullet.transform.rotation, rotation, 1);

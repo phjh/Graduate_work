@@ -10,9 +10,9 @@ public class DrillBullet : PlayerBullet
     [SerializeField]
     private string _bombEffectName;
 
-    public override void Init(Quaternion rot)
+    public override void Init(Quaternion rot,float damage)
     {
-        base.Init(rot);
+        base.Init(rot,damage);
         transform.rotation = Quaternion.Euler(45, 0, -rot.eulerAngles.y - 90);
         destroyCoroutine = StartCoroutine(DestroyBullet());
     }

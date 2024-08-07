@@ -23,5 +23,13 @@ MonoBehaviour:
     Count: 1
   - poolableType: 1
     poolableMono: {fileID: 2323055639523970824, guid: d5a9f3f17fe1e724781c96b8e395f4eb, type: 3}
-    poolableName: AddItemUI
+    poolableName: SmallGolem
     Count: 50
+  - poolableType: 1
+    poolableMono: {fileID: 5608957443657115236, guid: 16e88d8fc8339f847b9eff9d840ae2c9, type: 3}
+    poolableName: SmallGolem
+    Count: 10
+  - poolableType: 1
+    poolableMono: {fileID: 3993027108183574981, guid: 96a76c925af5e2246bb46ef8feea1dc6, type: 3}
+    poolableName: SmallGolem
+    Count: 10

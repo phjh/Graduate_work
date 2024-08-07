@@ -6,17 +6,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
 {
-    #region À¯´ÏÆ¼ ÀÎ½ºÆåÅÍ¿¡¼­ ¼¼ÆÃÇØÁÙ °ªµé 
+    #region ï¿½ï¿½ï¿½ï¿½Æ¼ ï¿½Î½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 
     [SerializeField]
     private InputReader _inputReader;
 
     [SerializeField]
-    private SkeletonAnimation _skeletonAnimation; //ÀÌ°Ç ¸öÂÊÀÌ´Ù.
-    //ÀÓ½Ã ¹«±â
+    private SkeletonAnimation _skeletonAnimation; //ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½.
+    //ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½
     [SerializeField]
     private WeaponDataSO _tempWeapon;
-    //½ºÅÈ
+    //ï¿½ï¿½ï¿½ï¿½
     [SerializeField]
     private StatusSO _stat;
 
@@ -31,17 +31,17 @@ public class Player : MonoBehaviour, IDamageable
 
     #endregion
 
-    #region ¿ÜºÎ ÄÚµå¿¡¼­ ¹Þ¾Æ¼­ ¾µ °ªµé
+    #region ï¿½Üºï¿½ ï¿½Úµå¿¡ï¿½ï¿½ ï¿½Þ¾Æ¼ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     public InputReader inputReader {  get; private set; } 
     public SkeletonAnimation skeletonAnimation {  get; private set; }
-    //ÀÓ½Ã ¹«±â
+    //ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public WeaponDataSO weaponData { get; private set; }
     public StatusSO playerStat { get; private set; }
 
     #endregion
 
-    #region ÇÃ·¹ÀÌ¾î°¡ °¡Áö°í ÀÖÀ»°ªµé
+    #region ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 
     private PlayerShield _playerShield;
@@ -56,7 +56,7 @@ public class Player : MonoBehaviour, IDamageable
 
     #endregion
 
-    #region ¿ÜºÎ¿¡¼­ ¼öÁ¤ÇÒ bool°ªµé(°ø°ÝÁßÀÎÁö, ¿òÁ÷ÀÏ¼öÀÖ´ÂÁö µî)
+    #region ï¿½ÜºÎ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ boolï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ ï¿½ï¿½)
 
     public bool canMove { get; set; } = true;
     public bool canAttack { get; set; } = true;
@@ -126,12 +126,12 @@ public class Player : MonoBehaviour, IDamageable
 
 		weaponData = _tempWeapon;
 
-        //ÀÎÇ²¸®´õ È°¼ºÈ­
+        //ï¿½ï¿½Ç²ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­
         inputReader.SetActive(true);
 
-        #region ÇÃ·¹ÀÌ¾î ÄÄÆ÷³ÍÆ® ¼¼ÆÃ
+        #region ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 
-        //ÇÃ·¹ÀÌ¾î ¿òÁ÷ÀÓ ºÎºÐ
+        //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½
         if (this.gameObject.TryGetComponent(out PlayerMove move))
             move.Init(this, inputReader, _skeletonAnimation, _moveAnimations);
         else
@@ -145,7 +145,7 @@ public class Player : MonoBehaviour, IDamageable
         else
             Logger.LogWarning("Playerattack is null");
 
-        //ÇÃ·¹ÀÌ¾î ½¯µå ºÎºÐ
+        //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½
         if (this.gameObject.TryGetComponent(out _playerShield))
             _playerShield.Init(this);
         else
@@ -160,23 +160,17 @@ public class Player : MonoBehaviour, IDamageable
     private void SetHealthBar()
     {
         Logger.Log(playerStat.NowHP / playerStat.MaxHP.GetValue());
+        PlayerManager.Instance.SetPlayerHealth(playerStat.NowHP / playerStat.MaxHP.GetValue());
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Z))
-        {
-            _playerShield.RegenDefence();
-        }
-        if(Input.GetKeyDown(KeyCode.X))
-        {
-            TakeDamage(1);
-        }
+
     }
 
     public void TakeDamage(float dmg)
     {        
-        //µ©Áö ¾È¹Þ´Â »óÅÂ
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½È¹Þ´ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (isImmunity || isDodging)
             return;
 
@@ -188,13 +182,11 @@ public class Player : MonoBehaviour, IDamageable
         }
         else
         {
-            //±×´ë·Î µ¥¹ÌÁö ÀÔ°Ô²û ÇØÁØ´Ù
+            //ï¿½×´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô°Ô²ï¿½ ï¿½ï¿½ï¿½Ø´ï¿½
             playerStat.NowHP -= dmg;
             if(playerStat.NowHP <= 0)
             {
-				isImmunity = true;
-                Managers.instance.FlowMng.isGameClear = false;
-				Managers.instance.FlowMng.ChangeSceneInFlow();
+                DieObject();
 			}
             StartCoroutine(TakeDamageEffects());
             SetHealthBar();
@@ -204,7 +196,7 @@ public class Player : MonoBehaviour, IDamageable
     private IEnumerator TakeDamageEffects()
     {
         isImmunity = true;
-        //¿©±â¼­ ¸Â¾ÒÀ»¶§ ÇÇµå¹éÀ»ÁØ´Ù
+        //ï¿½ï¿½ï¿½â¼­ ï¿½Â¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Çµï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½
         PoolManager.Instance.PopAndPushEffect("PlayerHitbloodEffect", transform.position + Vector3.up/2, 1f);
         
         PlayerManager.Instance.ShakeCamera(waitTime: _immuniateTime);
@@ -216,6 +208,9 @@ public class Player : MonoBehaviour, IDamageable
 
     public void DieObject()
     {
-        //³Ñ¾î°¡°Ô²û¹Ù²Ù±â
+        //ï¿½Ñ¾î°¡ï¿½Ô²ï¿½ï¿½Ù²Ù±ï¿½
+        isImmunity = true;
+        Managers.instance.FlowMng.isGameClear = false;
+        Managers.instance.FlowMng.ChangeSceneInFlow();
     }
 }
