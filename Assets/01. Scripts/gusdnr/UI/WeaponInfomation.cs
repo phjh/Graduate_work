@@ -37,12 +37,12 @@ public class WeaponInfomation : MonoBehaviour
 		SetUIElements();
 	}
 
-	public void Reload()
+	public void Reload(float reloadTime)
 	{
 		FadeImg.enabled = true;
 		ReloadIconImg.SetActive(true);
 
-		ReloadIconImg.transform.DORotate(new Vector3(0, 0, -360), 3f)
+		ReloadIconImg.transform.DORotate(new Vector3(0, 0, -360), reloadTime)
 			.OnComplete(() =>
 			{
 				FadeImg.enabled = false;

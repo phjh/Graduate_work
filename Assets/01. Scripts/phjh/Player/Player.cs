@@ -110,7 +110,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private void SetPlayerStat()
     {
-        playerStat = _stat;
+        playerStat = Instantiate(_stat);
         playerStat.SetUpDictionary();
     }
 

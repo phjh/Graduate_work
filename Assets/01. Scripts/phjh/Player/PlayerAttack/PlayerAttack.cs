@@ -33,14 +33,16 @@ public class PlayerAttack : MonoBehaviour
         this.tempBullet = bullet;
         this.weapon = weapon;
 
-        //foreach (var animation in animations)
-        //{
-        //    _moveAnimation.Add(new Lazy<AnimationReferenceAsset>(animation));
-        //}
 
         _inputReader.AttackEvent += DoAttack;
         _inputReader.ReloadEvent += ReloadWeapon;
         mainCamera = Camera.main;
+    }
+
+    private void FixedUpdate()
+    {
+        WeaponInfomation.Instance.SetMaxBullet(weapon.maxAmmo);
+        WeaponInfomation.Instance.SetCurrentBullet(weapon.currentAmmo);
     }
 
     public void DoAttack()
@@ -64,6 +66,7 @@ public class PlayerAttack : MonoBehaviour
     private void FireBullet()
     {
         weapon.currentAmmo--;
+        WeaponInfomation.Instance.SetCurrentBullet(weapon.currentAmmo);
 
         PlayerBullet bullet = (PlayerBullet)PoolManager.Instance.Pop(tempBullet.name, this.transform.position + new Vector3(0, 0.4f, 0));
         //bullet.transform.forward = rot;
@@ -101,6 +104,8 @@ public class PlayerAttack : MonoBehaviour
 
     private void ReloadWeapon()
     {
+        WeaponInfomation.Instance.Reload(weapon.ReloadTime);
+        WeaponInfomation.Instance.SetCurrentBullet(weapon.maxAmmo);
         _isReloading = true;
         _player.canAttack = false;
         Invoke(nameof(Reload), weapon.ReloadTime);

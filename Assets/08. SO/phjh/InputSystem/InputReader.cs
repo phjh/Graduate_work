@@ -28,17 +28,21 @@ public class InputReader : ScriptableObject, IPlayerActions
             _inputAction = new Controls();
             _inputAction.Player.SetCallbacks(this); //플레이어 인풋이 발생하면 이 인스턴스를 연결해주고
         }
-        
-        _inputAction.Player.Enable(); //활성화 까먹지말자
     }
 
     //대충 여기서 inputsystem 에러 안나게 해준다
     public void SetActive(bool active)
     {
         if (active)
+        {
             _inputAction.Player.Enable();
-        else if(!active)
+            Cursor.SetCursor(normalCursor, Vector2.zero, CursorMode.Auto);
+        }
+        else if (!active)
+        {
+            ResetCursor();
             _inputAction.Player.Disable();
+        }
         isactived = active;
     }
 
