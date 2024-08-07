@@ -35,13 +35,13 @@ public class StatusSO : ScriptableObject
     {
 		StatDictionary.Add("MaxHP", MaxHP);
 		NowHP = MaxHP.GetValue();
-		StatDictionary.Add("Attack", Attack);
+		StatDictionary.Add("Strength", Attack);
 		StatDictionary.Add("CriticalChance", CriticalChance);
 		StatDictionary.Add("CriticalDamage", CriticalDamage);
 		StatDictionary.Add("AttackSpeed", AttackSpeed);
 		StatDictionary.Add("ReloadSpeed", ReloadSpeed);
 		StatDictionary.Add("MoveSpeed", MoveSpeed);
-		StatDictionary.Add("ShieldRegen", ShieldRegen);
+		StatDictionary.Add("ShiledResilience", ShieldRegen);
 	}
 	
 	public void EditBaseStat(string StatName, float EditValue)
@@ -78,7 +78,7 @@ public class StatusSO : ScriptableObject
 			case StatType.AttackSpeed: return "AttackSpeed";
 			case StatType.MoveSpeed: return "MoveSpeed";
 			case StatType.ShiledResilience: return "ShiledResilience";
-			case StatType.ReloadSpeed: return "ReloadSpeeds";
+			case StatType.ReloadSpeed: return "ReloadSpeed";
 			case StatType.End: return "End";
 
 			default: return null;
