@@ -319,8 +319,8 @@ public class UIManager : ManagerBase<UIManager>
 	private RectTransform AddPopupContainer;
 	public void PopupAddItemUI(Sprite ItemSprite, int AddCount = 1)
 	{
-		if(AddPopupContainer == null) CurrentActiveCanvas.transform.Find("AddItemList").TryGetComponent(out AddPopupContainer);
-		Logger.Assert(AddPopupContainer != null, "Itme Popup Container is Null");
+		/*if(AddPopupContainer == null) */CurrentActiveCanvas.transform.Find("AddItemList").TryGetComponent(out AddPopupContainer);
+		Logger.Assert(AddPopupContainer != null, "Item Popup Container is Null");
 		if (mngs.PoolMng.Pop("AddItemUI").TryGetComponent(out AddItemUI uiCompoenet))
 		{
 			uiCompoenet.transform.parent = AddPopupContainer;

@@ -8,7 +8,6 @@ using Unity.VisualScripting;
 using UnityEditor;
 using DG.Tweening;
 using Spine;
-using TreeEditor;
 
 enum MoveDir
 { 

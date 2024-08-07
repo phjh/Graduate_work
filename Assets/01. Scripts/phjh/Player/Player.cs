@@ -190,12 +190,12 @@ public class Player : MonoBehaviour, IDamageable
         {
             //그대로 데미지 입게끔 해준다
             playerStat.NowHP -= dmg;
-            StartCoroutine(TakeDamage());
+            StartCoroutine(TakeDamageEffects());
             SetHealthBar();
         }
     }
 
-    private IEnumerator TakeDamage()
+    private IEnumerator TakeDamageEffects()
     {
         isImmunity = true;
         //여기서 맞았을때 피드백을준다

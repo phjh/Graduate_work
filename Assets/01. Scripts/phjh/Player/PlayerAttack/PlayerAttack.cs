@@ -93,7 +93,7 @@ public class PlayerAttack : MonoBehaviour
             return;
         }
 
-        if (_player.isDodging)
+        if (_player.isDodging || _isReloading)
             return;
 
         _player.canAttack = true;
