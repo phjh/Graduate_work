@@ -78,9 +78,10 @@ public class StatusSO : ScriptableObject
 			case StatType.AttackSpeed: return "AttackSpeed";
 			case StatType.MoveSpeed: return "MoveSpeed";
 			case StatType.ShiledResilience: return "ShiledResilience";
+			case StatType.ReloadSpeed: return "ReloadSpeeds";
 			case StatType.End: return "End";
-		}
 
-		return null;
+			default: return null;
+		}
 	}
 }

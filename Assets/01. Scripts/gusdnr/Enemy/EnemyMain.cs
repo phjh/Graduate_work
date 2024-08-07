@@ -44,7 +44,9 @@ public class EnemyMain : PoolableMono, IDamageable
 
 	private void FixedUpdate()
 	{
-		if (isAlive == false || IsAttack == true) return;
+		if (isAlive == false || IsAttack == true || TargetTransform == null) return;
+
+		EnemyAnimator.SetBool("Move", IsMove);
 
 		if (DistanceToTarget <= CorrectionMaxRange && DistanceToTarget >= CorrectionMinRange)
 		{
@@ -79,6 +81,7 @@ public class EnemyMain : PoolableMono, IDamageable
 		IsAttack = true;
 		CanAttack = false;
 
+		StopChaing();
 		ThisEnemyAttack.StartAttack();
 	}
 
@@ -122,7 +125,6 @@ public class EnemyMain : PoolableMono, IDamageable
 		SetMoveSpeed();
 
 		enemyData.NowHP = MaxHP.GetValue();
-
 		TargetTransform = Managers.instance?.PlayerMng?.Player.transform;
 	}
 

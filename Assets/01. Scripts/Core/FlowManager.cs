@@ -62,6 +62,7 @@ public class FlowManager : ManagerBase<FlowManager>
 				}
 			case GameState.PlayGame:
 				{
+					mngs.UIMng.EnableSelectCanvas(1);
 					break;
 				}
 			case GameState.EndGame:
