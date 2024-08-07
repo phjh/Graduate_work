@@ -44,7 +44,7 @@ public class EnemyMain : PoolableMono, IDamageable
 
 	private void FixedUpdate()
 	{
-		if (isAlive == false || IsAttack == true) return;
+		if (isAlive == false || IsAttack == true || TargetTransform == null) return;
 
 		EnemyAnimator.SetBool("Move", IsMove);
 

@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Debugging Attack", menuName = "EnemyAttack/Debug")]
+[CreateAssetMenu(fileName = "New NearArea Attack", menuName = "EnemyAttack/NearArea")]
 public class NearAreaAttack : EnemyAttackBase
 {
 	[SerializeField] private LayerMask WhatIsTarget;
-	[SerializeField] private float AttackRange = 5f;
 
 	public override void StartAttack()
 	{
@@ -18,7 +17,7 @@ public class NearAreaAttack : EnemyAttackBase
 		Logger.Log(E_Main.PoolName + " is Active Attack");
 
 		// Attack 범위 내 플레이어 감지
-		Collider[] playersInRange = Physics.OverlapSphere(E_Main.transform.position, AttackRange, WhatIsTarget);
+		Collider[] playersInRange = Physics.OverlapSphere(E_Main.transform.position, E_Main.MaxAttackRange, WhatIsTarget);
 		if (playersInRange.Length > 0)
 		{
 			IDamageable damageable = playersInRange[0].GetComponent<IDamageable>();
