@@ -58,7 +58,7 @@ public class ResultFlow : SceneFlowBase
 
 		foreach (OreResultPair pair in OrePairs)
 		{
-			OreCount = (int)(mngs?.PlayerMng?.RetrunOreCount(pair.ThisOreType));
+			OreCount = mngs.PlayerMng.RetrunOreCount(pair.ThisOreType);
 			pair.Text.text = IntToString(OreCount);
 			TMPDOText(pair.Text, OreDuration);
 			OreCountSum = OreCountSum + OreCount;
@@ -66,6 +66,8 @@ public class ResultFlow : SceneFlowBase
 
 		OreSum.text = IntToString(OreCountSum);
 		TMPDOText(OreSum, OreDuration);
+
+		TimeText.text = SetRemainTime();
 
 		ReStartBtn?.onClick.RemoveAllListeners();
 		ReStartBtn?.onClick.AddListener(() => mngs.UIMng.SetSceneName(NextSceneName));
@@ -84,4 +86,13 @@ public class ResultFlow : SceneFlowBase
 		tmp.maxVisibleCharacters = 0;
 		DOTween.To(x => tmp.maxVisibleCharacters = (int)x, 0f, tmp.text.Length, duration);
 	}
+
+	private string SetRemainTime()
+	{
+		int t0 = (int)mngs.TimeMng.timeLimit;
+		int m = t0 / 60;
+		int s = (t0 - m * 60);
+		return $"{m:00}:{s:00}";
+	}
+
 }

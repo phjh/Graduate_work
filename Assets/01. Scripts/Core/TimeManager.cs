@@ -7,9 +7,8 @@ public class TimeManager : ManagerBase<TimeManager>
 {
 	private Coroutine TimeScaleChange;
 
-    [SerializeField]
     [Tooltip("초 단위로 입력")]
-    private float timeLimit; 
+    public float timeLimit; 
 
     public bool isTimerActived = false;
 

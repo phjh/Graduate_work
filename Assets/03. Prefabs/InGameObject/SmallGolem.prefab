@@ -255,8 +255,8 @@ MonoBehaviour:
   TargetLayer:
     serializedVersion: 2
     m_Bits: 1024
-  MinCorrectionAttackRange: 0.5
-  MaxCorrectionAttackRange: 1
+  MinCorrectionAttackRange: 0.1
+  MaxCorrectionAttackRange: 0.5
   MaxHP:
     baseValue: 0
     fixedModifiers: []
