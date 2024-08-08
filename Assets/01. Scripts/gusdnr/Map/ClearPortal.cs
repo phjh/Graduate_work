@@ -9,9 +9,6 @@ public class ClearPortal : MonoBehaviour
 
 	private void Start()
 	{
-		PortalAnim = GetComponent<Animator>();
-		PortalCollider = GetComponent<Collider>();
-
 		PortalCollider.enabled = false;
 
 		PortalAnim.SetTrigger("Open");
