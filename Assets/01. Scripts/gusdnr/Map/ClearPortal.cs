@@ -28,8 +28,6 @@ public class ClearPortal : MonoBehaviour
 		{
 			Managers.instance.FlowMng.isGameClear = true;
 			Managers.instance.FlowMng.ChangeSceneInFlow();
-			
-			PortalAnim.SetTrigger("Open");
 		}
 	}
 }

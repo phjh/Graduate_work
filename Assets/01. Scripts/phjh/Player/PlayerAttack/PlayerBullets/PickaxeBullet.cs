@@ -31,7 +31,7 @@ public class PickaxeBullet : PlayerBullet
     {
         if (other.gameObject.TryGetComponent<EnemyMain>(out EnemyMain enemy))
         {
-            enemy.TakeDamage(damage);
+            DoDamage(enemy);
         }
         if (other.gameObject.TryGetComponent<Blocks>(out Blocks block))
         {

@@ -128,6 +128,9 @@ public class PlayerAttack : MonoBehaviour
 
     private void ReloadWeapon()
     {
+        if (_isReloading)
+            return;
+
         WeaponInfomation.Instance.Reload(weapon.ReloadTime);
         WeaponInfomation.Instance.SetCurrentBullet(weapon.maxAmmo);
         _isReloading = true;
