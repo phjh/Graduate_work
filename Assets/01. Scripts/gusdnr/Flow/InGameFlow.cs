@@ -28,6 +28,6 @@ public class InGameFlow : SceneFlowBase
 	{
 		SelectedSpawnPoint = Random.Range(0, SpawnPositions.Length - 1);
 
-		mngs.PlayerMng.Player.transform.position = SpawnPositions[SelectedSpawnPoint];
+		mngs.PlayerMng.Player.transform.position = SpawnPositions[2];
 	}
 }

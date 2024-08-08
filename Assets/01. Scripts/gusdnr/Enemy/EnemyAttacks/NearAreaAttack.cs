@@ -26,8 +26,14 @@ public class NearAreaAttack : EnemyAttackBase
 			if (damageable != null)	damageable.TakeDamage(E_Main.Attack.GetValue());
 		}
 
-		if(string.IsNullOrEmpty(EffectName) == false) PoolManager.Instance.PopAndPushEffect(EffectName, E_Main.transform.position, 1f);
+		if(string.IsNullOrEmpty(EffectName) == false) PoolManager.Instance.PopAndPushEffect(EffectName, new Vector3(E_Main.transform.position.x, 0f, E_Main.transform.position.z), 1f);
 
 		base.ActiveAttack();
 	}
+
+    public override void EndAttack()
+    {
+        E_Main.EnemyAnimator.ResetTrigger("Attack");
+        base.EndAttack();
+    }
 }

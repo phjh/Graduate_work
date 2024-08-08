@@ -56,7 +56,7 @@ public class EnemySpawn : MonoBehaviour
 			Vector3 RandomDirection = Random.insideUnitSphere * SpawnDistance;
 			RandomDirection.y = 0;
 
-			Vector3 SpawnPosition = PlayerTrm.position + RandomDirection;
+			Vector3 SpawnPosition = mngs.PlayerMng.Player.transform.position + RandomDirection;
 
 			bool isInBossArea = SpawnPosition.x >= BossArea.x && SpawnPosition.x <= BossArea.y && SpawnPosition.z >= BossArea.x && SpawnPosition.z <= BossArea.y;
 			bool isOutMap = SpawnPosition.x < MapOutLine.x || SpawnPosition.z < MapOutLine.x || SpawnPosition.x > MapOutLine.y || SpawnPosition.z > MapOutLine.y;
