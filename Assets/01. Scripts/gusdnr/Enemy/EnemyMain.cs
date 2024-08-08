@@ -49,28 +49,15 @@ public class EnemyMain : PoolableMono, IDamageable
 		if (DistanceToTarget <= CorrectionMaxRange && DistanceToTarget >= CorrectionMinRange)
 		{
 			StopChaing();
-		}
 
-		if (CanAttack == true)
-		{
-			if(IsMove == false)
+			if (CanAttack == true)
 			{
 				ActiveAttack();
 			}
 		}
-		else if (CanAttack == false)
+		else
 		{
-			if (IsAttack == false)
-			{
-				if (DistanceToTarget <= CorrectionMaxRange && DistanceToTarget >= CorrectionMinRange)
-				{
-					StopChaing();
-				}
-				else
-				{
-					SetDestinationPos();
-				}
-			}
+			SetDestinationPos();
 		}
 	}
 

@@ -304,7 +304,7 @@ public class UIManager : ManagerBase<UIManager>
 			Logger.Log($"UnLoading : [{asyncUnload.progress * 100}]%");
 			yield return null;
 		}
-		Debug.Log($"UnLoad Complete : {SceneManager.GetSceneByBuildIndex(index).name}");
+		Logger.Log($"UnLoad Complete : {SceneManager.GetSceneByBuildIndex(index).name}");
 
 		IsWorkingLoading = false;
 

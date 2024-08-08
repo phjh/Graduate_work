@@ -4110,6 +4110,12 @@ MonoBehaviour:
   LobbyPlayer: {fileID: 0}
   perlin: {fileID: 0}
   PlayerHealth: {fileID: 1475625324}
+  SpawnPositions:
+  - {x: 2, y: 0.25, z: 2}
+  - {x: 2, y: 0.25, z: 74}
+  - {x: 74, y: 0.25, z: 74}
+  - {x: 74, y: 0.25, z: 2}
+  SelectedSpawnPoint: -1
 --- !u!222 &987928996846554285
 CanvasRenderer:
   m_ObjectHideFlags: 0

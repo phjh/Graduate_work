@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,9 +11,16 @@ public class FloorChunkDataSO : ScriptableObject
     public List<ChunkSO> NinthChunks = new List<ChunkSO>();
     [Header("Random Chuncks")] 
     public List<ChunkSO> RandomChunks = new List<ChunkSO>();
+	[Header("Boss Chunks")]
+	public ChunkSO BossChunk;
 
-    public ChunkSO RetrunSelectChunk(List<ChunkSO> InitChunkList)
-    {
-        return InitChunkList[Random.Range(0, InitChunkList.Count - 1)];
-    }
+	public ChunkSO RetrunSelectChunk(List<ChunkSO> InitChunkList)
+	{
+		if (InitChunkList == null || InitChunkList.Count == 0)
+		{
+			Logger.LogError("InitChunkList is empty or null!");
+			return null; // 또는 기본값을 반환
+		}
+		return InitChunkList[Random.Range(0, InitChunkList.Count - 1)];
+	}
 }
