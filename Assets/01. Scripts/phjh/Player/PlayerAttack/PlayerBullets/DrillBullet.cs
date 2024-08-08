@@ -10,7 +10,7 @@ public class DrillBullet : PlayerBullet
     [SerializeField]
     private string _bombEffectName;
 
-    public override void Init(Quaternion rot,float damage, bool isCritical)
+    public override void Init(Quaternion rot,float damage, bool isCritical, bool first = false)
     {
         base.Init(rot,damage, isCritical);
         transform.rotation = Quaternion.Euler(45, 0, -rot.eulerAngles.y - 90);

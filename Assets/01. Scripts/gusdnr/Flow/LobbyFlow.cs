@@ -10,6 +10,7 @@ public class LobbyFlow : SceneFlowBase
 	{
 		StartBtn?.onClick.RemoveAllListeners();
 		StartBtn?.onClick.AddListener(SetIngameScene);
+		mngs.PlayerMng.SetPlayerWeapon(mngs.PlayerMng.SelectedWeaponData);
 	}
 
 	private void SetIngameScene()

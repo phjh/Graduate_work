@@ -28,7 +28,7 @@ public class OreBlock : Blocks
 
 	public override void SetBlock()
 	{
-		if (OreMeshFilter == null) TryGetComponent(out  OreMeshFilter);
+		if (OreMeshFilter == null) TryGetComponent(out OreMeshFilter);
 		if (OreMeshRenderer == null) TryGetComponent(out OreMeshRenderer);
 
 		SetMesh(BreakablePair);
@@ -49,6 +49,8 @@ public class OreBlock : Blocks
 		{
 			DropOre();
 			DeleteBlock();
+			if (this.gameObject.activeInHierarchy == true)
+				Destroy(this.gameObject);
 		}
 
 		if (alreadyExposed == false && TimesToBreak <= ExposeToBreak)
