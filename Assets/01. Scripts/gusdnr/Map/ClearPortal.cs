@@ -16,7 +16,6 @@ public class ClearPortal : MonoBehaviour
 
 	private void OnCollisionEnter(Collision collision)
 	{
-		Debug.Log(collision.gameObject.layer);
 		if(collision.gameObject.layer == 10)
 		{
 			Managers.instance.TimeMng.SetTimer(false);
