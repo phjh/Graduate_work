@@ -85,20 +85,22 @@ public class PlayerAttack : MonoBehaviour
 
         Quaternion rotation = Quaternion.LookRotation(rot);
 
-        bullet.Init(rotation, CalculateDamage());
+        var (damage, iscritical) = CalculateDamage();
+        bullet.Init(rotation, damage, iscritical);
 
         _lastFireTime = Time.time;
         //bullet.transform.rotation = Quaternion.Slerp(bullet.transform.rotation, rotation, 1);
     }
 
-    private float CalculateDamage()
+    private (float, bool) CalculateDamage()
     {
         float damage = strength;
-        if(UnityEngine.Random.Range(0,100f) < criticalChance)
+        bool isCritical = UnityEngine.Random.Range(0, 100f) < criticalChance;
+        if (isCritical)
         {
-            damage *= criticalDamage;
+            damage += (criticalDamage / 100f) * damage;
         }
-        return damage;
+        return (damage, isCritical);
     }
 
     private void CheckShoot()

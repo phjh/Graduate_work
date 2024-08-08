@@ -27,9 +27,13 @@ MonoBehaviour:
     Count: 50
   - poolableType: 1
     poolableMono: {fileID: 5608957443657115236, guid: 16e88d8fc8339f847b9eff9d840ae2c9, type: 3}
-    poolableName: SmallGolem
+    poolableName: DrillBullet
     Count: 10
   - poolableType: 1
     poolableMono: {fileID: 3993027108183574981, guid: 96a76c925af5e2246bb46ef8feea1dc6, type: 3}
-    poolableName: SmallGolem
+    poolableName: PickaxeBullet
+    Count: 10
+  - poolableType: 1
+    poolableMono: {fileID: 8942426634625073492, guid: dfebca61d1ff11440872bcc549b8072e, type: 3}
+    poolableName: DamageText
     Count: 10

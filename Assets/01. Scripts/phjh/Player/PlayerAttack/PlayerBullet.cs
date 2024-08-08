@@ -19,9 +19,9 @@ public abstract class PlayerBullet : PoolableMono
 
     protected Coroutine destroyCoroutine;
 
-    private float damage = 1;
+    protected float damage = 1;
 
-    public virtual void Init(Quaternion rot, float damage)
+    public virtual void Init(Quaternion rot, float damage, bool isCritical)
     {
         this.rot = rot;
         if(rb == null)
@@ -64,6 +64,12 @@ public abstract class PlayerBullet : PoolableMono
     {
         PoolManager.Instance.Push(this, this.gameObject.name);
         StopCoroutine(destroyCoroutine);
+    }
+
+    protected void DamageText(Vector3 position)
+    {
+        PoolableMono mono = PoolManager.Instance.Pop("DamageText", position);
+        
     }
 
 }
