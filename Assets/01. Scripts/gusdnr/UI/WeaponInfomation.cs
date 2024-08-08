@@ -42,11 +42,15 @@ public class WeaponInfomation : MonoBehaviour
 		FadeImg.enabled = true;
 		ReloadIconImg.SetActive(true);
 
+		ReloadIconImg.transform.rotation = Quaternion.identity;
+
 		ReloadIconImg.transform.DORotate(new Vector3(0, 0, -360), reloadTime)
 			.OnComplete(() =>
 			{
 				FadeImg.enabled = false;
 				ReloadIconImg.SetActive(false);
+
+				ReloadIconImg.transform.rotation = Quaternion.identity;
 			});
 	}
 

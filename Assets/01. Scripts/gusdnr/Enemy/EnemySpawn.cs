@@ -100,9 +100,10 @@ public class EnemySpawn : MonoBehaviour
 
     public void SpawnEnemy(int SpawnCount)
     {
+		LastEnemySpawnPosition = CalculateSpawnPos();
 		for (int count = 0; count < SpawnCount; count++)
         {
-            mngs.PoolMng.Pop(SpawnableMonsters[0], SpawnPos);
+            mngs.PoolMng.Pop(SpawnableMonsters[0], LastEnemySpawnPosition);
         }
     }
 

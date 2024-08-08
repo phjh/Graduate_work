@@ -12,8 +12,8 @@ public class AddItemUI : PoolableMono
 	public TextMeshProUGUI AddCountText;
 
 	[Header("Animaton Value")]
-	[SerializeField] private Vector2 MinScale = Vector2.zero;
-	[SerializeField] private Vector2 MaxScale = Vector2.one;
+	[SerializeField] private Vector3 MinScale = Vector2.zero;
+	[SerializeField] private Vector3 MaxScale = Vector2.one;
 	[SerializeField] private float DurationValue = 0.5f;
 	[SerializeField] private float LiveTime = 1f;
 
@@ -33,7 +33,7 @@ public class AddItemUI : PoolableMono
 		ItemImage.sprite = null;
 		AddCountText.text = string.Empty;
 
-		ThisRectTrm.sizeDelta = MinScale;
+		ThisRectTrm.localScale = MinScale;
 	}
 
 	public void InitData(Sprite ItemSprite, int AddCount = 1)
@@ -41,7 +41,7 @@ public class AddItemUI : PoolableMono
 		StringBuilder count = new StringBuilder(2);
 		count.Append("X ").Append(AddCount);
 
-		ThisRectTrm.DOSizeDelta(MaxScale, DurationValue)
+		ThisRectTrm.DOScale(MaxScale, DurationValue)
 			.OnStart(() =>
 			{
 				ItemImage.sprite = ItemSprite;
@@ -56,7 +56,7 @@ public class AddItemUI : PoolableMono
 
 	private void PushUI()
 	{
-		ThisRectTrm.DOSizeDelta(MinScale, DurationValue)
+		ThisRectTrm.DOScale(MinScale, DurationValue)
 			.OnComplete(() =>
 			{
 				mngs.PoolMng.Push(this, PoolName);

@@ -94,8 +94,8 @@ MonoBehaviour:
   ThisRectTrm: {fileID: 4033022503382093378}
   ItemImage: {fileID: 1480310978294466763}
   AddCountText: {fileID: 7560631664046037046}
-  MinScale: {x: 0, y: 0}
-  MaxScale: {x: 1, y: 1}
+  MinScale: {x: 0, y: 0, z: 1}
+  MaxScale: {x: 1, y: 1, z: 1}
   DurationValue: 0.5
   LiveTime: 1
 --- !u!1 &5739624920011497853
