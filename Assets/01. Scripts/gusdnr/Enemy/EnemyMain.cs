@@ -16,8 +16,8 @@ public class EnemyMain : PoolableMono, IDamageable
 	[Header("Enemy Attack")]
 	[SerializeField] private EnemyAttackBase ThisEnemyAttack;
 	public LayerMask TargetLayer;
-	[Range(0.1f, 29.9f)] public float MinCorrectionAttackRange = 0.5f;
-	[Range(0.1f, 29.9f)] public float MaxCorrectionAttackRange = 1.0f;
+	[Range(0.01f, 1f)] public float MinCorrectionAttackRange = 0.5f;
+	[Range(0.01f, 1f)] public float MaxCorrectionAttackRange = 1.0f;
 	
 	private float CorrectionMinRange = 0f;
 	private float CorrectionMaxRange= 0f;
