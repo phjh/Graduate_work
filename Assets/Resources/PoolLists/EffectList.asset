@@ -16,16 +16,16 @@ MonoBehaviour:
   - poolableType: 2
     poolableMono: {fileID: 1429072079549705027, guid: f7afccb6d98f668468231b3ee2796d1d, type: 3}
     poolableName: DrillExplosionEffect
-    Count: 1
+    Count: 30
   - poolableType: 2
     poolableMono: {fileID: 6034287996170676040, guid: b3eafb45a43ba0b4d86c7e964bdf1188, type: 3}
     poolableName: GroundEffect
-    Count: 1
+    Count: 30
   - poolableType: 2
     poolableMono: {fileID: -3308240605483498186, guid: 02e86e33d3ce9a64cbcc60804bc518cf, type: 3}
     poolableName: PlayerHitbloodEffect
-    Count: 1
+    Count: 30
   - poolableType: 2
     poolableMono: {fileID: 5839977251834315368, guid: f7fc5e8f76047fb4eaa2a4bda20e5766, type: 3}
     poolableName: SmallGolemAttackEffect
-    Count: 1
+    Count: 30

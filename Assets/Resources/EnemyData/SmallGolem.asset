@@ -13,15 +13,11 @@ MonoBehaviour:
   m_Name: SmallGolem
   m_EditorClassIdentifier: 
   MaxHP:
-    baseValue: 10
-    fixedModifiers: []
-    persentedModifiers: []
-  NowHP:
-    baseValue: 0
+    baseValue: 7
     fixedModifiers: []
     persentedModifiers: []
   Attack:
-    baseValue: 10
+    baseValue: 5
     fixedModifiers: []
     persentedModifiers: []
   CriticalChance:
@@ -33,18 +29,18 @@ MonoBehaviour:
     fixedModifiers: []
     persentedModifiers: []
   AttackSpeed:
-    baseValue: 10
-    fixedModifiers: []
-    persentedModifiers: []
-  MoveSpeed:
-    baseValue: 7
-    fixedModifiers: []
-    persentedModifiers: []
-  ShieldRegen:
-    baseValue: 0
+    baseValue: 3
     fixedModifiers: []
     persentedModifiers: []
   ReloadSpeed:
+    baseValue: 0
+    fixedModifiers: []
+    persentedModifiers: []
+  MoveSpeed:
+    baseValue: 3
+    fixedModifiers: []
+    persentedModifiers: []
+  ShieldRegen:
     baseValue: 0
     fixedModifiers: []
     persentedModifiers: []

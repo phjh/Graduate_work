@@ -44,18 +44,19 @@ public class OreBlock : Blocks
     {
 		TimesToBreak -= breaks;
 		MiningEffect(pos);
-		if(alreadyExposed == false && TimesToBreak <= ExposeToBreak)
-		{
-			alreadyExposed = true;
-			SetMesh(OrePair);
-            transform.rotation = Quaternion.Euler(45, 0, 0);
-        }
-
+		
 		if (TimesToBreak <= 0)
 		{
 			DropOre();
 			DeleteBlock();
 		}
+
+		if (alreadyExposed == false && TimesToBreak <= ExposeToBreak)
+		{
+			alreadyExposed = true;
+			SetMesh(OrePair);
+            transform.rotation = Quaternion.Euler(45, 0, 0);
+        }
 	}
 
 	private void SetMesh(MeshPair InitMesh)

@@ -20,7 +20,7 @@ public class IntroFlow : SceneFlowBase
 		StartBtn?.onClick.AddListener(() => mngs.UIMng.SetSceneName(NextSceneName));
 
 		OptionBtn?.onClick.RemoveAllListeners();
-		//Linking Active Option Window In UIManager
+		OptionBtn?.onClick.AddListener(() => mngs.UIMng.OpenOptionWindow(true));
 
 		QuitBtn?.onClick.RemoveAllListeners();
 		QuitBtn?.onClick.AddListener(() => mngs.UIMng.QuitGame());

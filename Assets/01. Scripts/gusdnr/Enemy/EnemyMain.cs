@@ -32,13 +32,17 @@ public class EnemyMain : PoolableMono, IDamageable
 	[HideInInspector] public bool CanAttack { get; set; } = false;
 
 	[HideInInspector] public NavMeshAgent EnemyAgent;
+	private SpriteRenderer EnemySpriteRender;
 	[HideInInspector] public Animator EnemyAnimator;
 
 	private float DistanceToTarget => Vector3.Distance(transform.position, TargetTransform.position);
 
 	private void FixedUpdate()
 	{
-		if (isAlive == false || IsAttack == true || TargetTransform == null) return;
+		if (TargetTransform.position.x >= transform.position.x) EnemySpriteRender.flipX = false;
+		if (TargetTransform.position.x <= transform.position.x) EnemySpriteRender.flipX = true;
+
+		if (isAlive == false || IsAttack == true || TargetTransform == null) StopChaing();
 
 		EnemyAnimator.SetBool("Move", IsMove);
 
@@ -74,14 +78,15 @@ public class EnemyMain : PoolableMono, IDamageable
 	{
 		IsAttack = true;
 		CanAttack = false;
+		EnemyAgent.avoidancePriority = 51;
 
 		StopChaing();
 		ThisEnemyAttack.StartAttack();
 	}
 
-	public void ActiveAttackCooldown()
+	public IEnumerator ActiveAttackCooldown()
 	{
-		// Active Cooldown Effect
+		yield return new WaitForSeconds(AttackCoolDownTime.GetValue());
 		CanAttack = true;
 	}
 
@@ -105,11 +110,13 @@ public class EnemyMain : PoolableMono, IDamageable
 	{
 		if (EnemyAgent == null) TryGetComponent(out  EnemyAgent);
 		EnemyAgent.updateRotation = false;
+		EnemyAgent.avoidancePriority = 50;
 
 		if (ThisEnemyAttack == null) TryGetComponent(out ThisEnemyAttack);
 		ThisEnemyAttack.InitEnemyData(this);
 
 		if (EnemyAnimator == null) transform.Find("Visual")?.TryGetComponent(out EnemyAnimator);
+		if (EnemySpriteRender == null) transform.Find("Visual")?.TryGetComponent(out EnemySpriteRender);
 
 		isAlive = true;
 		IsAttack = false;
@@ -160,7 +167,6 @@ public class EnemyMain : PoolableMono, IDamageable
 	{
 		//Start Hit Effect
 		enemyData.NowHP = Mathf.Clamp(enemyData.NowHP - dmg, 0, MaxHP.GetValue());
-		Debug.Log(enemyData.NowHP);
 
 		if (enemyData.NowHP <= 0) DieObject();
 	}
@@ -184,6 +190,7 @@ public class EnemyMain : PoolableMono, IDamageable
 		EnemyAgent.SetDestination(DestinationPos);
 
 		IsMove = true;
+		EnemyAgent.avoidancePriority = 50;
 	}
 
 	private Vector3 GetClosestPointOnCircle(Vector3 point)
@@ -193,13 +200,15 @@ public class EnemyMain : PoolableMono, IDamageable
 		CalculateCorrectionRanges();
 		Vector3 ClosestPositon = TargetTransform.position + direction * DestinationRadius;
 		ClosestPositon.y = point.y;
+
 		return ClosestPositon;
 	}
 
 	public void StopChaing()
 	{
 		IsMove = false;
-		EnemyAgent.SetDestination(this.transform.position);
+		EnemyAgent.isStopped = false;
+		EnemyAgent.velocity = Vector3.zero;
 	}
 
 	public void SetMoveSpeed() => EnemyAgent.speed = MoveSpeed.GetValue();

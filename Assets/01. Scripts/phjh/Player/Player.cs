@@ -217,6 +217,9 @@ public class Player : MonoBehaviour, IDamageable
     {
         //넘어가게끔바꾸기
         isImmunity = true;
-        Managers.instance.FlowMng.ChangeSceneInFlow();
+
+		Managers.instance.TimeMng.SetTimer(false);
+		Managers.instance.TimeMng.TimerText.gameObject.SetActive(false);
+		Managers.instance.FlowMng.ChangeSceneInFlow();
     }
 }
