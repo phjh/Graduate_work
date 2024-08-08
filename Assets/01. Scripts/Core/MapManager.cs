@@ -36,7 +36,8 @@ public class MapManager : ManagerBase<MapManager>
 
 	[Header("Chunk Data Setting")]
 	[SerializeField] private Vector2Int ChunkSize;
-	[SerializeField] private List<ChunkSO> ChunkDatas = new List<ChunkSO>(9);
+	[SerializeField] private FloorChunkDataSO ChunkDatabase;
+	private List<ChunkSO> InitChunkDatas = new List<ChunkSO>();
 
 	[Header("Block Datas")]
 	[SerializeField] private string WallPoolName = "WallBlock";
@@ -56,7 +57,8 @@ public class MapManager : ManagerBase<MapManager>
 		TryGetComponent(out nms);
 
 		SetGroundTile();
-		SetBlocks();
+		SetUnBreakableBlock();
+		SetChunkList();
 
 		nms.BuildNavMesh();
 	}
@@ -94,13 +96,6 @@ public class MapManager : ManagerBase<MapManager>
 		}
 	}
 
-
-	private void SetBlocks()
-	{
-		SetUnBreakableBlock();
-		SetMap();
-	}
-
 	//부서지지 않는 벽 설치
 	private void SetUnBreakableBlock()
 	{
@@ -114,6 +109,22 @@ public class MapManager : ManagerBase<MapManager>
 			AddBlock(new Vector3(0, 0, y), WallPoolName);
 			AddBlock(new Vector3(MapSize.x - 1, 0, y), WallPoolName);
 		}
+	}
+
+	private void SetChunkList()
+	{
+		InitChunkDatas = new List<ChunkSO>(9);
+
+		for (int count = 0; count < InitChunkDatas.Count; count++)
+		{
+			if (count == 0) InitChunkDatas[count] = ChunkDatabase.RetrunSelectChunk(ChunkDatabase.FirstChunks);
+			else if (count == 2) InitChunkDatas[count] = ChunkDatabase.RetrunSelectChunk(ChunkDatabase.ThirdChunks);
+			else if (count == 6) InitChunkDatas[count] = ChunkDatabase.RetrunSelectChunk(ChunkDatabase.SixthChunks);
+			else if (count == 8) InitChunkDatas[count] = ChunkDatabase.RetrunSelectChunk(ChunkDatabase.NinthChunks);
+
+			InitChunkDatas[count] = ChunkDatabase.RetrunSelectChunk(ChunkDatabase.RandomChunks);
+		}
+
 	}
 
 	private void SetMap()
@@ -135,17 +146,18 @@ public class MapManager : ManagerBase<MapManager>
 
 				index = ((yChunkCount - y) * xChunkCount) + x;
 
-				if (index >= 0 && index < ChunkDatas.Count)
+				if (index >= 0 && index < InitChunkDatas.Count)
 				{
-					ChunkSO cloneChunk = ChunkDatas[index].CreateCloneChunk(ChunkPos);
+					ChunkSO cloneChunk = InitChunkDatas[index].CreateCloneChunk(ChunkPos);
 					SetChunkData(cloneChunk);
 				}
 				else
 				{
-					Debug.LogError($"Index {index} is out of range for ChunkDatas array");
+					Debug.LogError($"Index {index} is out of range for InitChunkDatas array");
 				}
 			}
 		}
+		SetMap();
 	}
 
 	private void SetChunkData(ChunkSO chunkData)
