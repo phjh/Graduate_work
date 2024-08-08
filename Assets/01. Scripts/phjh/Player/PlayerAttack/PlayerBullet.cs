@@ -74,7 +74,7 @@ public abstract class PlayerBullet : PoolableMono
     protected void DoDamage(EnemyMain enemy)
     {
         enemy.TakeDamage(damage);
-        DamageText(enemy.transform.position);
+        //DamageText(enemy.transform.position);
     }
 
     protected void DamageText(Vector3 position)
@@ -106,7 +106,7 @@ public abstract class PlayerBullet : PoolableMono
 
         yield return new WaitForSeconds(time);
 
-        PoolManager.Instance.Push(mono, "DamageText");
+        PoolManager.Instance.Push(mono, mono.PoolName);
     }
 
 
