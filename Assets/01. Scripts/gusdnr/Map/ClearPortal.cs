@@ -19,7 +19,6 @@ public class ClearPortal : MonoBehaviour
 		Debug.Log(collision.gameObject.layer);
 		if(collision.gameObject.layer == 10)
 		{
-			Debug.Log("coll");
 			Managers.instance.TimeMng.SetTimer(false);
 			Managers.instance.FlowMng.isGameClear = true;
 			Managers.instance.FlowMng.ChangeSceneInFlow();
