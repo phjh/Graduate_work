@@ -135,6 +135,7 @@ MonoBehaviour:
   currentAmmo: 2
   ReloadTime: 0.5
   AttackCooltime: 0.25
+  damageFactor: 1.5
 --- !u!1 &8132682102864509363
 GameObject:
   m_ObjectHideFlags: 0

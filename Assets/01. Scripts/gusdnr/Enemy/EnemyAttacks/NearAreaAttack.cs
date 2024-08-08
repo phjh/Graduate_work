@@ -18,7 +18,7 @@ public class NearAreaAttack : EnemyAttackBase
 	{
 		Logger.Log(E_Main.PoolName + " is Active Attack");
 
-		// Attack ¹üÀ§ ³» ÇÃ·¹ÀÌ¾î °¨Áö
+		// Attack ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
 		Collider[] playersInRange = Physics.OverlapSphere(E_Main.transform.position, E_Main.MaxAttackRange, WhatIsTarget);
 		if (playersInRange.Length > 0)
 		{

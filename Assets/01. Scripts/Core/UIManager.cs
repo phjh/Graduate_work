@@ -339,6 +339,7 @@ public class UIManager : ManagerBase<UIManager>
 	{
 		if (IsOpenOption == isOpen) return;
 		IsOpenOption = isOpen;
+		TimeManager.Instance.SetTimer(!isOpen);
 
 		if(IsOpenOption == true)
 		{

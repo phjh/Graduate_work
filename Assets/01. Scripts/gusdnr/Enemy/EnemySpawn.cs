@@ -47,7 +47,7 @@ public class EnemySpawn : MonoBehaviour
 	{
 		if(EnemySpawnCoroutine != null) StopCoroutine(EnemySpawnCoroutine);
 
-		IsSpanwing = false ;
+		IsSpanwing = false;
 	}
 
 	private Vector3? CalculateSpawnPos()
@@ -82,6 +82,7 @@ public class EnemySpawn : MonoBehaviour
 
 		return null;
 	}
+
 
 	public void SpawnEnemy(int SpawnCount)
 	{

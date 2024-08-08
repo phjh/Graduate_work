@@ -20,6 +20,7 @@ public class InputReader : ScriptableObject, IPlayerActions
     private Controls _inputAction;
 
     private bool isactived = false;
+    private bool isOptionPopup = false;
 
     private void OnEnable()
     {
@@ -94,6 +95,7 @@ public class InputReader : ScriptableObject, IPlayerActions
 
     public void OnOption(InputAction.CallbackContext context)
     {
-        UIManager.Instance.OpenOptionWindow(true);
+        isOptionPopup = !isOptionPopup;
+        UIManager.Instance.OpenOptionWindow(isOptionPopup);
     }
 }

@@ -5,6 +5,8 @@ using static UnityEngine.Rendering.DebugUI;
 using UnityEngine.InputSystem;
 using System;
 using DG.Tweening;
+using UnityEngine.AI;
+using TMPro;
 
 [System.Serializable]
 public struct PoolListStruct
@@ -179,12 +181,30 @@ public class PoolManager : ManagerBase<PoolManager>
 		CompletePoolableMonos[PoolableName].Push(item);
 	}
 
+	public PoolableMono MonsterPop(string PoolableName, Vector3 SpawnPos)
+	{
+        if (CompletePoolableMonos[PoolableName] == null)
+        {
+            Logger.LogError($"Named {PoolableName} Object is Null");
+            return null;
+        }
+        PoolableMono item = CompletePoolableMonos[PoolableName].Pop();
+		NavMeshAgent agent = item.GetComponent<NavMeshAgent>();
+		agent.Warp(SpawnPos);
+        return item;
+    }
+
 	public void PopAndPushEffect(string poolableName, Vector3 position, float time)
 	{
 		StartCoroutine(EffectCoroutine(poolableName, position, time));
 	}
 
-	private IEnumerator EffectCoroutine(string poolableName, Vector3 position, float time)
+    public void PopAndPushEffect(string poolableName, Vector3 position, float time, Quaternion rot)
+    {
+        StartCoroutine(EffectCoroutine(poolableName, position, time, rot));
+    }
+
+    private IEnumerator EffectCoroutine(string poolableName, Vector3 position, float time)
 	{
 		PoolableMono mono = Pop(poolableName, position);
 		if(TryGetComponent(out ParticleSystem sys))
@@ -216,4 +236,64 @@ public class PoolManager : ManagerBase<PoolManager>
 		Push(mono, poolableName);
 	}
 
+    private IEnumerator EffectCoroutine(string poolableName, Vector3 position, float time,Quaternion rot)
+    {
+        PoolableMono mono = Pop(poolableName, position);
+		mono.transform.rotation = rot;
+        if (TryGetComponent(out ParticleSystem sys))
+        {
+            sys.Play();
+            yield return new WaitForSeconds(time);
+            sys.Stop();
+        }
+        else
+        {
+            List<ParticleSystem> particle = new();
+            foreach (var particles in mono.GetComponentsInChildren<ParticleSystem>())
+            {
+                particle.Add(particles);
+            }
+
+            foreach (var psys in particle)
+            {
+                psys.Play();
+            }
+
+            yield return new WaitForSeconds(time);
+
+            foreach (var psys in particle)
+            {
+                psys.Stop();
+            }
+        }
+        Push(mono, poolableName);
+    }
+
+    public void DamageTextPopAndPush(string poolableName, Vector3 position, float damage, bool iscritical, float time = 0.5f) => StartCoroutine(DamageTextCoroutine(poolableName, position,damage, iscritical, time));
+
+	private IEnumerator DamageTextCoroutine(string poolableName, Vector3 position, float damage, bool iscritical, float time = 0.5f)
+	{
+        PoolableMono mono = Pop("DamageText", position);
+        TextMeshPro tmp = mono.GetComponent<TextMeshPro>();
+        tmp.fontSize = 4;
+        if (iscritical)
+        {
+            time += 0.2f;
+            tmp.fontSize *= 1.25f;
+            tmp.color = Color.red;
+        }
+        else
+        {
+            tmp.color = Color.white;
+        }
+        mono.transform.position = position + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), 1, 0) - Vector3.back / 10;
+        mono.transform.DOMoveY(mono.transform.position.y + UnityEngine.Random.Range(time / 2, time), time).SetEase(Ease.OutCirc);
+
+
+        tmp.text = damage.ToString();
+
+        yield return new WaitForSeconds(time);
+
+        Push(mono, mono.PoolName);
+    }
 }
