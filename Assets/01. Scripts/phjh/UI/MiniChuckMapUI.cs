@@ -37,7 +37,7 @@ public class MiniChuckMapUI : MonoBehaviour
 
     private void SetPlayerChunk(Vector2 value)
     {
-        Vector3 pos = _playerTrm.position;
+        Vector3 pos = _playerTrm.position - Vector3.one;
         int nowChunk = 0;
         nowChunk = (int)(pos.x / 25) + (int)(pos.z / 25) * 3;
         if (_beforeChunk != nowChunk)

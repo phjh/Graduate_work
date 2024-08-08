@@ -286,11 +286,17 @@ public class PoolManager : ManagerBase<PoolManager>
         {
             tmp.color = Color.white;
         }
-        mono.transform.position = position + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), 1, 0) - Vector3.back / 10;
+        mono.transform.position = position + new Vector3(UnityEngine.Random.Range(-0.25f, 0.25f), 1, 0) - Vector3.back / 10;
         mono.transform.DOMoveY(mono.transform.position.y + UnityEngine.Random.Range(time / 2, time), time).SetEase(Ease.OutCirc);
 
+		int idamage = Mathf.RoundToInt(damage * 100);
+		string damageStr = "";
+		if (idamage % 100 != 0)
+			damageStr = (idamage / 100).ToString() + '.' + (idamage % 100).ToString();
+		else
+			damageStr = (idamage / 100).ToString();
 
-        tmp.text = damage.ToString();
+		tmp.text = damageStr;
 
         yield return new WaitForSeconds(time);
 

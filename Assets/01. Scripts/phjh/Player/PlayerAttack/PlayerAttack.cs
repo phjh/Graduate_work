@@ -100,8 +100,6 @@ public class PlayerAttack : MonoBehaviour
         {
             damage += (criticalDamage / 100f) * damage;
         }
-        int idamage = (int)(damage * 100);
-        damage = idamage / 100;
         return (damage, isCritical);
     }
 
