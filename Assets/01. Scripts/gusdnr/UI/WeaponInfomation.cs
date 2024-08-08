@@ -14,7 +14,7 @@ public class WeaponInfomation : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI CurrentBulletTxt;
 	[SerializeField] private TextMeshProUGUI MaxBulletTxt;
 	[SerializeField] private Image FadeImg;
-	[SerializeField] private GameObject ReloadIconImg;
+	[SerializeField] private RectTransform ReloadIconImg;
 
 	[Header("Auto Set Values")]
 	public WeaponDataSO WeaponData;
@@ -40,15 +40,15 @@ public class WeaponInfomation : MonoBehaviour
 	public void Reload(float reloadTime)
 	{
 		FadeImg.enabled = true;
-		ReloadIconImg.SetActive(true);
+		ReloadIconImg.localScale = Vector3.one;
 
-		ReloadIconImg.transform.rotation = Quaternion.identity;
+		ReloadIconImg.gameObject.SetActive(true);
 
-		ReloadIconImg.transform.DORotate(new Vector3(0, 0, -360), reloadTime)
+		ReloadIconImg.DOSizeDelta(new Vector3(0, 0, 1), reloadTime).SetEase(Ease.InBounce)
 			.OnComplete(() =>
 			{
 				FadeImg.enabled = false;
-				ReloadIconImg.SetActive(false);
+				ReloadIconImg.gameObject.SetActive(false);
 
 				ReloadIconImg.transform.rotation = Quaternion.identity;
 			});
@@ -60,7 +60,7 @@ public class WeaponInfomation : MonoBehaviour
 		WeaponIconImg.color = Color.white;
 
 		FadeImg.enabled = false;
-		ReloadIconImg.SetActive(false);
+		ReloadIconImg.gameObject.SetActive(false);
 
 		SetCurrentBullet();
 		SetMaxBullet();

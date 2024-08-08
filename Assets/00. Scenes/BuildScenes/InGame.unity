@@ -1545,7 +1545,8 @@ MonoBehaviour:
   MaxSpawnTick: 10
   MinSpawnOnce: 1
   MaxSpawnOnce: 3
-  SpawnDistance: 5
+  MinSpawnDistance: 3
+  MaxSpawnDistance: 6
   WhatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -1621,12 +1622,6 @@ MonoBehaviour:
   NextSceneName: Result
   NeedPoolListName: 
   ResetPool: 0
-  SpawnPositions:
-  - {x: 2, y: 0.25, z: 2}
-  - {x: 2, y: 0.25, z: 74}
-  - {x: 74, y: 0.25, z: 74}
-  - {x: 74, y: 0.25, z: 2}
-  SelectedSpawnPoint: -1
 --- !u!1001 &1689347447
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1946,10 +1941,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PortalAnim: {fileID: 1576758823}
-  PortalCollider: {fileID: 1913581597}
-  WhatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 1024
 --- !u!1 &1930517250
 GameObject:
   m_ObjectHideFlags: 0

@@ -125,7 +125,7 @@ public class PlayerManager : ManagerBase<PlayerManager>
 		if(Player == null) return;
 		SelectedSpawnPoint = Random.Range(0, SpawnPositions.Length - 1);
 
-		Player.transform.position = SpawnPositions[2];
+		Player.transform.position = SpawnPositions[SelectedSpawnPoint];
 	}
 
 }

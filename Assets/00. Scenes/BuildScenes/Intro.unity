@@ -1787,7 +1787,7 @@ MonoBehaviour:
   CurrentBulletTxt: {fileID: 1988496029}
   MaxBulletTxt: {fileID: 1478450616}
   FadeImg: {fileID: 489168220}
-  ReloadIconImg: {fileID: 1680430037}
+  ReloadIconImg: {fileID: 1680430038}
   WeaponData: {fileID: 0}
   CurrentBullet: 0
   MaxBullet: 0
@@ -3299,8 +3299,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9b20d90bf58bb0b4f83bebdd5650c89e, type: 2}
+  m_sharedMaterial: {fileID: 1448418316580891813, guid: 9b20d90bf58bb0b4f83bebdd5650c89e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3808,7 +3808,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1680430038
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3855,7 +3855,7 @@ MonoBehaviour:
   m_FillMethod: 4
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1680430040
@@ -4632,8 +4632,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9b20d90bf58bb0b4f83bebdd5650c89e, type: 2}
+  m_sharedMaterial: {fileID: 1448418316580891813, guid: 9b20d90bf58bb0b4f83bebdd5650c89e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

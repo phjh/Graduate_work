@@ -161,7 +161,6 @@ public class Player : MonoBehaviour, IDamageable
 
         #endregion
 
-
     }
 
 
@@ -169,11 +168,6 @@ public class Player : MonoBehaviour, IDamageable
     {
         Logger.Log(playerStat.NowHP / playerStat.MaxHP.GetValue());
         PlayerManager.Instance.SetPlayerHealth(playerStat.NowHP / playerStat.MaxHP.GetValue());
-    }
-
-    private void Update()
-    {
-
     }
 
     public void TakeDamage(float dmg)
