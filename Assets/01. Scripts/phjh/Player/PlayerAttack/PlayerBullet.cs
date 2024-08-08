@@ -74,40 +74,18 @@ public abstract class PlayerBullet : PoolableMono
     protected void DoDamage(EnemyMain enemy)
     {
         enemy.TakeDamage(damage);
-        //DamageText(enemy.transform.position);
+        DamageText(enemy.transform.position);
+        DamageEffect(enemy.transform.position);
+    }
+
+    protected void DamageEffect(Vector3 position)
+    {
+        PoolManager.Instance.PopAndPushEffect("MonsterHitEffect", position, 1f);
     }
 
     protected void DamageText(Vector3 position)
     {
-        StartCoroutine(DamageTextCoroutine(position));
+        PoolManager.Instance.DamageTextPopAndPush("DamageText",position,damage,isCritical);
     }
-
-    private IEnumerator DamageTextCoroutine(Vector3 position)
-    {
-        PoolableMono mono = PoolManager.Instance.Pop("DamageText", position);
-        TextMeshPro tmp = mono.GetComponent<TextMeshPro>();
-        float time = 0.5f;
-        tmp.fontSize = 4;
-        if (isCritical)
-        {
-            time += 0.2f;
-            tmp.fontSize *= 1.25f;
-            tmp.color = Color.red;
-        }
-        else
-        {
-            tmp.color = Color.white;
-        }
-        mono.transform.position = position + new Vector3(Random.Range(-0.5f, 0.5f), 1, 0) - Vector3.back/10;
-        mono.transform.DOMoveY(mono.transform.position.y + Random.Range(time / 2, time), time).SetEase(Ease.OutCirc);
-
-
-        tmp.text = damage.ToString();
-
-        yield return new WaitForSeconds(time);
-
-        PoolManager.Instance.Push(mono, mono.PoolName);
-    }
-
 
 }

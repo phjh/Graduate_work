@@ -13,4 +13,5 @@ public class PlayerWeapon : MonoBehaviour
     public int currentAmmo;
     public float ReloadTime;
     public float AttackCooltime;
+    public float damageFactor;
 }

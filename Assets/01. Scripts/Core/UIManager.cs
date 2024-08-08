@@ -367,8 +367,8 @@ public class UIManager : ManagerBase<UIManager>
             .OnComplete(() =>
             {
                 FadePanel.raycastTarget = false;
-                mngs.TimeMng.TimeChange(0f, 0f);
-            });
+                mngs.TimeMng.TimeChange(1f, 1f);
+			});
 
         }
 	}

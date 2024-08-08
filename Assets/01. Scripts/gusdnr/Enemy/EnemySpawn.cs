@@ -46,7 +46,7 @@ public class EnemySpawn : MonoBehaviour
 	{
 		if(EnemySpawnCoroutine != null) StopCoroutine(EnemySpawnCoroutine);
 
-		IsSpanwing = false ;
+		IsSpanwing = false;
 	}
 
 	private Vector3? CalculateSpawnPos()
@@ -79,6 +79,7 @@ public class EnemySpawn : MonoBehaviour
 		return null;
 	}
 
+
 	public void SpawnEnemy(int SpawnCount)
 	{
 		Vector3? spawnPosition = CalculateSpawnPos();
@@ -87,7 +88,7 @@ public class EnemySpawn : MonoBehaviour
 			LastEnemySpawnPosition = spawnPosition.Value;
 			for (int count = 0; count < SpawnCount; count++)
 			{
-				mngs.PoolMng.Pop(SpawnableMonsters[0], LastEnemySpawnPosition);
+				mngs.PoolMng.MonsterPop(SpawnableMonsters[0], LastEnemySpawnPosition);
 			}
 		}
 	}

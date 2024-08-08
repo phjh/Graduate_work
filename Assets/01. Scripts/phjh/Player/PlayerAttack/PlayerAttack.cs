@@ -86,7 +86,7 @@ public class PlayerAttack : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(rot);
 
         var (damage, iscritical) = CalculateDamage();
-        bullet.Init(rotation, damage, iscritical);
+        bullet.Init(rotation, damage * weapon.damageFactor, iscritical);
 
         _lastFireTime = Time.time;
         //bullet.transform.rotation = Quaternion.Slerp(bullet.transform.rotation, rotation, 1);
@@ -100,6 +100,8 @@ public class PlayerAttack : MonoBehaviour
         {
             damage += (criticalDamage / 100f) * damage;
         }
+        int idamage = (int)(damage * 100);
+        damage = idamage / 100;
         return (damage, isCritical);
     }
 
