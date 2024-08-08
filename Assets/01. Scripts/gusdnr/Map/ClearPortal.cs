@@ -8,23 +8,22 @@ public class ClearPortal : MonoBehaviour
 	[SerializeField] private LayerMask WhatIsPlayer;
 
 	private void Start()
-	{
-		PortalCollider.enabled = false;
+    {
+        PortalCollider.enabled = true;
 
-		PortalAnim.SetTrigger("Open");
-	}
-
-	public void OpenPortal()
-	{
-		PortalCollider.enabled = true;
+        PortalAnim.SetTrigger("Open");
 	}
 
 	private void OnCollisionEnter(Collision collision)
 	{
-		if(collision.gameObject.layer == WhatIsPlayer)
+		Debug.Log(collision.gameObject.layer);
+		if(collision.gameObject.layer == 10)
 		{
+			Debug.Log("coll");
+			Managers.instance.TimeMng.SetTimer(false);
 			Managers.instance.FlowMng.isGameClear = true;
 			Managers.instance.FlowMng.ChangeSceneInFlow();
-		}
+            PortalAnim.SetTrigger("Open");
+        }
 	}
 }

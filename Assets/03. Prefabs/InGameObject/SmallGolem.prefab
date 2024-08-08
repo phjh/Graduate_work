@@ -248,7 +248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PoolName: SmallGolem
   enemyData: {fileID: 11400000, guid: c6337358f37f3b7429c5d6a390dbfc00, type: 2}
-  MinAttackRange: 1
+  MinAttackRange: 0.05
   MaxAttackRange: 3
   TargetTransform: {fileID: 0}
   ThisEnemyAttack: {fileID: 11400000, guid: ef291c0621e2601428901434283c01af, type: 2}

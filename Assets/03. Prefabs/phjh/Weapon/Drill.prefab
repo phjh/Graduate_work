@@ -102,8 +102,8 @@ MonoBehaviour:
   rightHandIK: {fileID: 9046334335651579226}
   maxAmmo: 5
   currentAmmo: 5
-  ReloadTime: 0.1
-  AttackCooltime: 0.1
+  ReloadTime: 1
+  AttackCooltime: 0.3
 --- !u!1 &6538987951581946919
 GameObject:
   m_ObjectHideFlags: 0

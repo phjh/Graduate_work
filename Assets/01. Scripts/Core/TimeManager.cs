@@ -111,6 +111,9 @@ public class TimeManager : ManagerBase<TimeManager>
             timeLimit -= Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
+
+        mngs.FlowMng.isGameClear = false;
+        mngs.FlowMng.ChangeSceneInFlow();
     }
 
     private void SetTimerUI()

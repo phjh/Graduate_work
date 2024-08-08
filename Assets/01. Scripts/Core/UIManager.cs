@@ -20,6 +20,7 @@ public class UIManager : ManagerBase<UIManager>
 	[SerializeField][Range(0.0f, 1.0f)] private float fadeDuration = 0.5f;
 	[SerializeField] private GameObject LoadProcessObject;
 	[SerializeField] private RectTransform LoadProcessFill;
+	[SerializeField] private GameObject OptionWindow;
 
 	private Vector2 FillAmountSize = Vector2.up;
 
@@ -30,6 +31,8 @@ public class UIManager : ManagerBase<UIManager>
 		get;
 		private set;
 	} = false;
+
+	private bool IsOpenOption = false;
 
 	private Dictionary<string, PopupUI> popups = new Dictionary<string, PopupUI>();
 
@@ -71,7 +74,9 @@ public class UIManager : ManagerBase<UIManager>
 		SetUpUICanvases(CanvasContainer);
 		SetUpPopupUIs();
 
-		FadePanel.DOFade(0.0f, fadeDuration)
+        IsOpenOption = false;
+
+        FadePanel.DOFade(0.0f, fadeDuration)
 			.OnStart(() =>
 			{
 				this.IsWorkingLoading = false;
@@ -330,4 +335,45 @@ public class UIManager : ManagerBase<UIManager>
 		else return;
 	}
 
+	public void OpenOptionWindow(bool isOpen)
+	{
+		if (IsOpenOption == isOpen) return;
+		IsOpenOption = isOpen;
+
+		if(IsOpenOption == true)
+		{
+            FadePanel.DOFade(0.5f, fadeDuration)
+            .OnStart(() =>
+            {
+                FadePanel.raycastTarget = true;
+				mngs.TimeMng.TimeChange(1f, 0f);
+            })
+            .OnComplete(() =>
+            {
+                OptionWindow.SetActive(true);
+            });
+
+            OptionWindow.SetActive(false);
+
+        }
+		else if(IsOpenOption == false)
+		{
+            FadePanel.DOFade(0.0f, fadeDuration)
+            .OnStart(() =>
+            {
+                OptionWindow.SetActive(false);
+            })
+            .OnComplete(() =>
+            {
+                FadePanel.raycastTarget = false;
+                mngs.TimeMng.TimeChange(0f, 0f);
+            });
+
+        }
+	}
+
+	public void ResumeGame()
+	{
+		OpenOptionWindow(false);
+    }
 }

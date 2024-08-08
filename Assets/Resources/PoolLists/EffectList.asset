@@ -25,3 +25,7 @@ MonoBehaviour:
     poolableMono: {fileID: -3308240605483498186, guid: 02e86e33d3ce9a64cbcc60804bc518cf, type: 3}
     poolableName: PlayerHitbloodEffect
     Count: 1
+  - poolableType: 2
+    poolableMono: {fileID: 5839977251834315368, guid: f7fc5e8f76047fb4eaa2a4bda20e5766, type: 3}
+    poolableName: SmallGolemAttackEffect
+    Count: 1

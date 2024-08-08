@@ -88,7 +88,7 @@ public class EnemyMain : PoolableMono, IDamageable
 	private void CalculateCorrectionRanges()
 	{
 		float CorrectionValue = UnityEngine.Random.Range(MinCorrectionAttackRange, MaxCorrectionAttackRange);
-		CorrectionMinRange = MinAttackRange + CorrectionValue;
+		CorrectionMinRange = MinAttackRange;
 		CorrectionMaxRange = MaxAttackRange - CorrectionValue;
 	}
 

@@ -58,11 +58,10 @@ public class EnemySpawn : MonoBehaviour
 
 			Vector3 SpawnPosition = PlayerTrm.position + RandomDirection;
 
-			bool isInBossAreaX = SpawnPosition.x >= BossArea.x && SpawnPosition.x <= BossArea.y;
-			bool isInBossAreaY = SpawnPosition.z >= BossArea.x && SpawnPosition.z <= BossArea.y;
+			bool isInBossArea = SpawnPosition.x >= BossArea.x && SpawnPosition.x <= BossArea.y && SpawnPosition.z >= BossArea.x && SpawnPosition.z <= BossArea.y;
 			bool isOutMap = SpawnPosition.x < MapOutLine.x || SpawnPosition.z < MapOutLine.x || SpawnPosition.x > MapOutLine.y || SpawnPosition.z > MapOutLine.y;
 
-			if (!isInBossAreaX && !isInBossAreaY && !isOutMap)
+			if (!isInBossArea && !isOutMap)
 			{
 				NavMeshHit SampleSpawnPosition;
 				if (NavMesh.SamplePosition(SpawnPosition, out SampleSpawnPosition, 1.0f, NavMesh.AllAreas))

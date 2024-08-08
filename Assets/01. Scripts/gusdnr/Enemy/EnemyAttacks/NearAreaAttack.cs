@@ -6,12 +6,14 @@ using UnityEngine;
 public class NearAreaAttack : EnemyAttackBase
 {
 	[SerializeField] private LayerMask WhatIsTarget;
+	[SerializeField] private string EffectName;
 
 	public override void StartAttack()
 	{
 		E_Main.EnemyAnimator.SetTrigger("Attack");
 		base.StartAttack();
 	}
+
 	public override void ActiveAttack()
 	{
 		Logger.Log(E_Main.PoolName + " is Active Attack");
@@ -23,6 +25,8 @@ public class NearAreaAttack : EnemyAttackBase
 			IDamageable damageable = playersInRange[0].GetComponent<IDamageable>();
 			if (damageable != null)	damageable.TakeDamage(E_Main.Attack.GetValue());
 		}
+
+		if(string.IsNullOrEmpty(EffectName) == false) PoolManager.Instance.PopAndPushEffect(EffectName, E_Main.transform.position, 1f);
 
 		base.ActiveAttack();
 	}

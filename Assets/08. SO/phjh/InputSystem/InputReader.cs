@@ -92,4 +92,8 @@ public class InputReader : ScriptableObject, IPlayerActions
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
 
+    public void OnOption(InputAction.CallbackContext context)
+    {
+        UIManager.Instance.OpenOptionWindow(true);
+    }
 }

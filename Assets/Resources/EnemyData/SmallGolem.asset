@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42527876babea354a85ff5109a5aeb87, type: 3}
-  m_Name: TestingEnemy
+  m_Name: SmallGolem
   m_EditorClassIdentifier: 
   MaxHP:
     baseValue: 10
