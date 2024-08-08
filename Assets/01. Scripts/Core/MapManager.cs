@@ -308,10 +308,24 @@ public class MapManager : ManagerBase<MapManager>
 		{
 			dz.ActiveDangerZone(Phase);
 		}
+		//여기서 알아서 보스스폰 시켜주면됨
+	}
+
+	public void DeleteDangerZoneBlocks()
+	{
+		foreach(DangerZoneBlock dz in DangerZoneList)
+		{
+			DeleteBlock(dz.transform.position, DangerZonePoolName);
+		}
 	}
 
 	public void DeleteBlock(Vector3 position, string name)
 	{
+		if (!maps.TryGetValue(position, out Lazy<PoolableMono> mono))
+		{
+			Debug.LogWarning("wrong position dictionary has! at : " + position);
+			return;
+		}
 		mngs.PoolMng.Push(maps[position].Value, name);
 		maps.Remove(position);
 	}
