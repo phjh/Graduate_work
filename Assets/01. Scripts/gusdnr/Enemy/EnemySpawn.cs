@@ -5,35 +5,34 @@ using UnityEngine.AI;
 
 public class EnemySpawn : MonoBehaviour
 {
-    [Header("Spawn Values")]
-    [Range(0.1f, 10f)]public float MinSpawnTick = 3f;
-    [Range(0.1f, 10f)]public float MaxSpawnTick = 3f;
-	[Range(1, 10)]public int MinSpawnOnce = 1;
-    [Range(1, 10)]public int MaxSpawnOnce = 5;
+	[Header("Spawn Values")]
+	[Range(0.1f, 10f)] public float MinSpawnTick = 3f;
+	[Range(0.1f, 10f)] public float MaxSpawnTick = 3f;
+	[Range(1, 10)] public int MinSpawnOnce = 1;
+	[Range(1, 10)] public int MaxSpawnOnce = 5;
 	[Range(1f, 25f)] public float MinSpawnDistance = 5f;
 	[Range(1f, 25f)] public float MaxSpawnDistance = 10f;
 	public LayerMask WhatIsGround;
 	public LayerMask WhatIsWall;
 
-    [Header("Restricted Zone Range")]
+	[Header("Restricted Zone Range")]
 	[SerializeField] private Vector2 MapOutLine;
 	[SerializeField] private Vector2 BossArea;
 
+	[Header("Enemy Setting")]
+	public List<string> SpawnableMonsters;
 
-    [Header("Enemy Setting")]
-    public List<string> SpawnableMonsters;
-	
 	public bool IsSpanwing = false;
 	public bool OnRaid = false;
 
-    private Managers mngs;
-    private Transform PlayerTrm;
-    private Vector3 LastEnemySpawnPosition = Vector3.zero;
+	private Managers mngs;
+	private Transform PlayerTrm;
+	private Vector3 LastEnemySpawnPosition = Vector3.zero;
 
 	private Coroutine EnemySpawnCoroutine = null;
 
-    public void ActiveEnemySpawn()
-    {
+	public void ActiveEnemySpawn()
+	{
 		if (mngs == null) mngs = Managers.GetInstance();
 		if (PlayerTrm == null) PlayerTrm = mngs?.PlayerMng?.Player?.transform;
 
@@ -45,58 +44,65 @@ public class EnemySpawn : MonoBehaviour
 
 	public void InActiveEnemySpawn()
 	{
-		if(EnemySpawnCoroutine != null) StopCoroutine(EnemySpawnCoroutine);
-
+		if (EnemySpawnCoroutine != null) StopCoroutine(EnemySpawnCoroutine);
 		IsSpanwing = false;
 	}
 
 	private Vector3? CalculateSpawnPos()
 	{
-		for (int attempts = 0; attempts < 10; attempts++)
+		for (int attempts = 0; attempts < 10; attempts++) // Try 10
 		{
-			Vector3 RandomMinDirection = Random.insideUnitSphere * MinSpawnDistance;
-			Vector3 RandomMaxDirection = Random.insideUnitSphere * MaxSpawnDistance;
+			Vector3 randomDirection = Random.insideUnitSphere * Random.Range(MinSpawnDistance, MaxSpawnDistance); // Cashing Player Position
+			randomDirection.y = 0;
 
-			RandomMinDirection.y = 0;
-			RandomMaxDirection.y = 0;
+			Vector3 spawnPosition = mngs.PlayerMng.Player.transform.position + randomDirection;
 
-			Vector3 SpawnPosition = mngs.PlayerMng.Player.transform.position + RandomMinDirection;
-
-			bool isInBossArea = SpawnPosition.x >= BossArea.x && SpawnPosition.x <= BossArea.y && SpawnPosition.z >= BossArea.x && SpawnPosition.z <= BossArea.y;
-			bool isOutMap = SpawnPosition.x < MapOutLine.x || SpawnPosition.z < MapOutLine.x || SpawnPosition.x > MapOutLine.y || SpawnPosition.z > MapOutLine.y;
-
-			if (!isInBossArea && !isOutMap)
+			if (IsValidSpawnPosition(spawnPosition))
 			{
-				NavMeshHit SampleSpawnPosition;
-				if (NavMesh.SamplePosition(SpawnPosition, out SampleSpawnPosition, 1.0f, NavMesh.AllAreas))
-				{
-					// Ground üũ
-					if (Physics.CheckSphere(SampleSpawnPosition.position, 0.5f, WhatIsGround) &&
-						!Physics.CheckSphere(SampleSpawnPosition.position, 0.5f, WhatIsWall))
-					{
-						return new Vector3(SampleSpawnPosition.position.x, 0.5f, SampleSpawnPosition.position.z);
-					}
-				}
+				return GetNavMeshPosition(spawnPosition);
 			}
 		}
 
+		return null; // Unable to find a valid position
+	}
+
+	private bool IsValidSpawnPosition(Vector3 position) // Check Position is not BossArea or Void
+	{
+		bool isInBossArea = position.x >= BossArea.x && position.x <= BossArea.y && position.z >= BossArea.x && position.z <= BossArea.y;
+		bool isOutMap = position.x < MapOutLine.x || position.z < MapOutLine.x || position.x > MapOutLine.y || position.z > MapOutLine.y;
+
+		// Check Distance to player
+		float distanceToPlayer = Vector3.Distance(position, mngs.PlayerMng.Player.transform.position);
+		return !isInBossArea && !isOutMap && distanceToPlayer >= MinSpawnDistance;
+	}
+
+	private Vector3? GetNavMeshPosition(Vector3 spawnPosition) // Check Can Move Enemy
+	{
+		NavMeshHit sampleSpawnPosition;
+		if (NavMesh.SamplePosition(spawnPosition, out sampleSpawnPosition, 1.0f, NavMesh.AllAreas))
+		{
+			// Check Ground
+			if (Physics.CheckSphere(sampleSpawnPosition.position, 0.5f, WhatIsGround) &&
+				!Physics.CheckSphere(sampleSpawnPosition.position, 0.5f, WhatIsWall))
+			{
+				return new Vector3(sampleSpawnPosition.position.x, 0.5f, sampleSpawnPosition.position.z);
+			}
+		}
 		return null;
 	}
 
-
-	public void SpawnEnemy(int SpawnCount)
+	public void SpawnEnemy(int spawnCount)
 	{
 		Vector3? spawnPosition = CalculateSpawnPos();
 		if (spawnPosition.HasValue)
 		{
 			LastEnemySpawnPosition = spawnPosition.Value;
-			for (int count = 0; count < SpawnCount; count++)
+			for (int count = 0; count < spawnCount; count++)
 			{
-				if (mngs.PoolMng.Pop(SpawnableMonsters[0]).TryGetComponent(out EnemyMain SpawnedEnemy))
+				if (mngs.PoolMng.Pop(SpawnableMonsters[0]).TryGetComponent(out EnemyMain spawnedEnemy))
 				{
-					SpawnedEnemy.EnemyAgent.Warp(LastEnemySpawnPosition);
+					spawnedEnemy.EnemyAgent.Warp(LastEnemySpawnPosition);
 				}
-
 			}
 		}
 	}
@@ -107,8 +113,7 @@ public class EnemySpawn : MonoBehaviour
 		{
 			yield return new WaitForSeconds(Random.Range(MinSpawnTick, MaxSpawnTick));
 
-			if(OnRaid == false) SpawnEnemy(Random.Range(MinSpawnOnce, MaxSpawnOnce));
-			if(OnRaid == true) SpawnEnemy(Random.Range(MaxSpawnOnce, MaxSpawnOnce * 3));
+			SpawnEnemy(OnRaid ? Random.Range(MaxSpawnOnce, MaxSpawnOnce * 3) : Random.Range(MinSpawnOnce, MaxSpawnOnce));
 		}
 
 		InActiveEnemySpawn();
