@@ -33,6 +33,8 @@ public class StatusSO : ScriptableObject
 
     public void SetUpDictionary()
     {
+		if(StatDictionary != null) StatDictionary.Clear();
+	
 		StatDictionary.TryAdd("MaxHP", MaxHP);
 		NowHP = MaxHP.GetValue();
 		StatDictionary.TryAdd("Strength", Attack);

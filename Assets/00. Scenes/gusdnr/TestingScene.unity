@@ -3366,6 +3366,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallGolem
       objectReference: {fileID: 0}
+    - target: {fileID: 3518793302707934386, guid: d5a9f3f17fe1e724781c96b8e395f4eb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4964526342021370020, guid: d5a9f3f17fe1e724781c96b8e395f4eb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
