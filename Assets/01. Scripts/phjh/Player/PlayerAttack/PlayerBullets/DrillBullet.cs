@@ -10,9 +10,9 @@ public class DrillBullet : PlayerBullet
     [SerializeField]
     private string _bombEffectName;
 
-    public override void Init(Quaternion rot,float damage)
+    public override void Init(Quaternion rot,float damage, bool isCritical)
     {
-        base.Init(rot,damage);
+        base.Init(rot,damage, isCritical);
         transform.rotation = Quaternion.Euler(45, 0, -rot.eulerAngles.y - 90);
         destroyCoroutine = StartCoroutine(DestroyBullet());
     }
@@ -35,7 +35,7 @@ public class DrillBullet : PlayerBullet
             {
                 if (hit.collider.gameObject.TryGetComponent(out EnemyMain enemy))
                 {
-                    //enemy.TakeDamage
+                    enemy.TakeDamage(damage);
                 }
                 else if (hit.collider.gameObject.TryGetComponent(out Blocks block))
                 {

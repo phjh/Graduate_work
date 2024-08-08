@@ -26,6 +26,12 @@ public class PlayerAttack : MonoBehaviour
     private float _lastFireTime;
     private bool _isReloading = false;
 
+    public float strength;
+    public float criticalChance;
+    public float criticalDamage;
+    public float reloadCoolReduce;
+    public float attackSpeed;
+
     public void Init(Player player, InputReader inputReader, PoolableMono bullet, PlayerWeapon weapon, List<AnimationReferenceAsset> animations = null)
     {
         _player = player;
@@ -37,6 +43,12 @@ public class PlayerAttack : MonoBehaviour
         _inputReader.AttackEvent += DoAttack;
         _inputReader.ReloadEvent += ReloadWeapon;
         mainCamera = Camera.main;
+
+        strength = _player.playerStat.Attack.GetValue();
+        criticalChance = _player.playerStat.CriticalChance.GetValue();
+        criticalDamage = _player.playerStat.CriticalDamage.GetValue();
+        attackSpeed = _player.playerStat.AttackSpeed.GetValue();
+        reloadCoolReduce = _player.playerStat.ReloadSpeed.GetValue();
     }
 
     private void FixedUpdate()
@@ -56,7 +68,7 @@ public class PlayerAttack : MonoBehaviour
 
         if (rot == Vector3.up)
         {
-            Debug.LogError("bug");
+            Debug.LogWarning("Ground Layer not detected at mouse");
             return;
         }
 
@@ -73,15 +85,27 @@ public class PlayerAttack : MonoBehaviour
 
         Quaternion rotation = Quaternion.LookRotation(rot);
 
-        bullet.Init(rotation, _player.playerStat.Attack.GetValue());
+        var (damage, iscritical) = CalculateDamage();
+        bullet.Init(rotation, damage, iscritical);
 
         _lastFireTime = Time.time;
         //bullet.transform.rotation = Quaternion.Slerp(bullet.transform.rotation, rotation, 1);
     }
 
+    private (float, bool) CalculateDamage()
+    {
+        float damage = strength;
+        bool isCritical = UnityEngine.Random.Range(0, 100f) < criticalChance;
+        if (isCritical)
+        {
+            damage += (criticalDamage / 100f) * damage;
+        }
+        return (damage, isCritical);
+    }
+
     private void CheckShoot()
     {
-        if (_lastFireTime + weapon.AttackCooltime > Time.time)
+        if (_lastFireTime + (weapon.AttackCooltime / attackSpeed) > Time.time)
         {
             _player.canAttack = false;
             return;
@@ -108,7 +132,7 @@ public class PlayerAttack : MonoBehaviour
         WeaponInfomation.Instance.SetCurrentBullet(weapon.maxAmmo);
         _isReloading = true;
         _player.canAttack = false;
-        Invoke(nameof(Reload), weapon.ReloadTime);
+        Invoke(nameof(Reload), weapon.ReloadTime / reloadCoolReduce);
     }
 
     private void Reload()
@@ -167,7 +191,7 @@ public class PlayerAttack : MonoBehaviour
         //여기서 애니메이션 천리해준다
         bool isback = dir.x > 0;
         
-
+        //playermove로 이동함
 
     }
 

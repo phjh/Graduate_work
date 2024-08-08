@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [Serializable]
 public class Stat
@@ -34,6 +35,7 @@ public class Stat
 		{
 			if (IsPersent) { fixedModifiers.Add(value); }
 			else { persentedModifiers.Add(value); }
+			Debug.Log(GetValue());
 		}
 	}
 

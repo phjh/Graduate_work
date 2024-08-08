@@ -20,6 +20,8 @@ public class InGameFlow : SceneFlowBase
 
 		enemySpawn = FindAnyObjectByType<EnemySpawn>();
 		enemySpawn.ActiveEnemySpawn();
+
+		TimeManager.Instance.StartTimer();
 	}
 
 	private void SelectRandomStartPostion()

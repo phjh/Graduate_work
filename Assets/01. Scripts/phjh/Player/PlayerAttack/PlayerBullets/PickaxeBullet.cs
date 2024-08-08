@@ -9,9 +9,9 @@ public class PickaxeBullet : PlayerBullet
     [SerializeField]
     private float rotateSpeed = 20;
 
-    public override void Init(Quaternion rot, float damage)
+    public override void Init(Quaternion rot, float damage, bool isCritical)
     {
-        base.Init(rot, damage);
+        base.Init(rot, damage, isCritical);
         rotaterot = Quaternion.Euler(45, 0, rot.eulerAngles.y);
         destroyCoroutine = StartCoroutine(DestroyBullet());
     }
@@ -31,7 +31,7 @@ public class PickaxeBullet : PlayerBullet
     {
         if (other.gameObject.TryGetComponent<EnemyMain>(out EnemyMain enemy))
         {
-            //enemy.TakeDamage()
+            enemy.TakeDamage(damage);
         }
         if (other.gameObject.TryGetComponent<Blocks>(out Blocks block))
         {

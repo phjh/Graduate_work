@@ -6,17 +6,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
 {
-    #region ï¿½ï¿½ï¿½ï¿½Æ¼ ï¿½Î½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+    #region À¯´ÏÆ¼ ÀÎ½ºÆåÅÍ¿¡¼­ ¼¼ÆÃÇØÁÙ °ªµé 
 
     [SerializeField]
     private InputReader _inputReader;
 
     [SerializeField]
-    private SkeletonAnimation _skeletonAnimation; //ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½.
-    //ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    private SkeletonAnimation _skeletonAnimation; //ÀÌ°Ç ¸öÂÊÀÌ´Ù.
+    //ÀÓ½Ã ¹«±â
     [SerializeField]
     private WeaponDataSO _tempWeapon;
-    //ï¿½ï¿½ï¿½ï¿½
+    //½ºÅÈ
     [SerializeField]
     private StatusSO _stat;
 
@@ -31,32 +31,39 @@ public class Player : MonoBehaviour, IDamageable
 
     #endregion
 
-    #region ï¿½Üºï¿½ ï¿½Úµå¿¡ï¿½ï¿½ ï¿½Þ¾Æ¼ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    #region ¿ÜºÎ ÄÚµå¿¡¼­ ¹Þ¾Æ¼­ ¾µ °ªµé
 
     public InputReader inputReader {  get; private set; } 
     public SkeletonAnimation skeletonAnimation {  get; private set; }
-    //ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    //ÀÓ½Ã ¹«±â
     public WeaponDataSO weaponData { get; private set; }
     public StatusSO playerStat { get; private set; }
 
     #endregion
 
-    #region ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    #region ÇÃ·¹ÀÌ¾î°¡ °¡Áö°í ÀÖÀ»°ªµé
 
-
-    private PlayerShield _playerShield;
+    [HideInInspector]
+    public PlayerShield _playerShield;
 
     private PlayerHand _playerHand;
 
     private PlayerHead _playerHead;
 
-    private PlayerWeapon weapon;
+    [HideInInspector]
+    public PlayerWeapon weapon;
+
+    [HideInInspector]
+    public PlayerMove _move;
+
+    [HideInInspector]
+    public PlayerAttack _attack;
 
     public CinemachineVirtualCamera VirtualCam;
 
     #endregion
 
-    #region ï¿½ÜºÎ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ boolï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ ï¿½ï¿½)
+    #region ¿ÜºÎ¿¡¼­ ¼öÁ¤ÇÒ bool°ªµé(°ø°ÝÁßÀÎÁö, ¿òÁ÷ÀÏ¼öÀÖ´ÂÁö µî)
 
     public bool canMove { get; set; } = true;
     public bool canAttack { get; set; } = true;
@@ -126,26 +133,26 @@ public class Player : MonoBehaviour, IDamageable
 
 		weaponData = _tempWeapon;
 
-        //ï¿½ï¿½Ç²ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­
+        //ÀÎÇ²¸®´õ È°¼ºÈ­
         inputReader.SetActive(true);
 
-        #region ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+        #region ÇÃ·¹ÀÌ¾î ÄÄÆ÷³ÍÆ® ¼¼ÆÃ
 
-        //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½
-        if (this.gameObject.TryGetComponent(out PlayerMove move))
-            move.Init(this, inputReader, _skeletonAnimation, _moveAnimations);
+        //ÇÃ·¹ÀÌ¾î ¿òÁ÷ÀÓ ºÎºÐ
+        if (this.gameObject.TryGetComponent(out _move))
+            _move.Init(this, inputReader, _skeletonAnimation, _moveAnimations);
         else
         {
             Logger.LogWarning("Playermove is null");
             Debug.LogError("playermove is null");
         }
 
-        if (this.gameObject.TryGetComponent(out PlayerAttack attack))
-            attack.Init(this, inputReader, weaponData.bullet, weapon);
+        if (this.gameObject.TryGetComponent(out _attack))
+            _attack.Init(this, inputReader, weaponData.bullet, weapon);
         else
             Logger.LogWarning("Playerattack is null");
 
-        //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½
+        //ÇÃ·¹ÀÌ¾î ½¯µå ºÎºÐ
         if (this.gameObject.TryGetComponent(out _playerShield))
             _playerShield.Init(this);
         else
@@ -170,7 +177,7 @@ public class Player : MonoBehaviour, IDamageable
 
     public void TakeDamage(float dmg)
     {        
-        //ï¿½ï¿½ï¿½ï¿½ ï¿½È¹Þ´ï¿½ ï¿½ï¿½ï¿½ï¿½
+        //µ©Áö ¾È¹Þ´Â »óÅÂ
         if (isImmunity || isDodging)
             return;
 
@@ -182,7 +189,7 @@ public class Player : MonoBehaviour, IDamageable
         }
         else
         {
-            //ï¿½×´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô°Ô²ï¿½ ï¿½ï¿½ï¿½Ø´ï¿½
+            //±×´ë·Î µ¥¹ÌÁö ÀÔ°Ô²û ÇØÁØ´Ù
             playerStat.NowHP -= dmg;
             if(playerStat.NowHP <= 0)
             {
@@ -196,7 +203,7 @@ public class Player : MonoBehaviour, IDamageable
     private IEnumerator TakeDamageEffects()
     {
         isImmunity = true;
-        //ï¿½ï¿½ï¿½â¼­ ï¿½Â¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Çµï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½
+        //¿©±â¼­ ¸Â¾ÒÀ»¶§ ÇÇµå¹éÀ»ÁØ´Ù
         PoolManager.Instance.PopAndPushEffect("PlayerHitbloodEffect", transform.position + Vector3.up/2, 1f);
         
         PlayerManager.Instance.ShakeCamera(waitTime: _immuniateTime);
@@ -208,9 +215,8 @@ public class Player : MonoBehaviour, IDamageable
 
     public void DieObject()
     {
-        //ï¿½Ñ¾î°¡ï¿½Ô²ï¿½ï¿½Ù²Ù±ï¿½
+        //³Ñ¾î°¡°Ô²û¹Ù²Ù±â
         isImmunity = true;
-        Managers.instance.FlowMng.isGameClear = false;
         Managers.instance.FlowMng.ChangeSceneInFlow();
     }
 }

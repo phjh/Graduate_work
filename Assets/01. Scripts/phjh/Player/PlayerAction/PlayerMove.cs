@@ -42,10 +42,15 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     private float _resolveTime;
     [SerializeField]
-    private float _dodgeCooltime;
+    private float _dodgeCooltime; 
 
     [SerializeField]
     private Transform _afterImage;
+
+    public void SetPlayerSpeed(float speed)
+    {
+        _currentSpeed = speed;
+    }
 
     public void Init(Player player, InputReader inputReader, SkeletonAnimation body, List<AnimationReferenceAsset> anim)
     {
