@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae2619ed71bfa1a43a794a197b165be4, type: 3}
-  m_Name: 7
+  m_Name: RND-4
   m_EditorClassIdentifier: 
-  chunkName: 7
-  excelData: {fileID: 4900000, guid: 037f7c028d87a594b9a09af4948e27a6, type: 3}
-  PlaceOreBlockEncounter: 0.1
+  chunkName: RND-4
+  excelData: {fileID: 4900000, guid: 227853d8db4286048905bfd06c79e042, type: 3}
+  PlaceOreBlockEncounter: 0.2
   BaseChunkPos: {x: 0, y: 0, z: 0}

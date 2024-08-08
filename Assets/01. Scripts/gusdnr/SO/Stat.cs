@@ -35,7 +35,6 @@ public class Stat
 		{
 			if (IsPersent) { fixedModifiers.Add(value); }
 			else { persentedModifiers.Add(value); }
-			Debug.Log(GetValue());
 		}
 	}
 

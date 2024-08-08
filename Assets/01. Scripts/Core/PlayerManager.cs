@@ -10,6 +10,10 @@ public class PlayerManager : ManagerBase<PlayerManager>
 	public bool ActioveXRay = false;
 	public Player Player;
 
+	[Header("Player Spawn Position")]
+	[SerializeField] private Vector3[] SpawnPositions = new Vector3[4];
+	public int SelectedSpawnPoint = -1;
+
 	public Dictionary<StatType, int> OreDictionary = new Dictionary<StatType, int>();
 
 	private GameObject nowWeapon;
@@ -88,7 +92,7 @@ public class PlayerManager : ManagerBase<PlayerManager>
 	{
 		if (!OreDictionary.ContainsKey(type)) return; //If Non value in Dictionary to same type, return
 
-		OreDictionary[type] = OreDictionary[type]++;
+		OreDictionary[type] = OreDictionary[type] + 1;
 		Player.playerStat.AddModifierStat(type, addValue, false);
 	}
 
@@ -116,5 +120,12 @@ public class PlayerManager : ManagerBase<PlayerManager>
 		PlayerHealth.localScale = new Vector3(percent, 1, 1);
 	}
 
+	public void SelectRandomStartPostion()
+	{
+		if(Player == null) return;
+		SelectedSpawnPoint = Random.Range(0, SpawnPositions.Length - 1);
+
+		Player.transform.position = SpawnPositions[2];
+	}
 
 }

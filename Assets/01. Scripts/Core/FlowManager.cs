@@ -61,6 +61,7 @@ public class FlowManager : ManagerBase<FlowManager>
 				}
 			case GameState.PlayGame:
 				{
+					mngs.TimeMng.TimerText.gameObject.SetActive(true);
 					mngs.UIMng.EnableSelectCanvas(1);
 					break;
 				}
@@ -70,6 +71,7 @@ public class FlowManager : ManagerBase<FlowManager>
 				}
 			case GameState.Result:
 				{
+					mngs.TimeMng.TimerText.gameObject.SetActive(false);
 					break;
 				}
 			case GameState.Quit:

@@ -90,7 +90,8 @@ public class Player : MonoBehaviour, IDamageable
     private void SetWeapon()
     {
         PlayerManager.Instance.Player = this;
-        _tempWeapon = PlayerManager.Instance.SentWeaponData();
+        PlayerManager.Instance.SelectRandomStartPostion();
+		_tempWeapon = PlayerManager.Instance.SentWeaponData();
 
         weapon = Instantiate(_tempWeapon.playerWeapon.gameObject, transform.position, Quaternion.Euler(0, 0, 45), _weaponParent).GetComponent<PlayerWeapon>();
         weapon.transform.localPosition = new Vector2(-0.1f, 0);
@@ -217,6 +218,9 @@ public class Player : MonoBehaviour, IDamageable
     {
         //넘어가게끔바꾸기
         isImmunity = true;
-        Managers.instance.FlowMng.ChangeSceneInFlow();
+
+		Managers.instance.TimeMng.SetTimer(false);
+		Managers.instance.TimeMng.TimerText.gameObject.SetActive(false);
+		Managers.instance.FlowMng.ChangeSceneInFlow();
     }
 }

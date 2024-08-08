@@ -36,7 +36,8 @@ public class MapManager : ManagerBase<MapManager>
 
 	[Header("Chunk Data Setting")]
 	[SerializeField] private Vector2Int ChunkSize;
-	[SerializeField] private List<ChunkSO> ChunkDatas = new List<ChunkSO>(9);
+	[SerializeField] private FloorChunkDataSO ChunkDatabase;
+	private List<ChunkSO> InitChunkDatas = new List<ChunkSO>();
 
 	[Header("Block Datas")]
 	[SerializeField] private string WallPoolName = "WallBlock";
@@ -56,7 +57,8 @@ public class MapManager : ManagerBase<MapManager>
 		TryGetComponent(out nms);
 
 		SetGroundTile();
-		SetBlocks();
+		SetUnBreakableBlock();
+		SetChunkList();
 
 		nms.BuildNavMesh();
 	}
@@ -94,13 +96,6 @@ public class MapManager : ManagerBase<MapManager>
 		}
 	}
 
-
-	private void SetBlocks()
-	{
-		SetUnBreakableBlock();
-		SetMap();
-	}
-
 	//부서지지 않는 벽 설치
 	private void SetUnBreakableBlock()
 	{
@@ -114,6 +109,29 @@ public class MapManager : ManagerBase<MapManager>
 			AddBlock(new Vector3(0, 0, y), WallPoolName);
 			AddBlock(new Vector3(MapSize.x - 1, 0, y), WallPoolName);
 		}
+	}
+
+	private void SetChunkList()
+	{
+		InitChunkDatas = new List<ChunkSO>();
+
+		for (int count = 0; count < 9; count++)
+		{
+			if (count == 0)
+				InitChunkDatas.Add(ChunkDatabase.RetrunSelectChunk(ChunkDatabase.FirstChunks));
+			else if (count == 2)
+				InitChunkDatas.Add(ChunkDatabase.RetrunSelectChunk(ChunkDatabase.ThirdChunks));
+			else if (count == 4)
+				InitChunkDatas.Add(ChunkDatabase.BossChunk);
+			else if (count == 6)
+				InitChunkDatas.Add(ChunkDatabase.RetrunSelectChunk(ChunkDatabase.SixthChunks));
+			else if (count == 8)
+				InitChunkDatas.Add(ChunkDatabase.RetrunSelectChunk(ChunkDatabase.NinthChunks));
+			else
+				InitChunkDatas.Add(ChunkDatabase.RetrunSelectChunk(ChunkDatabase.RandomChunks));
+		}
+
+		SetMap();
 	}
 
 	private void SetMap()
@@ -135,14 +153,14 @@ public class MapManager : ManagerBase<MapManager>
 
 				index = ((yChunkCount - y) * xChunkCount) + x;
 
-				if (index >= 0 && index < ChunkDatas.Count)
+				if (index >= 0 && index < InitChunkDatas.Count)
 				{
-					ChunkSO cloneChunk = ChunkDatas[index].CreateCloneChunk(ChunkPos);
+					ChunkSO cloneChunk = InitChunkDatas[index].CreateCloneChunk(ChunkPos);
 					SetChunkData(cloneChunk);
 				}
 				else
 				{
-					Debug.LogError($"Index {index} is out of range for ChunkDatas array");
+					Logger.LogError($"Index {index} is out of range for InitChunkDatas array");
 				}
 			}
 		}
@@ -230,36 +248,37 @@ public class MapManager : ManagerBase<MapManager>
 		{
 			for (int z = 0; z < ChunkSize.y; z++)
 			{
-				addPos = new Vector3(z, 0, ChunkSize.x - 1 - x);
-
-				Logger.Log($"Position = {x} , {z} / Block Data :{InitChunk.chunkData[x][z]}");
-
-				switch (InitChunk.chunkData[x][z])
+				// 인덱스 범위 확인
+				if (x < InitChunk.chunkData.Count && z < InitChunk.chunkData[x].Count)
 				{
-					case (int)BlockType.None:
-					default:
-						break;
+					addPos = new Vector3(z, 0, ChunkSize.x - 1 - x);
+					Logger.Log($"Position = {x} , {z} / Block Data :{InitChunk.chunkData[x][z]}");
 
-					case (int)BlockType.Breakable:
-						AddBlock(InitChunk.BaseChunkPos + addPos, BreakablePoolName);
-						break;
+					switch (InitChunk.chunkData[x][z])
+					{
+						case (int)BlockType.None:
+						default:
+							break;
 
-					case (int)BlockType.Ore:
-						string oreName = OrePoolName[UnityEngine.Random.Range(0, OrePoolName.Count)];
-                        AddBlock(InitChunk.BaseChunkPos + addPos, oreName);
-						//여기서 다른 2차원 맵에 광석 추가해준다(광석시야)
-						break;
+						case (int)BlockType.Breakable:
+							AddBlock(InitChunk.BaseChunkPos + addPos, BreakablePoolName);
+							break;
 
-					case (int)BlockType.Interaction:
-						break;
+						case (int)BlockType.Ore:
+							string oreName = OrePoolName[UnityEngine.Random.Range(0, OrePoolName.Count)];
+							AddBlock(InitChunk.BaseChunkPos + addPos, oreName);
+							break;
 
-					case (int)BlockType.DangerZone:
-						AddBlock(InitChunk.BaseChunkPos + addPos, DangerZonePoolName);
-						break;
+						case (int)BlockType.Interaction:
+							break;
+
+						case (int)BlockType.DangerZone:
+							AddBlock(InitChunk.BaseChunkPos + addPos, DangerZonePoolName);
+							break;
+					}
 				}
 			}
 		}
-
 	}
 
 	private void AddBlock(Vector3 position, string poolObjectname)

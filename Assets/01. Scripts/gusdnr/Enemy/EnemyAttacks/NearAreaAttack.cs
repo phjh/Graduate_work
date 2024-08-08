@@ -18,7 +18,7 @@ public class NearAreaAttack : EnemyAttackBase
 	{
 		Logger.Log(E_Main.PoolName + " is Active Attack");
 
-		// Attack ¹üÀ§ ³» ÇÃ·¹ÀÌ¾î °¨Áö
+		// Attack ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
 		Collider[] playersInRange = Physics.OverlapSphere(E_Main.transform.position, E_Main.MaxAttackRange, WhatIsTarget);
 		if (playersInRange.Length > 0)
 		{
@@ -26,14 +26,15 @@ public class NearAreaAttack : EnemyAttackBase
 			if (damageable != null)	damageable.TakeDamage(E_Main.Attack.GetValue());
 		}
 
-		if(string.IsNullOrEmpty(EffectName) == false) PoolManager.Instance.PopAndPushEffect(EffectName, new Vector3(E_Main.transform.position.x, 0f, E_Main.transform.position.z), 1f);
+		if (string.IsNullOrEmpty(EffectName) == false) PoolManager.Instance.PopAndPushEffect(EffectName, new Vector3(E_Main.transform.position.x, 0f, E_Main.transform.position.z), 1f);
 
 		base.ActiveAttack();
 	}
 
-    public override void EndAttack()
-    {
-        E_Main.EnemyAnimator.ResetTrigger("Attack");
-        base.EndAttack();
-    }
+	public override void EndAttack()
+	{
+		E_Main.EnemyAnimator.ResetTrigger("Attack");
+
+		base.EndAttack();
+	}
 }

@@ -10,7 +10,8 @@ public class EnemySpawn : MonoBehaviour
     [Range(0.1f, 10f)]public float MaxSpawnTick = 3f;
 	[Range(1, 10)]public int MinSpawnOnce = 1;
     [Range(1, 10)]public int MaxSpawnOnce = 5;
-	[Range(1f, 25f)] public float SpawnDistance = 10f;
+	[Range(1f, 25f)] public float MinSpawnDistance = 5f;
+	[Range(1f, 25f)] public float MaxSpawnDistance = 10f;
 	public LayerMask WhatIsGround;
 	public LayerMask WhatIsWall;
 
@@ -53,10 +54,13 @@ public class EnemySpawn : MonoBehaviour
 	{
 		for (int attempts = 0; attempts < 10; attempts++)
 		{
-			Vector3 RandomDirection = Random.insideUnitSphere * SpawnDistance;
-			RandomDirection.y = 0;
+			Vector3 RandomMinDirection = Random.insideUnitSphere * MinSpawnDistance;
+			Vector3 RandomMaxDirection = Random.insideUnitSphere * MaxSpawnDistance;
 
-			Vector3 SpawnPosition = mngs.PlayerMng.Player.transform.position + RandomDirection;
+			RandomMinDirection.y = 0;
+			RandomMaxDirection.y = 0;
+
+			Vector3 SpawnPosition = mngs.PlayerMng.Player.transform.position + RandomMinDirection;
 
 			bool isInBossArea = SpawnPosition.x >= BossArea.x && SpawnPosition.x <= BossArea.y && SpawnPosition.z >= BossArea.x && SpawnPosition.z <= BossArea.y;
 			bool isOutMap = SpawnPosition.x < MapOutLine.x || SpawnPosition.z < MapOutLine.x || SpawnPosition.x > MapOutLine.y || SpawnPosition.z > MapOutLine.y;
@@ -88,7 +92,11 @@ public class EnemySpawn : MonoBehaviour
 			LastEnemySpawnPosition = spawnPosition.Value;
 			for (int count = 0; count < SpawnCount; count++)
 			{
-				mngs.PoolMng.MonsterPop(SpawnableMonsters[0], LastEnemySpawnPosition);
+				if (mngs.PoolMng.Pop(SpawnableMonsters[0]).TryGetComponent(out EnemyMain SpawnedEnemy))
+				{
+					SpawnedEnemy.EnemyAgent.Warp(LastEnemySpawnPosition);
+				}
+
 			}
 		}
 	}

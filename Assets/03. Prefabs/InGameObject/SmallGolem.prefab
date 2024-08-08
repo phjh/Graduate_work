@@ -196,7 +196,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 0
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -215,7 +215,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3518793302707934386}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -249,7 +249,7 @@ MonoBehaviour:
   PoolName: SmallGolem
   enemyData: {fileID: 11400000, guid: c6337358f37f3b7429c5d6a390dbfc00, type: 2}
   MinAttackRange: 0.05
-  MaxAttackRange: 3
+  MaxAttackRange: 2
   TargetTransform: {fileID: 0}
   ThisEnemyAttack: {fileID: 11400000, guid: ef291c0621e2601428901434283c01af, type: 2}
   TargetLayer:

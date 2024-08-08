@@ -33,8 +33,6 @@ class Pool<T> where T : PoolableMono
 			obj.name = obj.name.Replace("(Clone)", "");
 
 			obj?.gameObject.SetActive(false);
-
-			//Logger.Log(obj.name);
 		}
 		else
 		{
