@@ -49,40 +49,48 @@ public class EnemySpawn : MonoBehaviour
 		IsSpanwing = false ;
 	}
 
-    private Vector3 CalculateSpawnPos()
-    {
-		Vector3 RandomDirection = Random.insideUnitSphere * SpawnDistance;
-		RandomDirection.y = 0; // Set Y value to 0
-
-		Vector3 SpawnPosition = PlayerTrm.position + RandomDirection; // Create Random Position by PlayerPosition
-
-		bool isInBossAreaX = SpawnPosition.x >= BossArea.x && SpawnPosition.x <= BossArea.y;
-		bool isInBossAreaY = SpawnPosition.z >= BossArea.x && SpawnPosition.z <= BossArea.y;
-		bool isOutMap = SpawnPosition.x <= MapOutLine.x || SpawnPosition.z <= MapOutLine.x || SpawnPosition.x >= MapOutLine.y || SpawnPosition.z >= MapOutLine.y;
-
-		if (isInBossAreaX || isInBossAreaY || isOutMap) // If meet the Condition one of both, Explore again
+	private Vector3? CalculateSpawnPos()
+	{
+		for (int attempts = 0; attempts < 10; attempts++)
 		{
-			return CalculateSpawnPos();
-		}
+			Vector3 RandomDirection = Random.insideUnitSphere * SpawnDistance;
+			RandomDirection.y = 0;
 
+			Vector3 SpawnPosition = PlayerTrm.position + RandomDirection;
 
-		NavMeshHit SampleSpawnPosition;
-		// Find Right Position in NavMesh
-		if (NavMesh.SamplePosition(SpawnPosition, out SampleSpawnPosition, 1.0f, NavMesh.AllAreas))
-		{
-			// Checking Ground
-			if (Physics.CheckSphere(SampleSpawnPosition.position, 0.5f, WhatIsGround))
+			bool isInBossAreaX = SpawnPosition.x >= BossArea.x && SpawnPosition.x <= BossArea.y;
+			bool isInBossAreaY = SpawnPosition.z >= BossArea.x && SpawnPosition.z <= BossArea.y;
+			bool isOutMap = SpawnPosition.x < MapOutLine.x || SpawnPosition.z < MapOutLine.x || SpawnPosition.x > MapOutLine.y || SpawnPosition.z > MapOutLine.y;
+
+			if (!isInBossAreaX && !isInBossAreaY && !isOutMap)
 			{
-				// Check Wall is not this Position (using Layer)
-				if (!Physics.CheckSphere(SampleSpawnPosition.position, 0.5f, WhatIsWall))
+				NavMeshHit SampleSpawnPosition;
+				if (NavMesh.SamplePosition(SpawnPosition, out SampleSpawnPosition, 1.0f, NavMesh.AllAreas))
 				{
-					return new Vector3(SampleSpawnPosition.position.x, 0.5f, SampleSpawnPosition.position.z); // If meet the conditions, return Vector
+					// Ground üũ
+					if (Physics.CheckSphere(SampleSpawnPosition.position, 0.5f, WhatIsGround) &&
+						!Physics.CheckSphere(SampleSpawnPosition.position, 0.5f, WhatIsWall))
+					{
+						return new Vector3(SampleSpawnPosition.position.x, 0.5f, SampleSpawnPosition.position.z);
+					}
 				}
 			}
 		}
 
-		// Explore again if don't meet the conditions
-		return CalculateSpawnPos();
+		return null;
+	}
+
+	public void SpawnEnemy(int SpawnCount)
+	{
+		Vector3? spawnPosition = CalculateSpawnPos();
+		if (spawnPosition.HasValue)
+		{
+			LastEnemySpawnPosition = spawnPosition.Value;
+			for (int count = 0; count < SpawnCount; count++)
+			{
+				mngs.PoolMng.Pop(SpawnableMonsters[0], LastEnemySpawnPosition);
+			}
+		}
 	}
 
 	private IEnumerator EnemySpawning()
@@ -97,15 +105,4 @@ public class EnemySpawn : MonoBehaviour
 
 		InActiveEnemySpawn();
 	}
-
-    public void SpawnEnemy(int SpawnCount)
-    {
-		LastEnemySpawnPosition = CalculateSpawnPos();
-		for (int count = 0; count < SpawnCount; count++)
-        {
-            mngs.PoolMng.Pop(SpawnableMonsters[0], LastEnemySpawnPosition);
-        }
-    }
-
-
 }
