@@ -9,13 +9,15 @@ public class InGameFlow : SceneFlowBase
 	public int SelectedSpawnPoint = -1;
 
 	private WeaponInfomation weaponInfo;
+	private MiniChuckMapUI minimap;
 	private EnemySpawn enemySpawn;
 
 	public override void ActiveFlowBase()
 	{
 		weaponInfo = FindAnyObjectByType<WeaponInfomation>();
 		weaponInfo.SetWeaponData(mngs.PlayerMng.SelectedWeaponData);
-
+		minimap = FindAnyObjectByType<MiniChuckMapUI>();
+		minimap.ChunkMiniMapUIInit(mngs.PlayerMng.Player.transform, mngs.PlayerMng.Player.inputReader);
 		SelectRandomStartPostion();
 
 		enemySpawn = FindAnyObjectByType<EnemySpawn>();
