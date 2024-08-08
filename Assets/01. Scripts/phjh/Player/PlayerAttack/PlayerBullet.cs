@@ -25,7 +25,7 @@ public abstract class PlayerBullet : PoolableMono
     protected float damage = 1;
     protected bool isCritical = false;
 
-    public virtual void Init(Quaternion rot, float damage, bool isCritical)
+    public virtual void Init(Quaternion rot, float damage, bool isCritical, bool first = false)
     {
         this.rot = rot;
         if(rb == null)

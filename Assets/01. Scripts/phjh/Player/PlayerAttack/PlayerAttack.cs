@@ -80,13 +80,13 @@ public class PlayerAttack : MonoBehaviour
         weapon.currentAmmo--;
         WeaponInfomation.Instance.SetCurrentBullet(weapon.currentAmmo);
 
-        PlayerBullet bullet = (PlayerBullet)PoolManager.Instance.Pop(tempBullet.name, this.transform.position + new Vector3(0, 0.4f, 0));
+        PlayerBullet bullet = (PlayerBullet)PoolManager.Instance.Pop(tempBullet.name, this.transform.position + new Vector3(0, 0.4f, 0.2f));
         //bullet.transform.forward = rot;
 
         Quaternion rotation = Quaternion.LookRotation(rot);
 
         var (damage, iscritical) = CalculateDamage();
-        bullet.Init(rotation, damage * weapon.damageFactor, iscritical);
+        bullet.Init(rotation, damage * weapon.damageFactor, iscritical, true);
 
         _lastFireTime = Time.time;
         //bullet.transform.rotation = Quaternion.Slerp(bullet.transform.rotation, rotation, 1);
@@ -155,7 +155,7 @@ public class PlayerAttack : MonoBehaviour
         if (success)
         {
             // Calculate the direction
-            var direction = position - transform.position + new Vector3(0,0,-1);
+            var direction = position - transform.position + new Vector3(0,0,-0.5f);
 
             // You might want to delete this line.
             // Ignore the height difference.
