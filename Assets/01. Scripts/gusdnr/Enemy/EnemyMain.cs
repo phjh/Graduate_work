@@ -9,7 +9,6 @@ public class EnemyMain : PoolableMono, IDamageable
 {
 	[Header("Enemy Values")]
 	public StatusSO enemyData;
-	[Range(0.01f, 30f)] public float MinAttackRange;
 	[Range(0.01f, 30f)] public float MaxAttackRange;
 	public Transform TargetTransform;
 
@@ -19,8 +18,7 @@ public class EnemyMain : PoolableMono, IDamageable
 	[Range(0.01f, 1f)] public float MinCorrectionAttackRange = 0.5f;
 	[Range(0.01f, 1f)] public float MaxCorrectionAttackRange = 1.0f;
 	
-	private float CorrectionMinRange = 0f;
-	private float CorrectionMaxRange= 0f;
+	private float CorrectionRange= 0f;
 
 	[HideInInspector] public Stat MaxHP;
 	[HideInInspector] public Stat Attack;
@@ -39,14 +37,14 @@ public class EnemyMain : PoolableMono, IDamageable
 
 	private void FixedUpdate()
 	{
-		if (TargetTransform.position.x >= transform.position.x) EnemySpriteRender.flipX = false;
-		if (TargetTransform.position.x <= transform.position.x) EnemySpriteRender.flipX = true;
+		if (TargetTransform?.position.x >= transform.position.x) EnemySpriteRender.flipX = false;
+		if (TargetTransform?.position.x <= transform.position.x) EnemySpriteRender.flipX = true;
 
 		if (isAlive == false || IsAttack == true || TargetTransform == null) StopChaing();
 
 		EnemyAnimator.SetBool("Move", IsMove);
 
-		if (DistanceToTarget <= CorrectionMaxRange && DistanceToTarget >= CorrectionMinRange)
+		if (DistanceToTarget <= CorrectionRange)
 		{
 			StopChaing();
 
@@ -79,9 +77,8 @@ public class EnemyMain : PoolableMono, IDamageable
 
 	private void CalculateCorrectionRanges()
 	{
-		float CorrectionValue = UnityEngine.Random.Range(MinCorrectionAttackRange, MaxCorrectionAttackRange);
-		CorrectionMinRange = MinAttackRange;
-		CorrectionMaxRange = MaxAttackRange - CorrectionValue;
+		float CorrectValue = UnityEngine.Random.Range(MinCorrectionAttackRange, MaxCorrectionAttackRange);
+		CorrectionRange = MaxAttackRange - CorrectValue;
 	}
 
 	#region PoolableMono Methods
@@ -168,16 +165,16 @@ public class EnemyMain : PoolableMono, IDamageable
 	#endregion
 
 	#region Enemy Move Methods
-	private float DestinationRadius => UnityEngine.Random.Range(CorrectionMinRange, CorrectionMaxRange);
 	private Vector3 DestinationPos = Vector3.zero;
 
 	private void SetDestinationPos()
 	{
+		IsMove = true;
+		EnemyAgent.isStopped = false;
+		EnemyAgent.avoidancePriority = 50;
+
 		DestinationPos = GetClosestPointOnCircle(transform.position);
 		EnemyAgent.SetDestination(DestinationPos);
-
-		IsMove = true;
-		EnemyAgent.avoidancePriority = 50;
 	}
 
 	private Vector3 GetClosestPointOnCircle(Vector3 point)
@@ -185,7 +182,7 @@ public class EnemyMain : PoolableMono, IDamageable
 		Vector3 direction = point - TargetTransform.position; // Calcurate Direction Vector
 		direction.Normalize(); // Normalized Direction Vector
 		CalculateCorrectionRanges();
-		Vector3 ClosestPositon = TargetTransform.position + direction * DestinationRadius;
+		Vector3 ClosestPositon = TargetTransform.position + direction * CorrectionRange;
 		ClosestPositon.y = point.y;
 
 		return ClosestPositon;
@@ -194,7 +191,7 @@ public class EnemyMain : PoolableMono, IDamageable
 	public void StopChaing()
 	{
 		IsMove = false;
-		EnemyAgent.isStopped = false;
+		EnemyAgent.isStopped = true;
 		EnemyAgent.velocity = Vector3.zero;
 	}
 

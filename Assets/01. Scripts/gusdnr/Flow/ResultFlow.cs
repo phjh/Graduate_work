@@ -50,8 +50,8 @@ public class ResultFlow : SceneFlowBase
 
 	public override void ActiveFlowBase()
 	{
-		if(mngs.FlowMng.isGameClear == false) ResultText.text = ResultPairs[0].ResultText;
-		else if(mngs.FlowMng.isGameClear == true) ResultText.text = ResultPairs[1].ResultText;
+		ResultText.text = ResultPairs[mngs.FlowMng.isGameClear ? 1 : 0].ResultText;
+		ResultImg.sprite = ResultPairs[mngs.FlowMng.isGameClear ? 1 : 0].ResultImage;
 		TMPDOText(ResultText, ResultDuration);
 
 		OreCount = OreCountSum = 0;

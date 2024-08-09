@@ -1546,7 +1546,7 @@ MonoBehaviour:
   MinSpawnOnce: 1
   MaxSpawnOnce: 3
   MinSpawnDistance: 3
-  MaxSpawnDistance: 6
+  MaxSpawnDistance: 10
   WhatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -1620,7 +1620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ThisSceneState: 3
   NextSceneName: Result
-  NeedPoolListName: 
+  NeedPoolListName: []
   ResetPool: 0
 --- !u!1001 &1689347447
 PrefabInstance:

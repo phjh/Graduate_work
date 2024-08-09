@@ -15,7 +15,7 @@ public enum GameState
 
 public class FlowManager : ManagerBase<FlowManager>
 {
-	[HideInInspector] public bool isGameClear = false;
+	[HideInInspector] public bool isGameClear { get; set; }
 
 	public GameState CurrentGameState;
 	public SceneFlowBase CurrentSceneFlow;
