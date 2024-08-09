@@ -8,7 +8,7 @@ public abstract class SceneFlowBase : MonoBehaviour
 	[Header("FlowBase Default Values")]
 	public GameState ThisSceneState;
 	public string NextSceneName;
-	[SerializeField] private string NeedPoolListName;
+	[SerializeField] private string[] NeedPoolListName;
 	[SerializeField] private bool ResetPool = false;
 
 	private void Awake()
@@ -19,11 +19,14 @@ public abstract class SceneFlowBase : MonoBehaviour
 	public void SetFlowThisScene()
 	{
 		mngs?.FlowMng.ChangeGameState(ThisSceneState);
-		if(string.IsNullOrEmpty(NeedPoolListName) == false)
+		if(NeedPoolListName.Length != 0)
 		{
-			mngs?.PoolMng?.SetDataOnStruct(NeedPoolListName, ResetPool);
+			foreach (var name in NeedPoolListName)
+			{
+				mngs?.PoolMng?.SetDataOnStruct(name, ResetPool);
+			}
 		}
-		else if(string.IsNullOrEmpty(NeedPoolListName) == true && ResetPool == true)
+		else if(NeedPoolListName.Length == 0 && ResetPool == true)
 		{
 			mngs?.PoolMng?.ClearPreviousData();
 		}

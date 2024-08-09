@@ -42,13 +42,6 @@ public class PoolManager : ManagerBase<PoolManager>
 		DontDestroyOnLoad(PoolParent_Block.root);
 
 		SetDataListInDictionary();
-
-		StructNamesList.ForEach(name =>
-		{
-			SetDataOnStruct(name);
-		});
-
-		StartPooling();
 	}
 
 	public void SetBlockVisible(bool value) => PoolParent_Block.gameObject.SetActive(value);
@@ -86,7 +79,23 @@ public class PoolManager : ManagerBase<PoolManager>
 		{
 			pool.DestroyAll();
 		}
+
+		DestroyInChild(PoolParent_Block);
+		DestroyInChild(PoolParent_Effect);
+		DestroyInChild(PoolParent_Object);
+		DestroyInChild(PoolParent_UI);
+
 		CompletePoolableMonos.Clear();
+	}
+
+	private void DestroyInChild(Transform InitTrm)
+	{
+		if(InitTrm == null ||  InitTrm.childCount <= 0) return;
+
+		for(int count = 0; count < InitTrm.childCount; count++)
+		{
+			Destroy(InitTrm.GetChild(count).gameObject);
+		}
 	}
 
 	private void StartPooling()

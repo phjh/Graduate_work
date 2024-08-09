@@ -40,11 +40,11 @@ public class WeaponInfomation : MonoBehaviour
 	public void Reload(float reloadTime)
 	{
 		FadeImg.enabled = true;
+		ReloadIconImg.gameObject.SetActive(true);
 		ReloadIconImg.localScale = Vector3.one;
 
-		ReloadIconImg.gameObject.SetActive(true);
 
-		ReloadIconImg.DOSizeDelta(new Vector3(0, 0, 1), reloadTime).SetEase(Ease.InBounce)
+		ReloadIconImg.DOScale(new Vector3(0, 0, 1), reloadTime).SetEase(Ease.InBounce)
 			.OnComplete(() =>
 			{
 				FadeImg.enabled = false;
