@@ -37,20 +37,27 @@ public class EnemyMain : PoolableMono, IDamageable
 
 	private void FixedUpdate()
 	{
+		if (isAlive == false || IsAttack == true || TargetTransform == null)
+		{
+			StopChaing();
+			return;
+		}
+
 		if (TargetTransform?.position.x >= transform.position.x) EnemySpriteRender.flipX = false;
 		if (TargetTransform?.position.x <= transform.position.x) EnemySpriteRender.flipX = true;
-
-		if (isAlive == false || IsAttack == true || TargetTransform == null) StopChaing();
 
 		EnemyAnimator.SetBool("Move", IsMove);
 
 		if (DistanceToTarget <= CorrectionRange)
 		{
-			StopChaing();
 
 			if (CanAttack == true)
 			{
 				ActiveAttack();
+			}
+			if(CanAttack == false)
+			{
+				StopChaing();
 			}
 		}
 		else
@@ -193,6 +200,9 @@ public class EnemyMain : PoolableMono, IDamageable
 		IsMove = false;
 		EnemyAgent.isStopped = true;
 		EnemyAgent.velocity = Vector3.zero;
+
+
+		EnemyAnimator.ResetTrigger("Attack");
 	}
 
 	public void SetMoveSpeed() => EnemyAgent.speed = MoveSpeed.GetValue();

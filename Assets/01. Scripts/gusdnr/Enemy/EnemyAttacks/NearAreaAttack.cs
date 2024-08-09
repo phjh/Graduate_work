@@ -10,12 +10,13 @@ public class NearAreaAttack : EnemyAttackBase
 
 	public override void StartAttack()
 	{
-		E_Main.EnemyAnimator.SetTrigger("Attack");
 		base.StartAttack();
 	}
 
 	public override void ActiveAttack()
 	{
+		E_Main.EnemyAnimator.SetTrigger("Attack");
+
 		Logger.Log(E_Main.PoolName + " is Active Attack");
 
 		// Attack ���� �� �÷��̾� ����
@@ -26,7 +27,6 @@ public class NearAreaAttack : EnemyAttackBase
 			if (damageable != null)	damageable.TakeDamage(E_Main.Attack.GetValue());
 		}
 
-		if (string.IsNullOrEmpty(EffectName) == false) PoolManager.Instance.PopAndPushEffect(EffectName, new Vector3(E_Main.transform.position.x, 0f, E_Main.transform.position.z), 1f);
 
 		base.ActiveAttack();
 	}
@@ -34,6 +34,7 @@ public class NearAreaAttack : EnemyAttackBase
 	public override void EndAttack()
 	{
 		E_Main.EnemyAnimator.ResetTrigger("Attack");
+		if (string.IsNullOrEmpty(EffectName) == false) PoolManager.Instance.PopAndPushEffect(EffectName, new Vector3(E_Main.transform.position.x, 0f, E_Main.transform.position.z), 1f);
 
 		base.EndAttack();
 	}
