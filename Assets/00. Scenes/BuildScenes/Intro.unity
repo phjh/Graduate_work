@@ -2645,7 +2645,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ThisSceneState: 1
   NextSceneName: Lobby
-  NeedPoolListName: 
+  NeedPoolListName:
+  - ObjectList
   ResetPool: 0
   StartBtn: {fileID: 7312236587541534308}
   OptionBtn: {fileID: 9046994367917621659}
@@ -3703,8 +3704,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 0}
+  m_AnchoredPosition: {x: 0, y: -15}
+  m_SizeDelta: {x: 100, y: -430}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1668812983
 MonoBehaviour:
@@ -4349,7 +4350,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 44420aab13d57304d87e54929856d093, type: 3}
+  m_Texture: {fileID: 2800000, guid: 2fd8df2b551990f46b5e3b9712d2aad3, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0

@@ -45,14 +45,4 @@ public class WeaponWheelUI : MonoBehaviour
         if (this.ThisWheelData == null) return;
         mngs?.PlayerMng.SetPlayerWeapon(ThisWheelData);
     }
-
-    public void Selected()
-    {
-        alreadySelected = true;
-    }
-
-    public void Deselected()
-    {
-        alreadySelected = false;
-    }
 }
