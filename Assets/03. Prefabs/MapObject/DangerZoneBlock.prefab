@@ -100,7 +100,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PoolName: DangerZoneBlock
-  BlockMaterials: []
+  BlockMaterials:
+  - {fileID: 2772606615370136572, guid: 72cfe88740db586428f08815cc19822b, type: 3}
+  - {fileID: 2100000, guid: 003b2b515b86f1743afb0199df76a6b5, type: 2}
   BlockRdr: {fileID: 5529403997875081427}
   BlockRB: {fileID: 4750926119006150869}
   BlockCld: {fileID: 4273082069542496434}

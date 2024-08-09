@@ -140,14 +140,12 @@ public class PlayerMove : MonoBehaviour
 
     private IEnumerator DodgeCoroutine()
     {
-        Debug.Log("dodgeStart");
         _lastMovementVelocity *= 1.4f;
         _rb.velocity = _lastMovementVelocity;
         StartCoroutine(AfterImage());
         yield return new WaitForSeconds(_dodgeTime);
         //회피 지속시간
         _player.isDodging = false;
-        Debug.Log("dodgeEnd");
 
         yield return new WaitForSeconds(_dodgeCooltime);
         //쿨타임
@@ -170,8 +168,8 @@ public class PlayerMove : MonoBehaviour
             {
                 skeleton.skeleton.A = Mathf.Lerp(1, 0, time / _resolveTime);
             }
-            time += Time.deltaTime;
-            yield return new WaitForSeconds(Time.deltaTime);
+            time += Time.fixedDeltaTime;
+            yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
         _afterImage.gameObject.SetActive(false);
     }

@@ -30,5 +30,24 @@ public class DangerZoneBlock : Blocks
 	public void ActiveDangerZone(int Phase)
 	{
 		Logger.Log($"DangerZon Active Phase {Phase}");
+		SetActiveBorder(Phase == 1);
 	}
+
+	private void SetActiveBorder(bool active)
+	{
+		if (active)
+		{
+			BlockRdr.material = BlockMaterials[1];
+			BlockCld.enabled = true;
+			NavMeshObst.enabled = true;			
+		}
+		else
+		{
+			BlockRdr.material = BlockMaterials[0];
+			BlockCld.enabled = false;
+			NavMeshObst.enabled = false;
+			MapManager.Instance.DeleteDangerZoneBlocks();
+		}
+	}
+
 }
