@@ -28,10 +28,11 @@ public class OreBlock : Blocks
 
 	public override void SetBlock()
 	{
-		if (OreMeshFilter == null) TryGetComponent(out OreMeshFilter);
-		if (OreMeshRenderer == null) TryGetComponent(out OreMeshRenderer);
+		if (OreMeshFilter == null) OreMeshFilter = GetComponentInChildren<MeshFilter>();
+		if (OreMeshRenderer == null) OreMeshRenderer = GetComponentInChildren<MeshRenderer>();
 
 		SetMesh(BreakablePair);
+		OreMeshFilter.transform.rotation = Quaternion.Euler(0,0,0);
 
 		alreadyExposed = false;
 
@@ -57,7 +58,7 @@ public class OreBlock : Blocks
 		{
 			alreadyExposed = true;
 			SetMesh(OrePair);
-            transform.rotation = Quaternion.Euler(45, 0, 0);
+            OreMeshFilter.transform.rotation = Quaternion.Euler(45, 0, 0);
         }
 	}
 
