@@ -8,7 +8,8 @@ using static Controls;
 public class InputReader : ScriptableObject, IPlayerActions
 {
     public event Action<Vector2> MovementEvent;
-    public event Action AttackEvent;
+    public event Action<bool> AttackOnOffEvent;
+    public event Action SkillEvent;
     public event Action DodgeEvent;
     public event Action ReloadEvent;
 
@@ -66,11 +67,12 @@ public class InputReader : ScriptableObject, IPlayerActions
             //attack Event
             if (context.performed)
             {
-                AttackEvent?.Invoke();
+                AttackOnOffEvent?.Invoke(true);
                 Cursor.SetCursor(FiringCursor, Vector2.zero, CursorMode.Auto);
             }
             if (context.canceled)
             {
+                AttackOnOffEvent?.Invoke(false);
                 Cursor.SetCursor(normalCursor, Vector2.zero, CursorMode.Auto);
             }
         }
@@ -97,5 +99,11 @@ public class InputReader : ScriptableObject, IPlayerActions
     {
         isOptionPopup = !isOptionPopup;
         UIManager.Instance.OpenOptionWindow(isOptionPopup);
+    }
+
+    public void OnSkill(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+            SkillEvent?.Invoke();
     }
 }

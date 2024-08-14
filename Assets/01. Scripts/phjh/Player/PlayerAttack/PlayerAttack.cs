@@ -25,6 +25,7 @@ public class PlayerAttack : MonoBehaviour
 
     private float _lastFireTime;
     private bool _isReloading = false;
+    private bool _isAttackOn = false;
 
     public float strength;
     public float criticalChance;
@@ -39,10 +40,9 @@ public class PlayerAttack : MonoBehaviour
         this.tempBullet = bullet;
         this.weapon = weapon;
 
-
-        _inputReader.AttackEvent += DoAttack;
-        _inputReader.ReloadEvent += ReloadWeapon;
         mainCamera = Camera.main;
+        _inputReader.ReloadEvent += ReloadWeapon;
+        _inputReader.AttackOnOffEvent += AttackOnOff;
 
         strength = _player.playerStat.Attack.GetValue();
         criticalChance = _player.playerStat.CriticalChance.GetValue();
@@ -55,9 +55,16 @@ public class PlayerAttack : MonoBehaviour
     {
         WeaponInfomation.Instance.SetMaxBullet(weapon.maxAmmo);
         WeaponInfomation.Instance.SetCurrentBullet(weapon.currentAmmo);
+        if(_isAttackOn)
+            DoAttack();
     }
 
-    public void DoAttack()
+    public void AttackOnOff(bool value)
+    {
+        _isAttackOn = value;
+    }
+
+    private void DoAttack()
     {
         CheckShoot();
 

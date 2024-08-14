@@ -38,7 +38,8 @@ public class OreBlock : Blocks
 
 		blockType = BlockType.OreBlock;
 		TimesToBreak = MaxTimesToBreak;
-        transform.rotation = Quaternion.Euler(0, 0, 0);
+		OreMeshFilter.transform.localPosition = new Vector3(0,0,0);
+        OreMeshFilter.transform.rotation = Quaternion.Euler(0, 0, 0);
 	}
 
 	public override void BlockEvent(Vector3 pos, int breaks = 1)
@@ -58,6 +59,7 @@ public class OreBlock : Blocks
 		{
 			alreadyExposed = true;
 			SetMesh(OrePair);
+			OreMeshFilter.transform.localPosition = new Vector3(0,0,-0.4f);
             OreMeshFilter.transform.rotation = Quaternion.Euler(45, 0, 0);
         }
 	}
