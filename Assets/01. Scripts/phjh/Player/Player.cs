@@ -24,6 +24,9 @@ public class Player : MonoBehaviour, IDamageable
     private List<AnimationReferenceAsset> _moveAnimations;
 
     [SerializeField]
+    private Skills _skill;
+
+    [SerializeField]
     private Transform _weaponParent;
 
     [SerializeField]
@@ -158,6 +161,11 @@ public class Player : MonoBehaviour, IDamageable
             _playerShield.Init(this);
         else
             Logger.LogWarning("Playershield is null");
+
+        if (this.gameObject.TryGetComponent(out PlayerSkill skill))
+            skill.Init(this, inputReader, _skill);
+        else
+            Logger.LogWarning("playerskill is null");
 
         #endregion
 
