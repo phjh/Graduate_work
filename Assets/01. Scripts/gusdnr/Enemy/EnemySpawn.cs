@@ -85,7 +85,7 @@ public class EnemySpawn : MonoBehaviour
 			if (Physics.CheckSphere(sampleSpawnPosition.position, 0.5f, WhatIsGround) &&
 				!Physics.CheckSphere(sampleSpawnPosition.position, 0.5f, WhatIsWall))
 			{
-				return new Vector3(sampleSpawnPosition.position.x, 0.5f, sampleSpawnPosition.position.z);
+				return new Vector3(sampleSpawnPosition.position.x, 0f, sampleSpawnPosition.position.z);
 			}
 		}
 		return null;

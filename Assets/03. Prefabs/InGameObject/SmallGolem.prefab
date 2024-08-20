@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4521784663578157294}
   - component: {fileID: 6419496799340853445}
   - component: {fileID: 240069332574093469}
+  - component: {fileID: 6597139640847957693}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1381679043258282084}
   serializedVersion: 2
   m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -106,6 +107,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6597139640847957693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381679043258282084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77c138d49159c0e41b149af0540d0f45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3518793302707934386
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +217,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1
-  m_BaseOffset: 0.5
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!54 &4079157873532526040
@@ -248,7 +261,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PoolName: SmallGolem
   enemyData: {fileID: 11400000, guid: c6337358f37f3b7429c5d6a390dbfc00, type: 2}
-  MinAttackRange: 0.05
   MaxAttackRange: 2
   TargetTransform: {fileID: 0}
   ThisEnemyAttack: {fileID: 11400000, guid: ef291c0621e2601428901434283c01af, type: 2}
@@ -275,7 +287,7 @@ MonoBehaviour:
     persentedModifiers: []
   isAlive: 1
   EnemyAgent: {fileID: 0}
-  EnemyAnimator: {fileID: 0}
+  EAnimator: {fileID: 0}
 --- !u!136 &-7047373009021169180
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -6,17 +6,14 @@ using UnityEngine.AI;
 public class BossMain : PoolableMono, IDamageable
 {
 	[Header("Enemy Values")]
-	public StatusSO enemyData;
+	public StatusSO bossData;
 	[Range(0.01f, 30f)] public float MinAttackRange;
 	[Range(0.01f, 30f)] public float MaxAttackRange;
 	public Transform TargetTransform;
 
 	[Header("Enemy Attack")]
-	[SerializeField] private EnemyAttackBase ThisEnemyAttack;
+	[SerializeField] private EnemyAttackBase[] PatternList;
 	public LayerMask TargetLayer;
-
-	private float CorrectionMinRange = 0f;
-	private float CorrectionMaxRange = 0f;
 
 	[HideInInspector] public Stat MaxHP;
 	[HideInInspector] public Stat Attack;
@@ -41,13 +38,33 @@ public class BossMain : PoolableMono, IDamageable
 		base.ResetPoolableMono();
 	}
 
-	public void DieObject()
-	{
-		throw new System.NotImplementedException();
-	}
 
 	public void TakeDamage(float dmg)
 	{
-		throw new System.NotImplementedException();
+		if (dmg < 0) IncreaseHP(dmg);
+		if (dmg == 0) return;
+		if (dmg > 0) DecreaseHP(dmg);
+	}
+
+	private void IncreaseHP(float dmg)
+	{
+		//Start Heel Effect
+		bossData.NowHP = Mathf.Clamp(bossData.NowHP + dmg, 0, MaxHP.GetValue());
+
+		if (bossData.NowHP <= 0) DieObject();
+	}
+
+	private void DecreaseHP(float dmg)
+	{
+		//Start Hit Effect
+		bossData.NowHP = Mathf.Clamp(bossData.NowHP - dmg, 0, MaxHP.GetValue());
+
+		if (bossData.NowHP <= 0) DieObject();
+	}
+
+	public void DieObject()
+	{
+		isAlive = false;
+		PoolManager.Instance.Push(this, this.PoolName);
 	}
 }

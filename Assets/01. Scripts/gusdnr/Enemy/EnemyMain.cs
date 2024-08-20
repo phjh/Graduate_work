@@ -30,8 +30,8 @@ public class EnemyMain : PoolableMono, IDamageable
 	[HideInInspector] public bool CanAttack { get; set; } = false;
 
 	[HideInInspector] public NavMeshAgent EnemyAgent;
-	private SpriteRenderer EnemySpriteRender;
-	[HideInInspector] public Animator EnemyAnimator;
+
+	[HideInInspector] public EnemyAnimator EAnimator;
 
 	private float DistanceToTarget => Vector3.Distance(transform.position, TargetTransform.position);
 
@@ -43,10 +43,9 @@ public class EnemyMain : PoolableMono, IDamageable
 			return;
 		}
 
-		if (TargetTransform?.position.x >= transform.position.x) EnemySpriteRender.flipX = false;
-		if (TargetTransform?.position.x <= transform.position.x) EnemySpriteRender.flipX = true;
+		EAnimator.FlixX(TargetTransform?.position.x <= transform.position.x);
 
-		EnemyAnimator.SetBool("Move", IsMove);
+		EAnimator.SetBool("Move", IsMove);
 
 		if (DistanceToTarget <= CorrectionRange)
 		{
@@ -106,8 +105,7 @@ public class EnemyMain : PoolableMono, IDamageable
 		if (ThisEnemyAttack == null) TryGetComponent(out ThisEnemyAttack);
 		ThisEnemyAttack.InitEnemyData(this);
 
-		if (EnemyAnimator == null) transform.Find("Visual")?.TryGetComponent(out EnemyAnimator);
-		if (EnemySpriteRender == null) transform.Find("Visual")?.TryGetComponent(out EnemySpriteRender);
+		if (EAnimator == null) transform.Find("Visual")?.TryGetComponent(out EAnimator);
 
 		isAlive = true;
 		IsAttack = false;
@@ -166,6 +164,7 @@ public class EnemyMain : PoolableMono, IDamageable
 	{
 		isAlive = false;
 		StopChaing();
+		ThisEnemyAttack.DisableAttackEvent();
 		PoolManager.Instance.Push(this, this.PoolName);
 	}
 
@@ -201,8 +200,7 @@ public class EnemyMain : PoolableMono, IDamageable
 		EnemyAgent.isStopped = true;
 		EnemyAgent.velocity = Vector3.zero;
 
-
-		EnemyAnimator.ResetTrigger("Attack");
+		EAnimator.ResetTrigger("Attack");
 	}
 
 	public void SetMoveSpeed() => EnemyAgent.speed = MoveSpeed.GetValue();
