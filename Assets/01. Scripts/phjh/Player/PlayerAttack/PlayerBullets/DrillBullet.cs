@@ -35,7 +35,7 @@ public class DrillBullet : PlayerBullet
             {
                 if (hit.collider.gameObject.TryGetComponent(out EnemyMain enemy))
                 {
-                    DoDamage(enemy);
+                    DoDamage(enemy, 0.5f);
                 }
                 else if (hit.collider.gameObject.TryGetComponent(out Blocks block))
                 {

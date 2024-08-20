@@ -8,7 +8,9 @@ public class PlayerSkill : MonoBehaviour
     private InputReader _inputReader;
 
     private Skills skill;
+    private float cooltime = -100;
 
+    public float strength;
 
     public void Init(Player player, InputReader inputReader, Skills skill)
     {
@@ -17,11 +19,22 @@ public class PlayerSkill : MonoBehaviour
         this.skill = skill;
 
         _inputReader.SkillEvent += UseSkill;
+        strength = _player.playerStat.Attack.GetValue();
+
     }
 
     private void UseSkill()
     {
-        skill.SkillInit(_player.transform.position);
+        //쿨타임 계산해주는거 넣기
+        if (Time.time < cooltime + this.skill.coolTime)
+            return;
+
+        Skills skill = (Skills)PoolManager.Instance.Pop(this.skill.PoolName, _player.transform.position);
+
+        skill.SkillInit(strength);
+
+        cooltime = Time.time;
+
     }
 
 }

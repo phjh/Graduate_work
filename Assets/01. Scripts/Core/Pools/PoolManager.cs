@@ -278,7 +278,7 @@ public class PoolManager : ManagerBase<PoolManager>
         Push(mono, poolableName);
     }
 
-    public void DamageTextPopAndPush(string poolableName, Vector3 position, float damage, bool iscritical, float time = 0.5f) => StartCoroutine(DamageTextCoroutine(poolableName, position,damage, iscritical, time));
+    public void DamageTextPopAndPush(string poolableName, Vector3 position, float damage, bool iscritical = false, float time = 0.5f) => StartCoroutine(DamageTextCoroutine(poolableName, position,damage, iscritical, time));
 
 	private IEnumerator DamageTextCoroutine(string poolableName, Vector3 position, float damage, bool iscritical, float time = 0.5f)
 	{

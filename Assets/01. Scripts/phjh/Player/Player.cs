@@ -64,6 +64,8 @@ public class Player : MonoBehaviour, IDamageable
 
     public CinemachineVirtualCamera VirtualCam;
 
+    [HideInInspector]
+    public PlayerSkill skill;
     #endregion
 
     #region 외부에서 수정할 bool값들(공격중인지, 움직일수있는지 등)
@@ -162,7 +164,7 @@ public class Player : MonoBehaviour, IDamageable
         else
             Logger.LogWarning("Playershield is null");
 
-        if (this.gameObject.TryGetComponent(out PlayerSkill skill))
+        if (this.gameObject.TryGetComponent(out skill))
             skill.Init(this, inputReader, _skill);
         else
             Logger.LogWarning("playerskill is null");

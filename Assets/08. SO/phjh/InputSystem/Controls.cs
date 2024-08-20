@@ -232,6 +232,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""OreDetect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1c9d4781-e5a8-4f67-b704-9413c7a196ff"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OreDetect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }

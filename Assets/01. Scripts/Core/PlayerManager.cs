@@ -24,6 +24,8 @@ public class PlayerManager : ManagerBase<PlayerManager>
 	public CinemachineBasicMultiChannelPerlin perlin;
 	public RectTransform PlayerHealth;
 
+	private float lastDetectTime = -3f;
+
 	public override void InitManager()
 	{
 		base.InitManager();
@@ -128,7 +130,15 @@ public class PlayerManager : ManagerBase<PlayerManager>
 		Player.transform.position = SpawnPositions[SelectedSpawnPoint];
 	}
 
-	public void Detect(Material oreMat, Material blockMat) => StartCoroutine(DetectCoroutine(oreMat, blockMat));
+	public void Detect(Material oreMat, Material blockMat)
+	{
+		Debug.Log("time : " + Time.time + "last time : " + lastDetectTime);
+		if (Time.time >= lastDetectTime + 3)
+		{
+			StartCoroutine(DetectCoroutine(oreMat, blockMat));
+			lastDetectTime = Time.time;
+		}
+	}
 
 	private IEnumerator DetectCoroutine(Material oreMat, Material blockMat)
 	{
@@ -140,9 +150,9 @@ public class PlayerManager : ManagerBase<PlayerManager>
         {
             oreMat.SetVector("_PlayerPos", Player.transform.position);
             blockMat.SetVector("_PlayerPos", Player.transform.position);
-            if (time <= 2)
+            if (time <= 1.5f)
             {
-                scanRange = Mathf.Lerp(0.1f, 20, time);
+                scanRange = Mathf.Lerp(0.1f, 25, time);
                 opacity = Mathf.Lerp(0.8f, 0, time);
                 oreMat.SetFloat("_Range", scanRange);
                 blockMat.SetFloat("_Range", scanRange);

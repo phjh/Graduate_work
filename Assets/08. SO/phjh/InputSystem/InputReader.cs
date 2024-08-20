@@ -24,7 +24,6 @@ public class InputReader : ScriptableObject, IPlayerActions
 
     private bool isactived = false;
     private bool isOptionPopup = false;
-    private float lastDetectTime = 0;
 
     private void OnEnable()
     {
@@ -112,10 +111,9 @@ public class InputReader : ScriptableObject, IPlayerActions
 
     public void OnOreDetect(InputAction.CallbackContext context)
     {
-        if (context.performed && Time.time > lastDetectTime + 3)
+        if (context.performed)
         {
             PlayerManager.Instance.Detect(OreBlockMat, BreakableBlockMat);
-            lastDetectTime = Time.time;
         }
     }
 
