@@ -15,6 +15,8 @@ public class InputReader : ScriptableObject, IPlayerActions
 
     public Texture2D normalCursor;
     public Texture2D FiringCursor;
+    public Material BreakableBlockMat;
+    public Material OreBlockMat;
 
     public Vector2 AimPosition { get; private set; } //마우스는 이벤트방식이 아니기 때문에
 
@@ -22,6 +24,7 @@ public class InputReader : ScriptableObject, IPlayerActions
 
     private bool isactived = false;
     private bool isOptionPopup = false;
+    private float lastDetectTime = 0;
 
     private void OnEnable()
     {
@@ -106,4 +109,14 @@ public class InputReader : ScriptableObject, IPlayerActions
         if(context.performed)
             SkillEvent?.Invoke();
     }
+
+    public void OnOreDetect(InputAction.CallbackContext context)
+    {
+        if (context.performed && Time.time > lastDetectTime + 3)
+        {
+            PlayerManager.Instance.Detect(OreBlockMat, BreakableBlockMat);
+            lastDetectTime = Time.time;
+        }
+    }
+
 }

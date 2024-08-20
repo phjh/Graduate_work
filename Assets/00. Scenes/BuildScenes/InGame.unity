@@ -1775,7 +1775,7 @@ MonoBehaviour:
   tempBullet: {fileID: 0}
   layer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 384
   strength: 0
   criticalChance: 0
   criticalDamage: 0

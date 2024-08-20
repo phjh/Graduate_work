@@ -5,12 +5,19 @@ using UnityEngine;
 public abstract class Skills : PoolableMono
 {
     [SerializeField]
-    string SkillName;
+    protected string SkillName;
+    protected PoolableMono mono;
 
 
-    public virtual void SkillInit()
+
+    public virtual void SkillInit(Vector2 pos)
     {
-        Debug.Log("skillinit");
+        mono = PoolManager.Instance.Pop(SkillName, pos);
+        StartCoroutine(SkillAttack());
+
     }
 
+    protected abstract IEnumerator SkillAttack();
+
+    protected virtual void DetectEnemy() { }
 }

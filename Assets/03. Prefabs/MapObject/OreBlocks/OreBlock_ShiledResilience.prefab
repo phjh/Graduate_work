@@ -121,7 +121,7 @@ MonoBehaviour:
     Material: {fileID: 2100000, guid: 00a031250a9646f448ad1608c4f054a4, type: 2}
   BreakablePair:
     Mesh: {fileID: -8605420179976273663, guid: 92114128ff70e144c94a252a4c5c4caa, type: 3}
-    Material: {fileID: 2100000, guid: 9c58ab732d615df4c816367ed88940ae, type: 2}
+    Material: {fileID: 2100000, guid: 6a5bb246b4cbd1b46ba18a4aafdefe9f, type: 2}
 --- !u!1 &7164939141077077423
 GameObject:
   m_ObjectHideFlags: 0

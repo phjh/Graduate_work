@@ -21,7 +21,7 @@ public class PlayerSkill : MonoBehaviour
 
     private void UseSkill()
     {
-        skill.SkillInit();
+        skill.SkillInit(_player.transform.position);
     }
 
 }

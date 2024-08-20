@@ -128,4 +128,38 @@ public class PlayerManager : ManagerBase<PlayerManager>
 		Player.transform.position = SpawnPositions[SelectedSpawnPoint];
 	}
 
+	public void Detect(Material oreMat, Material blockMat) => StartCoroutine(DetectCoroutine(oreMat, blockMat));
+
+	private IEnumerator DetectCoroutine(Material oreMat, Material blockMat)
+	{
+        float time = 0;
+        float scanRange = 0.1f;
+        float opacity = 0.8f;
+        oreMat.SetFloat("_OreOpacity", 20f);
+        while (true)
+        {
+            oreMat.SetVector("_PlayerPos", Player.transform.position);
+            blockMat.SetVector("_PlayerPos", Player.transform.position);
+            if (time <= 2)
+            {
+                scanRange = Mathf.Lerp(0.1f, 20, time);
+                opacity = Mathf.Lerp(0.8f, 0, time);
+                oreMat.SetFloat("_Range", scanRange);
+                blockMat.SetFloat("_Range", scanRange);
+                blockMat.SetFloat("_Opacity", opacity);
+                time += Time.deltaTime;
+				yield return new WaitForSeconds(Time.deltaTime);
+            }
+            else
+                break;
+        }
+        oreMat.SetFloat("_Range", 0.001f);
+        oreMat.SetFloat("_OreOpacity", 0f);
+        blockMat.SetFloat("_Range", 0.001f);
+        blockMat.SetFloat("_Opacity", 0f);
+        oreMat.SetVector("_PlayerPos", Vector3.zero);
+        blockMat.SetVector("_PlayerPos", Vector3.zero);
+    }
+
+
 }
