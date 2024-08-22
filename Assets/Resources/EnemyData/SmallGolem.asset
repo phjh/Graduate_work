@@ -37,7 +37,7 @@ MonoBehaviour:
     fixedModifiers: []
     persentedModifiers: []
   MoveSpeed:
-    baseValue: 3
+    baseValue: 2
     fixedModifiers: []
     persentedModifiers: []
   ShieldRegen:

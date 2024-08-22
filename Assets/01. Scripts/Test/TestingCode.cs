@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class TestingCode : MonoBehaviour
 {
-    [SerializeField] private KeyCode MapKey = KeyCode.P;
+    [SerializeField] private KeyCode MapKey = KeyCode.M;
+    [SerializeField] private KeyCode PoolKey = KeyCode.P;
+    [SerializeField] private string[] PoolList;
 
     private Managers mngs;
 
@@ -19,6 +21,11 @@ public class TestingCode : MonoBehaviour
         {
             mngs?.InItInGameManagers();
         }
+
+        if (Input.GetKeyDown(PoolKey))
+        {
+            for(int count = 0; count < PoolList.Length; count++) mngs?.PoolMng?.SetDataOnStruct(PoolList[count]);
+		}
 	}
 
 }

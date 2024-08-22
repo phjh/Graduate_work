@@ -10,6 +10,7 @@ public class NearAreaAttack : EnemyAttackBase
 
 	public override void StartAttack()
 	{
+		Logger.Log(E_Main.PoolName + " is Start Attack");
 		E_Main.EAnimator.ActiveTrigger("Attack");
 	}
 
