@@ -7,6 +7,8 @@ using UnityEngine.AI;
 
 public class EnemyMain : PoolableMono, IDamageable
 {
+	public bool IsTesting;
+
 	[Header("Enemy Values")]
 	public StatusSO enemyData;
 	[Range(0.01f, 30f)] public float MaxAttackRange;
@@ -17,8 +19,8 @@ public class EnemyMain : PoolableMono, IDamageable
 	public LayerMask TargetLayer;
 	[Range(0.01f, 1f)] public float MinCorrectionAttackRange = 0.5f;
 	[Range(0.01f, 1f)] public float MaxCorrectionAttackRange = 1.0f;
-	
-	private float CorrectionRange= 0f;
+
+	private float CorrectionRange = 0f;
 
 	[HideInInspector] public Stat MaxHP;
 	[HideInInspector] public Stat Attack;
@@ -31,38 +33,39 @@ public class EnemyMain : PoolableMono, IDamageable
 
 	[HideInInspector] public NavMeshAgent EnemyAgent;
 
-	[HideInInspector] public EnemyAnimator EAnimator;
+	public EnemyAnimator EAnimator;
 
 	private float DistanceToTarget => Vector3.Distance(transform.position, TargetTransform.position);
 
+	private void Start()
+	{
+		if (IsTesting == true)
+		{
+			ResetPoolableMono();
+			EnablePoolableMono();
+		}
+	}
+
 	private void FixedUpdate()
 	{
-		if (isAlive == false || IsAttack == true || TargetTransform == null)
-		{
-			StopChaing();
-			return;
-		}
-
-		EAnimator.FlixX(TargetTransform?.position.x <= transform.position.x);
-
-		EAnimator.SetBool("Move", IsMove);
+		if (isAlive == false || IsAttack == true || TargetTransform == null) return;
+		
+		EAnimator.FlipX(TargetTransform.position.x <= transform.position.x);
 
 		if (DistanceToTarget <= CorrectionRange)
 		{
-
+			StopChaing();
 			if (CanAttack == true)
 			{
 				ActiveAttack();
-			}
-			if(CanAttack == false)
-			{
-				StopChaing();
 			}
 		}
 		else
 		{
 			SetDestinationPos();
 		}
+
+		EAnimator.SetBool("Move", IsMove);
 	}
 
 	private void ActiveAttack()
@@ -71,7 +74,6 @@ public class EnemyMain : PoolableMono, IDamageable
 		CanAttack = false;
 		EnemyAgent.avoidancePriority = 51;
 
-		StopChaing();
 		ThisEnemyAttack.StartAttack();
 	}
 
@@ -92,20 +94,21 @@ public class EnemyMain : PoolableMono, IDamageable
 	public override void ResetPoolableMono()
 	{
 		enemyData.SetUpDictionary();
-		
+
 		SetEnemyStat();
 	}
 
 	public override void EnablePoolableMono()
 	{
-		if (EnemyAgent == null) TryGetComponent(out  EnemyAgent);
+		if (EnemyAgent == null) TryGetComponent(out EnemyAgent);
 		EnemyAgent.updateRotation = false;
 		EnemyAgent.avoidancePriority = 50;
 
 		if (ThisEnemyAttack == null) TryGetComponent(out ThisEnemyAttack);
-		ThisEnemyAttack.InitEnemyData(this);
 
-		if (EAnimator == null) transform.Find("Visual")?.TryGetComponent(out EAnimator);
+		if (EAnimator == null) EAnimator = GetComponentInChildren<EnemyAnimator>();
+
+		ThisEnemyAttack.LinkEnemyMain(this);
 
 		isAlive = true;
 		IsAttack = false;
@@ -114,8 +117,8 @@ public class EnemyMain : PoolableMono, IDamageable
 
 		SetMoveSpeed();
 
-		enemyData.NowHP = MaxHP.GetValue();
-		TargetTransform = Managers.instance?.PlayerMng?.Player.transform;
+		enemyData.NowHP = MaxHP.GetValue(); 
+		//TargetTransform = IsTesting ? null : Managers.instance?.PlayerMng?.Player.transform;
 	}
 
 	#endregion
@@ -139,9 +142,9 @@ public class EnemyMain : PoolableMono, IDamageable
 
 	public void TakeDamage(float dmg)
 	{
-		if(dmg < 0) IncreaseHP(dmg);
-		if(dmg == 0) return;
-		if(dmg >= 1) DecreaseHP(dmg);
+		if (dmg < 0) IncreaseHP(dmg);
+		if (dmg == 0) return;
+		if (dmg >= 1) DecreaseHP(dmg);
 	}
 
 	private void IncreaseHP(float dmg)

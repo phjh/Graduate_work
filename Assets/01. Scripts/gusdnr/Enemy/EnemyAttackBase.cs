@@ -6,13 +6,11 @@ public abstract class EnemyAttackBase : ScriptableObject
 {
     protected EnemyMain E_Main;
 
-	public EnemyAttackBase InitEnemyData(EnemyMain SetMain)
+	public void LinkEnemyMain(EnemyMain SetMain)
 	{
 		E_Main = SetMain;
 		E_Main.EAnimator.OnActiveAttack += ActiveAttack;
 		E_Main.EAnimator.OnEndAttack += EndAttack;
-
-		return this;
 	}
 
 	public void DisableAttackEvent()

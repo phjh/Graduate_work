@@ -14,16 +14,10 @@ public class EnemyAnimator : MonoBehaviour
     public event Action OnEndAttack;
     public event Action OnDie;
 
-	private void OnEnable()
+	private void Awake()
 	{
 		TryGetComponent(out EAnimator);
         TryGetComponent(out ERenderer);
-	}
-
-	private void OnDisable()
-	{
-		EAnimator = null;
-        ERenderer = null;
 	}
 
 	public void SetBool(string BoolName, bool value)
@@ -38,12 +32,19 @@ public class EnemyAnimator : MonoBehaviour
 
 	public void ResetTrigger(string TriggerName)
 	{
-		EAnimator.ResetTrigger("Attack");
+		EAnimator.ResetTrigger(TriggerName);
 	}
 
-	public void FlixX(bool isFlip)
+	public void FlipX(bool isFlip)
 	{
-		ERenderer.flipX = isFlip;
+		if (ERenderer != null)
+		{
+			ERenderer.flipX = isFlip;
+		}
+		else
+		{
+			Logger.LogError("SpriteRenderer가 null입니다. FlipX 메소드를 호출하기 전에 초기화 확인 필요.");
+		}
 	}
 
     public void Appear() => OnAppear?.Invoke();
