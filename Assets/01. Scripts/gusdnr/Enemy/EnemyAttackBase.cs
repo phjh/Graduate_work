@@ -9,25 +9,24 @@ public abstract class EnemyAttackBase : ScriptableObject
 	public EnemyAttackBase InitEnemyData(EnemyMain SetMain)
 	{
 		E_Main = SetMain;
-		if (E_Main != null) Logger.Log("Set Complete : " + this.name);
+		E_Main.EAnimator.OnActiveAttack += ActiveAttack;
+		E_Main.EAnimator.OnEndAttack += EndAttack;
+
 		return this;
 	}
 
-	public virtual void StartAttack()
+	public void DisableAttackEvent()
 	{
-		if (E_Main.isAlive)
+		if (E_Main.EAnimator != null)
 		{
-			ActiveAttack();
+			E_Main.EAnimator.OnActiveAttack -= ActiveAttack;
+			E_Main.EAnimator.OnEndAttack -= EndAttack;
 		}
 	}
 
-	public virtual void ActiveAttack()
-	{
-		if (E_Main.isAlive) // 적이 살아있는 경우에만 공격 시작
-		{
-			EndAttack();
-		}
-	}
+	public abstract void StartAttack();
+	
+	public abstract void ActiveAttack();
 
 	public virtual void EndAttack()
 	{
