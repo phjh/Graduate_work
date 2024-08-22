@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7151380992856951667}
   - component: {fileID: 7640109257015065297}
-  - component: {fileID: 2920694812051979200}
+  - component: {fileID: 6767298186517593048}
   m_Layer: 0
   m_Name: Pickaxe
   m_TagString: Untagged
@@ -117,7 +117,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2920694812051979200
+--- !u!114 &6767298186517593048
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,16 +126,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7220200670752573213}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d10e95ee9c3ed14b878a121e6066698, type: 3}
+  m_Script: {fileID: 11500000, guid: 98cab83b25248a24cb0c28f7495b04f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   leftHandIK: {fileID: 4435234324050297257}
   rightHandIK: {fileID: 5540690426236555946}
-  maxAmmo: 2
-  currentAmmo: 2
+  maxAmmo: 1
   ReloadTime: 1.5
   AttackCooltime: 0.4
   damageFactor: 1.2
+  firePos: {fileID: 7151380992856951667}
 --- !u!1 &8132682102864509363
 GameObject:
   m_ObjectHideFlags: 0

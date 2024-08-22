@@ -4,20 +4,23 @@ using UnityEngine;
 
 public class Pickaxe : PlayerWeapon
 {
+    
 
     protected override void Start()
     {
         base.Start();
     }
 
-    protected override IEnumerator AttackWeaponCoroutine()
+    protected override IEnumerator AttackWeaponCoroutine(float duration)
     {
-        return base.AttackWeaponCoroutine();
+        _spRenderer.sprite = null;
+        return base.AttackWeaponCoroutine(duration);
     }
 
-    protected override IEnumerator ReloadWeaponCoroutine()
+    protected override IEnumerator ReloadWeaponCoroutine(float duration)
     {
-        return base.ReloadWeaponCoroutine();
+        yield return new WaitForSeconds(duration);
+        _spRenderer.sprite = _baseSprite;
     }
 
 }

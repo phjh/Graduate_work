@@ -10,13 +10,15 @@ public class PlayerWeapon : MonoBehaviour
 
     //무기 정보들
     public int maxAmmo;
-    public int currentAmmo;
+    public int currentAmmo { get; set; }
     public float ReloadTime;
     public float AttackCooltime;
     public float damageFactor;
 
     protected SpriteRenderer _spRenderer;
     protected Sprite _baseSprite;
+
+    public Transform firePos;
 
     protected virtual void Start()
     {
@@ -25,22 +27,22 @@ public class PlayerWeapon : MonoBehaviour
         _baseSprite = _spRenderer.sprite;
     }
 
-    public void AttackWeaponEvent()
+    public void AttackWeaponEvent(float duration)
     {
-        StartCoroutine(AttackWeaponCoroutine());
+        StartCoroutine(AttackWeaponCoroutine(duration));
     }
 
-    public void ReloadWeaponEvent()
+    public void ReloadWeaponEvent(float duration)
     {
-        StartCoroutine(ReloadWeaponCoroutine());
+        StartCoroutine(ReloadWeaponCoroutine(duration));
     }
 
-    protected virtual IEnumerator AttackWeaponCoroutine()
+    protected virtual IEnumerator AttackWeaponCoroutine(float duration)
     {
         yield return null;
     }
 
-    protected virtual IEnumerator ReloadWeaponCoroutine()
+    protected virtual IEnumerator ReloadWeaponCoroutine(float duration)
     {
         yield return null;
     }
