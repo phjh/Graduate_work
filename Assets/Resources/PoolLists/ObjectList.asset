@@ -37,3 +37,7 @@ MonoBehaviour:
     poolableMono: {fileID: 8942426634625073492, guid: dfebca61d1ff11440872bcc549b8072e, type: 3}
     poolableName: DamageText
     Count: 10
+  - poolableType: 1
+    poolableMono: {fileID: 1483587284991002659, guid: 22fcb45927393054493216c4e0829f7e, type: 3}
+    poolableName: Dynamite
+    Count: 10

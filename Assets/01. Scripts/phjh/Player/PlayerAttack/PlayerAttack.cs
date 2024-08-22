@@ -85,9 +85,10 @@ public class PlayerAttack : MonoBehaviour
     private void FireBullet()
     {
         weapon.currentAmmo--;
+        weapon.AttackWeaponEvent();
         WeaponInfomation.Instance.SetCurrentBullet(weapon.currentAmmo);
 
-        PlayerBullet bullet = (PlayerBullet)PoolManager.Instance.Pop(tempBullet.name, this.transform.position + new Vector3(0, 0.4f, 0.2f));
+        PlayerBullet bullet = (PlayerBullet)PoolManager.Instance.Pop(tempBullet.name, this.transform.position + new Vector3(0, 0.4f, 0.25f));
         //bullet.transform.forward = rot;
 
         Quaternion rotation = Quaternion.LookRotation(rot);
@@ -162,7 +163,7 @@ public class PlayerAttack : MonoBehaviour
         if (success)
         {
             // Calculate the direction
-            var direction = position - transform.position + new Vector3(0,0,-0.5f);
+            var direction = position - transform.position + new Vector3(0,0,-1f);
 
             // You might want to delete this line.
             // Ignore the height difference.

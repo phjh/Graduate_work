@@ -89,6 +89,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OreDetect"",
+                    ""type"": ""Button"",
+                    ""id"": ""b44f8558-9be8-4f46-bf9b-f4c6cc5c1c84"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -212,6 +221,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Skill"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dcc49504-8ab4-403d-87e8-19b916269d26"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OreDetect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1c9d4781-e5a8-4f67-b704-9413c7a196ff"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OreDetect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -244,6 +275,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_Option = m_Player.FindAction("Option", throwIfNotFound: true);
         m_Player_Skill = m_Player.FindAction("Skill", throwIfNotFound: true);
+        m_Player_OreDetect = m_Player.FindAction("OreDetect", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -312,6 +344,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_Option;
     private readonly InputAction m_Player_Skill;
+    private readonly InputAction m_Player_OreDetect;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -323,6 +356,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputAction @Option => m_Wrapper.m_Player_Option;
         public InputAction @Skill => m_Wrapper.m_Player_Skill;
+        public InputAction @OreDetect => m_Wrapper.m_Player_OreDetect;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -353,6 +387,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Skill.started += instance.OnSkill;
             @Skill.performed += instance.OnSkill;
             @Skill.canceled += instance.OnSkill;
+            @OreDetect.started += instance.OnOreDetect;
+            @OreDetect.performed += instance.OnOreDetect;
+            @OreDetect.canceled += instance.OnOreDetect;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -378,6 +415,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Skill.started -= instance.OnSkill;
             @Skill.performed -= instance.OnSkill;
             @Skill.canceled -= instance.OnSkill;
+            @OreDetect.started -= instance.OnOreDetect;
+            @OreDetect.performed -= instance.OnOreDetect;
+            @OreDetect.canceled -= instance.OnOreDetect;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -413,5 +453,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnReload(InputAction.CallbackContext context);
         void OnOption(InputAction.CallbackContext context);
         void OnSkill(InputAction.CallbackContext context);
+        void OnOreDetect(InputAction.CallbackContext context);
     }
 }

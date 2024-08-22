@@ -96,6 +96,7 @@ public class StatusSO : ScriptableObject
             case StatType.None: break;
             case StatType.Strength:
 				PlayerManager.Instance.Player._attack.strength = Attack.GetValue();
+				PlayerManager.Instance.Player.skill.strength = Attack.GetValue();
 				break;
             case StatType.CriticalDamage:
                 PlayerManager.Instance.Player._attack.criticalDamage = CriticalDamage.GetValue();

@@ -71,10 +71,10 @@ public abstract class PlayerBullet : PoolableMono
         StopCoroutine(destroyCoroutine);
     }
 
-    protected void DoDamage(EnemyMain enemy)
+    protected void DoDamage(EnemyMain enemy, float additionalFactor = 1)
     {
-        enemy.TakeDamage(damage);
-        DamageText(enemy.transform.position);
+        enemy.TakeDamage(damage * additionalFactor);
+        DamageText(enemy.transform.position, damage * additionalFactor);
         DamageEffect(enemy.transform.position);
     }
 
@@ -83,9 +83,9 @@ public abstract class PlayerBullet : PoolableMono
         PoolManager.Instance.PopAndPushEffect("MonsterHitEffect", position, 1f);
     }
 
-    protected void DamageText(Vector3 position)
+    protected void DamageText(Vector3 position, float damage)
     {
-        PoolManager.Instance.DamageTextPopAndPush("DamageText",position,damage,isCritical);
+        PoolManager.Instance.DamageTextPopAndPush("DamageText", position, damage, isCritical);
     }
 
 }

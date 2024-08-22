@@ -130,48 +130,52 @@ public class PlayerMove : MonoBehaviour
 
     private void Dodge()
     {
-        if (!_player.canDodge)
-            return;
+        if (_player._playerShield.canDefence && !_player.isImmunity)
+            _player._playerShield.Defence();
 
-        _player.isDodging = true;
-        _player.canDodge = false;
-        StartCoroutine(DodgeCoroutine());
+        //if (!_player.canDodge)
+        //    return;
+
+        //_player.isDodging = true;
+        //_player.canDodge = false;
+        //StartCoroutine(DodgeCoroutine());
+
     }
 
-    private IEnumerator DodgeCoroutine()
-    {
-        _lastMovementVelocity *= 1.4f;
-        _rb.velocity = _lastMovementVelocity;
-        StartCoroutine(AfterImage());
-        yield return new WaitForSeconds(_dodgeTime);
-        //회피 지속시간
-        _player.isDodging = false;
+    //private IEnumerator DodgeCoroutine()
+    //{
+    //    _lastMovementVelocity *= 1.4f;
+    //    _rb.velocity = _lastMovementVelocity;
+    //    StartCoroutine(AfterImage());
+    //    yield return new WaitForSeconds(_dodgeTime);
+    //    //회피 지속시간
+    //    _player.isDodging = false;
 
-        yield return new WaitForSeconds(_dodgeCooltime);
-        //쿨타임
-        _player.canDodge = true;
-    }
+    //    yield return new WaitForSeconds(_dodgeCooltime);
+    //    //쿨타임
+    //    _player.canDodge = true;
+    //}
 
-    private IEnumerator AfterImage()
-    {
-        float time = 0;
-        _afterImage.gameObject.SetActive(true);
-        _afterImage.transform.position = this.transform.position;
-        SkeletonAnimation[] skeletonanims = _afterImage.GetComponentsInChildren<SkeletonAnimation>();
-        bool isleft = transform.position.x > _inputReader.AimPosition.x;
+    //private IEnumerator AfterImage()
+    //{
+    //    float time = 0;
+    //    _afterImage.gameObject.SetActive(true);
+    //    _afterImage.transform.position = this.transform.position;
+    //    SkeletonAnimation[] skeletonanims = _afterImage.GetComponentsInChildren<SkeletonAnimation>();
+    //    bool isleft = transform.position.x > _inputReader.AimPosition.x;
 
-        _afterImage.transform.rotation = Quaternion.Euler(0, 180 * (isleft == true ? 1 : 0), 0);
+    //    _afterImage.transform.rotation = Quaternion.Euler(0, 180 * (isleft == true ? 1 : 0), 0);
 
-        while (time < _resolveTime)
-        {
-            foreach(var skeleton in skeletonanims)
-            {
-                skeleton.skeleton.A = Mathf.Lerp(1, 0, time / _resolveTime);
-            }
-            time += Time.fixedDeltaTime;
-            yield return new WaitForSeconds(Time.fixedDeltaTime);
-        }
-        _afterImage.gameObject.SetActive(false);
-    }
+    //    while (time < _resolveTime)
+    //    {
+    //        foreach(var skeleton in skeletonanims)
+    //        {
+    //            skeleton.skeleton.A = Mathf.Lerp(1, 0, time / _resolveTime);
+    //        }
+    //        time += Time.fixedDeltaTime;
+    //        yield return new WaitForSeconds(Time.fixedDeltaTime);
+    //    }
+    //    _afterImage.gameObject.SetActive(false);
+    //}
 
 }

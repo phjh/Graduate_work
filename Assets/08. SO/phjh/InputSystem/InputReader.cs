@@ -15,6 +15,8 @@ public class InputReader : ScriptableObject, IPlayerActions
 
     public Texture2D normalCursor;
     public Texture2D FiringCursor;
+    public Material BreakableBlockMat;
+    public Material OreBlockMat;
 
     public Vector2 AimPosition { get; private set; } //마우스는 이벤트방식이 아니기 때문에
 
@@ -80,12 +82,14 @@ public class InputReader : ScriptableObject, IPlayerActions
 
     public void OnDodge(InputAction.CallbackContext context)
     {
-        DodgeEvent?.Invoke();
+        if(context.performed)
+            DodgeEvent?.Invoke();
     }
 
     public void OnReload(InputAction.CallbackContext context)
     {
-        ReloadEvent?.Invoke();
+        if(context.performed)
+            ReloadEvent?.Invoke();
     }
 
     #endregion
@@ -106,4 +110,13 @@ public class InputReader : ScriptableObject, IPlayerActions
         if(context.performed)
             SkillEvent?.Invoke();
     }
+
+    public void OnOreDetect(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            PlayerManager.Instance.Detect(OreBlockMat, BreakableBlockMat);
+        }
+    }
+
 }

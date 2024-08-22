@@ -204,4 +204,4 @@ MonoBehaviour:
     Material: {fileID: 2100000, guid: a38b534e457f6374d8342610635573db, type: 2}
   BreakablePair:
     Mesh: {fileID: -8605420179976273663, guid: 92114128ff70e144c94a252a4c5c4caa, type: 3}
-    Material: {fileID: 2100000, guid: 9c58ab732d615df4c816367ed88940ae, type: 2}
+    Material: {fileID: 2100000, guid: 6a5bb246b4cbd1b46ba18a4aafdefe9f, type: 2}
