@@ -118,7 +118,7 @@ public class EnemyMain : PoolableMono, IDamageable
 		SetMoveSpeed();
 
 		enemyData.NowHP = MaxHP.GetValue(); 
-		//TargetTransform = IsTesting ? null : Managers.instance?.PlayerMng?.Player.transform;
+		if (IsTesting == true) TargetTransform = Managers.instance?.PlayerMng?.Player.transform;
 	}
 
 	#endregion
