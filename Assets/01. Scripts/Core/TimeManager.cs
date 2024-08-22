@@ -124,4 +124,9 @@ public class TimeManager : ManagerBase<TimeManager>
         TimerText.text = $"[ {m:00} : {s:00} : {ms:00} ]";
     }
 
+    public void Addtime(float time)
+    {
+        timeLimit += time;
+    }
+
 }

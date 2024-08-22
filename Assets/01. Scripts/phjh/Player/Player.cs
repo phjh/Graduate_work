@@ -186,23 +186,15 @@ public class Player : MonoBehaviour, IDamageable
         if (isImmunity || isDodging)
             return;
 
-
-        if (_playerShield.canDefence)
+        //그대로 데미지 입게끔 해준다
+        playerStat.NowHP -= dmg;
+        if (playerStat.NowHP <= 0)
         {
-            _playerShield.Defence();
-
+            DieObject();
         }
-        else
-        {
-            //그대로 데미지 입게끔 해준다
-            playerStat.NowHP -= dmg;
-            if(playerStat.NowHP <= 0)
-            {
-                DieObject();
-			}
-            StartCoroutine(TakeDamageEffects());
-            SetHealthBar();
-        }
+		
+        StartCoroutine(TakeDamageEffects());
+        SetHealthBar();
     }
 
     private IEnumerator TakeDamageEffects()

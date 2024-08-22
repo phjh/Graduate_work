@@ -11,6 +11,9 @@ public class PlayerShield : MonoBehaviour
     private float _defenseCost = 1;
 
     [SerializeField]
+    private int maxChargedDefences = 5;
+
+    [SerializeField]
     private float _immuniateTime;
 
     [SerializeField]
@@ -33,7 +36,8 @@ public class PlayerShield : MonoBehaviour
     public void RegenDefence()
     {
         //여기서 방어막 리젠 해준다
-        _nowDefensive += _defensiveRegenRate;
+        _nowDefensive = Mathf.Clamp(_nowDefensive + _defensiveRegenRate, 0, maxChargedDefences);
+        
         if(canDefence)
             SetDefenceable();
     }

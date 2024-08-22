@@ -85,6 +85,7 @@ public class PlayerAttack : MonoBehaviour
     private void FireBullet()
     {
         weapon.currentAmmo--;
+        weapon.AttackWeaponEvent();
         WeaponInfomation.Instance.SetCurrentBullet(weapon.currentAmmo);
 
         PlayerBullet bullet = (PlayerBullet)PoolManager.Instance.Pop(tempBullet.name, this.transform.position + new Vector3(0, 0.4f, 0.25f));

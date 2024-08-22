@@ -304,6 +304,7 @@ public class MapManager : ManagerBase<MapManager>
 
 	public void ActvieDangerZone(int Phase)
 	{
+		TimeManager.Instance.Addtime(120);
 		foreach(DangerZoneBlock dz in DangerZoneList)
 		{
 			dz.ActiveDangerZone(Phase);
@@ -329,4 +330,6 @@ public class MapManager : ManagerBase<MapManager>
 		mngs.PoolMng.Push(maps[position].Value, name);
 		maps.Remove(position);
 	}
+
+
 }

@@ -82,12 +82,14 @@ public class InputReader : ScriptableObject, IPlayerActions
 
     public void OnDodge(InputAction.CallbackContext context)
     {
-        DodgeEvent?.Invoke();
+        if(context.performed)
+            DodgeEvent?.Invoke();
     }
 
     public void OnReload(InputAction.CallbackContext context)
     {
-        ReloadEvent?.Invoke();
+        if(context.performed)
+            ReloadEvent?.Invoke();
     }
 
     #endregion
