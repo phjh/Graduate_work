@@ -5,21 +5,25 @@ using UnityEngine;
 public class Drill : PlayerWeapon
 {
     [SerializeField]
-    private Sprite _emptyDrill;
+    private Sprite _emptyDrillSprite;
+    [SerializeField]
+    private Sprite _drillBulletSprite;
 
     protected override void Start()
     {
         base.Start();
     }
 
-    protected override IEnumerator AttackWeaponCoroutine()
+    protected override IEnumerator AttackWeaponCoroutine(float duration)
     {
-        return base.AttackWeaponCoroutine();
+        return base.AttackWeaponCoroutine(duration);
     }
 
-    protected override IEnumerator ReloadWeaponCoroutine()
+    protected override IEnumerator ReloadWeaponCoroutine(float duration)
     {
-        return base.ReloadWeaponCoroutine();
+        _spRenderer.sprite = _emptyDrillSprite;
+        yield return new WaitForSeconds(duration);
+        _spRenderer.sprite = _baseSprite;
     }
 
 }

@@ -85,10 +85,9 @@ public class PlayerAttack : MonoBehaviour
     private void FireBullet()
     {
         weapon.currentAmmo--;
-        weapon.AttackWeaponEvent();
         WeaponInfomation.Instance.SetCurrentBullet(weapon.currentAmmo);
 
-        PlayerBullet bullet = (PlayerBullet)PoolManager.Instance.Pop(tempBullet.name, this.transform.position + new Vector3(0, 0.4f, 0.25f));
+        PlayerBullet bullet = (PlayerBullet)PoolManager.Instance.Pop(tempBullet.name, weapon.firePos.position);//this.transform.position + new Vector3(0, 0.4f, 0.25f));
         //bullet.transform.forward = rot;
 
         Quaternion rotation = Quaternion.LookRotation(rot);
@@ -97,6 +96,7 @@ public class PlayerAttack : MonoBehaviour
         bullet.Init(rotation, damage * weapon.damageFactor, iscritical, true);
 
         _lastFireTime = Time.time;
+        weapon.AttackWeaponEvent(weapon.AttackCooltime / attackSpeed);
         //bullet.transform.rotation = Quaternion.Slerp(bullet.transform.rotation, rotation, 1);
     }
 
@@ -143,6 +143,7 @@ public class PlayerAttack : MonoBehaviour
         WeaponInfomation.Instance.SetCurrentBullet(weapon.maxAmmo);
         _isReloading = true;
         _player.canAttack = false;
+        weapon.ReloadWeaponEvent(weapon.ReloadTime / reloadCoolReduce);
         Invoke(nameof(Reload), weapon.ReloadTime / reloadCoolReduce);
     }
 
