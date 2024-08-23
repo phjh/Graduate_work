@@ -18,6 +18,10 @@ public class AddItemUI : PoolableMono
 	[SerializeField] private float LiveTime = 1f;
 
 	private Managers mngs;
+	private StatType ThisStatType;
+	private int CurrentAddingCount = 0;
+
+	private StringBuilder CurrentCountString = new StringBuilder(2);
 
 	public override void ResetPoolableMono()
 	{
@@ -33,19 +37,19 @@ public class AddItemUI : PoolableMono
 		ItemImage.sprite = null;
 		AddCountText.text = string.Empty;
 
+		CurrentAddingCount = 0;
+		CurrentCountString = new StringBuilder(2);
 		ThisRectTrm.localScale = MinScale;
 	}
 
-	public void InitData(Sprite ItemSprite, int AddCount = 1)
+	public void InitData(ItemDataSO ItemData, int AddCount)
 	{
-		StringBuilder count = new StringBuilder(2);
-		count.Append("X ").Append(AddCount);
-
+		SetAddingCountString(AddCount);
+		ThisStatType = ItemData.AddingStatType;
 		ThisRectTrm.DOScale(MaxScale, DurationValue)
 			.OnStart(() =>
 			{
-				ItemImage.sprite = ItemSprite;
-				AddCountText.text = count.ToString();
+				ItemImage.sprite = ItemData.Image;
 			})
 			.OnComplete(() =>
 			{
@@ -54,11 +58,22 @@ public class AddItemUI : PoolableMono
 			.SetEase(Ease.InOutBack);
 	}
 
+	public void SetAddingCountString(int AddCount)
+	{
+		CurrentAddingCount = CurrentAddingCount + AddCount;
+
+		CurrentCountString.Clear();
+		CurrentCountString.Append("X ").Append(CurrentAddingCount);
+
+		AddCountText.text = CurrentCountString.ToString();
+	}
+
 	private void PushUI()
 	{
 		ThisRectTrm.DOScale(MinScale, DurationValue)
 			.OnComplete(() =>
 			{
+				mngs.UIMng.AddUIs.Remove(ThisStatType);
 				mngs.PoolMng.Push(this, PoolName);
 			})
 			.SetEase(Ease.OutExpo);

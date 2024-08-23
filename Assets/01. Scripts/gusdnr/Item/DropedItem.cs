@@ -58,7 +58,7 @@ public class DropedItem : PoolableMono
         if (other.gameObject.CompareTag("Player") && Input.GetKeyDown(KeyCode.F))
         {
             mngs.PlayerMng.AddOreInDictionary(ItemData.AddingStatType, ItemData.ItemAddingValue);
-            mngs.UIMng.PopupAddItemUI(ItemData.Image);
+            mngs.UIMng.PopupAddItemUI(ItemData);
             mngs.PoolMng.Push(this, PoolName);
         }
     }

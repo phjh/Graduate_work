@@ -530,9 +530,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4964526342021370020, guid: d5a9f3f17fe1e724781c96b8e395f4eb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1647337086}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5a9f3f17fe1e724781c96b8e395f4eb, type: 3}
+--- !u!4 &495431503 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4964526342021370020, guid: d5a9f3f17fe1e724781c96b8e395f4eb, type: 3}
+  m_PrefabInstance: {fileID: 495431502}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &505827661
 GameObject:
   m_ObjectHideFlags: 0
@@ -826,7 +834,6 @@ MonoBehaviour:
   MapKey: 109
   PoolKey: 112
   PoolList:
-  - MAP
   - OBJECT
   - EFFECT
 --- !u!4 &839203256
@@ -2531,16 +2538,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 51c53d5feeb0a0e4584f435b8e2682b4, type: 2}
   m_DrawDistance: 10
-  m_FadeScale: 0.9
+  m_FadeScale: 1
   m_StartAngleFade: 180
   m_EndAngleFade: 180
   m_UVScale: {x: 1, y: 1}
   m_UVBias: {x: 0, y: 0}
   m_DecalLayerMask: 1
   m_ScaleMode: 0
-  m_Offset: {x: 0, y: 0, z: 0.5}
-  m_Size: {x: 4, y: 4, z: 1}
-  m_FadeFactor: 0.7
+  m_Offset: {x: 0, y: 0, z: 0.15}
+  m_Size: {x: 4, y: 4, z: 0.3}
+  m_FadeFactor: 1
 --- !u!4 &1647337086
 Transform:
   m_ObjectHideFlags: 0
@@ -2549,12 +2556,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1647337084}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.3, z: 2}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 495431503}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1666368156
 GameObject:
@@ -3928,5 +3935,4 @@ SceneRoots:
   - {fileID: 839203256}
   - {fileID: 1493885510}
   - {fileID: 495431502}
-  - {fileID: 1647337086}
   - {fileID: 1345993945}
