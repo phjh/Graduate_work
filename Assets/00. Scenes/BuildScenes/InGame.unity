@@ -1759,7 +1759,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defensiveRegenRate: 0.5
   maxChargedDefences: 5
-  _immuniateTime: 1
+  _immuniateTime: 0.5
   _shieldObj: {fileID: 1138782183}
 --- !u!114 &1732037700
 MonoBehaviour:
@@ -1782,6 +1782,8 @@ MonoBehaviour:
   criticalDamage: 0
   reloadCoolReduce: 0
   attackSpeed: 0
+  fuel: 0
+  _maxFuel: 100
 --- !u!114 &1732037701
 MonoBehaviour:
   m_ObjectHideFlags: 0

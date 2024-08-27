@@ -39,17 +39,18 @@ public class PlayerShield : MonoBehaviour
         _nowDefensive = Mathf.Clamp(_nowDefensive + _defensiveRegenRate, 0, maxChargedDefences);
         
         if(canDefence)
-            SetDefenceable();
+            SetDefenceUI();
     }
 
-    private void SetDefenceable()
+    private void SetDefenceUI()
     {
-        //방어가능하다고 UI에서 표시해줄 메서드
+        PlayerManager.Instance.playerShield.UpdateShieldInfo(_nowDefensive);
     }
 
     public void Defence()
     {
         _nowDefensive -= _defenseCost;
+        SetDefenceUI();
         StartCoroutine(SetDefenceAnimation());
     }
 

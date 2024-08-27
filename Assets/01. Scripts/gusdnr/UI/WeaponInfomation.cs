@@ -15,6 +15,8 @@ public class WeaponInfomation : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI MaxBulletTxt;
 	[SerializeField] private Image FadeImg;
 	[SerializeField] private RectTransform ReloadIconImg;
+	[SerializeField] private List<Slider> FuelSliders;
+	[SerializeField] private TextMeshProUGUI FuelPercentTxt;
 
 	[Header("Auto Set Values")]
 	public WeaponDataSO WeaponData;
@@ -75,4 +77,26 @@ public class WeaponInfomation : MonoBehaviour
 	{
 		MaxBulletTxt.text = count.ToString();
 	}
+
+	public void SetFuelBar(float percent)
+	{
+		//FuelPercentTxt.text = percent.ToString(); // 텍스트를 굳이 넣어야하나..?
+		StartCoroutine(FuelBarAnimating(percent));
+	}
+
+	private IEnumerator FuelBarAnimating(float percent)
+	{
+		float basePercent = (FuelSliders[0].value + FuelSliders[1].value) * 50;
+		float time = 0;
+		while (time < 0.25f)
+		{
+			float tempPercent = Mathf.Lerp(basePercent, percent, time * 4);
+            FuelSliders[0].value = Mathf.Clamp(tempPercent / 50f, 0, 1);
+            tempPercent -= 50;
+            FuelSliders[1].value = Mathf.Clamp(tempPercent / 50f, 0, 1);
+            time += Time.deltaTime;
+			yield return new WaitForSeconds(Time.deltaTime);
+		}
+	}
+
 }

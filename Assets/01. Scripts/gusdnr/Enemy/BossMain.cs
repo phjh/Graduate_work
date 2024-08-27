@@ -62,9 +62,27 @@ public class BossMain : PoolableMono, IDamageable
 		if (bossData.NowHP <= 0) DieObject();
 	}
 
-	public void DieObject()
+
+
+    private void SetEnemyStat()
+    {
+        List<Stat> enemyDataStats = bossData.GetBasicStats();
+        MaxHP = enemyDataStats[0];
+        Logger.Assert(MaxHP != null, "MaxHP is Set Complete");
+        Attack = enemyDataStats[1];
+        Logger.Assert(Attack != null, "MaxHP is Set Complete");
+        AttackCoolDownTime = enemyDataStats[2];
+        Logger.Assert(AttackCoolDownTime != null, "AttackCoolDownTime is Set Complete");
+        MoveSpeed = enemyDataStats[3];
+        Logger.Assert(MoveSpeed != null, "MoveSpeed is Set Complete");
+
+        this.gameObject.name = PoolName;
+    }
+
+    public void DieObject()
 	{
 		isAlive = false;
 		PoolManager.Instance.Push(this, this.PoolName);
 	}
+
 }

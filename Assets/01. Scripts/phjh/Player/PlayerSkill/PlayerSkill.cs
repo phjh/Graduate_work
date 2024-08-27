@@ -10,6 +10,7 @@ public class PlayerSkill : MonoBehaviour
     private Skills skill;
     private float cooltime = -100;
 
+    [HideInInspector]
     public float strength;
 
     public void Init(Player player, InputReader inputReader, Skills skill)

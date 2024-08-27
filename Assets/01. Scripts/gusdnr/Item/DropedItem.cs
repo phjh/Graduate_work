@@ -60,6 +60,12 @@ public class DropedItem : PoolableMono
             mngs.PlayerMng.AddOreInDictionary(ItemData.AddingStatType, ItemData.ItemAddingValue);
             mngs.UIMng.PopupAddItemUI(ItemData.Image);
             mngs.PoolMng.Push(this, PoolName);
+            return;
+        }
+        if(other.gameObject.CompareTag("Player") && Input.GetKeyDown(KeyCode.C))
+        {
+            mngs.PlayerMng.Player._attack.FuelRecharge(25);
+            mngs.PoolMng.Push(this, PoolName);
         }
     }
 

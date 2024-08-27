@@ -33,12 +33,18 @@ public class PlayerAttack : MonoBehaviour
     public float reloadCoolReduce;
     public float attackSpeed;
 
+    public float fuel;
+    [SerializeField]
+    private float _maxFuel = 100;
+    private bool CanNotReload => (_isReloading || ((fuel - weapon.reloadFuel) < 0));
+
     public void Init(Player player, InputReader inputReader, PoolableMono bullet, PlayerWeapon weapon, List<AnimationReferenceAsset> animations = null)
     {
         _player = player;
         _inputReader = inputReader;
         this.tempBullet = bullet;
         this.weapon = weapon;
+        FuelRecharge(_maxFuel);
 
         mainCamera = Camera.main;
         _inputReader.ReloadEvent += ReloadWeapon;
@@ -98,12 +104,22 @@ public class PlayerAttack : MonoBehaviour
         _lastFireTime = Time.time;
         weapon.AttackWeaponEvent(weapon.AttackCooltime / attackSpeed);
         //bullet.transform.rotation = Quaternion.Slerp(bullet.transform.rotation, rotation, 1);
+
+        if(weapon.currentAmmo <= 0)
+        {
+            if (!CanNotReload)
+            {
+                ReloadWeapon();
+            }
+        }
+
+
     }
 
     private (float, bool) CalculateDamage()
     {
         float damage = strength;
-        bool isCritical = UnityEngine.Random.Range(0, 100f) < criticalChance;
+        bool isCritical = UnityEngine.Random.Range(0f, 100f) <= criticalChance;
         if (isCritical)
         {
             damage += (criticalDamage / 100f) * damage;
@@ -121,7 +137,7 @@ public class PlayerAttack : MonoBehaviour
 
         if (weapon.currentAmmo <= 0)
         {
-            if (!_isReloading)
+            if (!CanNotReload)
             {
                 ReloadWeapon();
             }
@@ -134,24 +150,27 @@ public class PlayerAttack : MonoBehaviour
         _player.canAttack = true;
     }
 
+
     private void ReloadWeapon()
     {
-        if (_isReloading)
+        if (CanNotReload)
             return;
 
+        fuel -= weapon.reloadFuel;
         WeaponInfomation.Instance.Reload(weapon.ReloadTime);
         WeaponInfomation.Instance.SetCurrentBullet(weapon.maxAmmo);
+        WeaponInfomation.Instance.SetFuelBar(fuel / _maxFuel * 100f);
         _isReloading = true;
         _player.canAttack = false;
         weapon.ReloadWeaponEvent(weapon.ReloadTime / reloadCoolReduce);
-        Invoke(nameof(Reload), weapon.ReloadTime / reloadCoolReduce);
+        Invoke(nameof(Reload), weapon.ReloadTime / reloadCoolReduce - 0.05f);
     }
 
     private void Reload()
     {
         weapon.currentAmmo = weapon.maxAmmo;
-        _player.canAttack = true;
         _isReloading = false;
+        _player.canAttack = true;
     }
 
 
@@ -205,6 +224,12 @@ public class PlayerAttack : MonoBehaviour
         
         //playermove로 이동함
 
+    }
+
+    public void FuelRecharge(float amount)
+    {
+        fuel = Mathf.Clamp(fuel + amount, 0, _maxFuel);
+        WeaponInfomation.Instance.SetFuelBar(fuel / _maxFuel * 100f);
     }
 
     private void OnDrawGizmos()

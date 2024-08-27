@@ -14,6 +14,7 @@ public class PlayerWeapon : MonoBehaviour
     public float ReloadTime;
     public float AttackCooltime;
     public float damageFactor;
+    public float reloadFuel;
 
     protected SpriteRenderer _spRenderer;
     protected Sprite _baseSprite;

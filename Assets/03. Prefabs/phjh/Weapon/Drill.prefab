@@ -105,6 +105,7 @@ MonoBehaviour:
   ReloadTime: 1
   AttackCooltime: 0.3
   damageFactor: 1.5
+  reloadFuel: 5
   firePos: {fileID: 4990227384616713301}
   _emptyDrillSprite: {fileID: 1601421821, guid: 33f429376b2a2f34686788760f172da1, type: 3}
   _drillBulletSprite: {fileID: 0}

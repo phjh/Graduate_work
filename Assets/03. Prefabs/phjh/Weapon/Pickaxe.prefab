@@ -135,6 +135,7 @@ MonoBehaviour:
   ReloadTime: 1.5
   AttackCooltime: 0.4
   damageFactor: 1.2
+  reloadFuel: 4
   firePos: {fileID: 7151380992856951667}
 --- !u!1 &8132682102864509363
 GameObject:

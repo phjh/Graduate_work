@@ -23,6 +23,7 @@ public class PlayerManager : ManagerBase<PlayerManager>
 
 	public CinemachineBasicMultiChannelPerlin perlin;
 	public RectTransform PlayerHealth;
+	public ShieldUI playerShield;
 
 	private float lastDetectTime = -3f;
 
