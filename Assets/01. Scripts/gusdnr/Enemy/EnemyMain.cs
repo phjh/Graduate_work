@@ -34,6 +34,7 @@ public class EnemyMain : PoolableMono, IDamageable
 	[HideInInspector] public NavMeshAgent EnemyAgent;
 
 	public EnemyAnimator EAnimator;
+	public Projector AttackProjector;
 
 	private float DistanceToTarget => Vector3.Distance(transform.position, TargetTransform.position);
 
@@ -107,8 +108,10 @@ public class EnemyMain : PoolableMono, IDamageable
 		if (ThisEnemyAttack == null) TryGetComponent(out ThisEnemyAttack);
 
 		if (EAnimator == null) EAnimator = GetComponentInChildren<EnemyAnimator>();
+		if (AttackProjector == null) AttackProjector = GetComponentInChildren<Projector>();
 
 		ThisEnemyAttack.LinkEnemyMain(this);
+		AttackProjector.
 
 		isAlive = true;
 		IsAttack = false;
