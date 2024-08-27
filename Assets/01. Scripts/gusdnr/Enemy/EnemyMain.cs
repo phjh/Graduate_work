@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering.Universal;
 
 public class EnemyMain : PoolableMono, IDamageable
 {
@@ -34,7 +35,7 @@ public class EnemyMain : PoolableMono, IDamageable
 	[HideInInspector] public NavMeshAgent EnemyAgent;
 
 	public EnemyAnimator EAnimator;
-	public Projector AttackProjector;
+	public DecalProjector AttackProjector;
 
 	private float DistanceToTarget => Vector3.Distance(transform.position, TargetTransform.position);
 
@@ -108,10 +109,10 @@ public class EnemyMain : PoolableMono, IDamageable
 		if (ThisEnemyAttack == null) TryGetComponent(out ThisEnemyAttack);
 
 		if (EAnimator == null) EAnimator = GetComponentInChildren<EnemyAnimator>();
-		if (AttackProjector == null) AttackProjector = GetComponentInChildren<Projector>();
+		if (AttackProjector == null) AttackProjector = GetComponentInChildren<DecalProjector>();
 
 		ThisEnemyAttack.LinkEnemyMain(this);
-		AttackProjector.
+		AttackProjector.enabled = false;
 
 		isAlive = true;
 		IsAttack = false;

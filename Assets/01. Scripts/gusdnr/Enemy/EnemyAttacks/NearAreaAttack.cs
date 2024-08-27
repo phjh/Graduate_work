@@ -12,6 +12,7 @@ public class NearAreaAttack : EnemyAttackBase
 	{
 		Logger.Log(E_Main.PoolName + " is Start Attack");
 		E_Main.EAnimator.ActiveTrigger("Attack");
+		E_Main.AttackProjector.enabled = true;
 	}
 
 	public override void ActiveAttack()
@@ -27,5 +28,11 @@ public class NearAreaAttack : EnemyAttackBase
 			IDamageable damageable = playersInRange[0].GetComponent<IDamageable>();
 			if (damageable != null)	damageable.TakeDamage(E_Main.Attack.GetValue());
 		}
+	}
+
+	public override void EndAttack()
+	{
+		E_Main.AttackProjector.enabled = false;
+		base.EndAttack();
 	}
 }
