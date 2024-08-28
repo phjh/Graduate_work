@@ -109,6 +109,7 @@ public class EnemyMain : PoolableMono, IDamageable
 		if (ThisEnemyAttack == null) TryGetComponent(out ThisEnemyAttack);
 
 		if (EAnimator == null) EAnimator = GetComponentInChildren<EnemyAnimator>();
+		if (AttackProjectorObject == null) AttackProjectorObject = transform.Find("AttackRangeProjector").gameObject;
 
 		ThisEnemyAttack.LinkEnemyMain(this);
 		AttackProjectorObject.SetActive(false);
