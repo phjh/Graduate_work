@@ -119,6 +119,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77c138d49159c0e41b149af0540d0f45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2891178587218808664
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4014599899961056906}
+  - component: {fileID: 7820559306919733703}
+  m_Layer: 0
+  m_Name: AttackRangeProjector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4014599899961056906
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2891178587218808664}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4964526342021370020}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &7820559306919733703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2891178587218808664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 51c53d5feeb0a0e4584f435b8e2682b4, type: 2}
+  m_DrawDistance: 10
+  m_FadeScale: 1
+  m_StartAngleFade: 180
+  m_EndAngleFade: 180
+  m_UVScale: {x: 1, y: 1}
+  m_UVBias: {x: 0, y: 0}
+  m_DecalLayerMask: 1
+  m_ScaleMode: 0
+  m_Offset: {x: 0, y: 0, z: 0.15}
+  m_Size: {x: 4, y: 4, z: 0.3}
+  m_FadeFactor: 1
 --- !u!1 &3518793302707934386
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,6 +210,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4521784663578157294}
+  - {fileID: 4014599899961056906}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &4328421151704837294
@@ -289,6 +346,7 @@ MonoBehaviour:
   isAlive: 1
   EnemyAgent: {fileID: 0}
   EAnimator: {fileID: 0}
+  AttackProjectorObject: {fileID: 2891178587218808664}
 --- !u!136 &-7047373009021169180
 CapsuleCollider:
   m_ObjectHideFlags: 0

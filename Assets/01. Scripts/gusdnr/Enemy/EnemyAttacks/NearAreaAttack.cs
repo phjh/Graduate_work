@@ -12,7 +12,7 @@ public class NearAreaAttack : EnemyAttackBase
 	{
 		Logger.Log(E_Main.PoolName + " is Start Attack");
 		E_Main.EAnimator.ActiveTrigger("Attack");
-		E_Main.AttackProjector.enabled = true;
+		E_Main.AttackProjectorObject.SetActive(true);
 	}
 
 	public override void ActiveAttack()
@@ -32,7 +32,7 @@ public class NearAreaAttack : EnemyAttackBase
 
 	public override void EndAttack()
 	{
-		E_Main.AttackProjector.enabled = false;
+		E_Main.AttackProjectorObject.SetActive(false);
 		base.EndAttack();
 	}
 }
