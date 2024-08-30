@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering.Universal;
 
 public class EnemyMain : PoolableMono, IDamageable
 {
@@ -34,6 +35,7 @@ public class EnemyMain : PoolableMono, IDamageable
 	[HideInInspector] public NavMeshAgent EnemyAgent;
 
 	public EnemyAnimator EAnimator;
+	public GameObject AttackProjectorObject;
 
 	private float DistanceToTarget => Vector3.Distance(transform.position, TargetTransform.position);
 
@@ -107,8 +109,10 @@ public class EnemyMain : PoolableMono, IDamageable
 		if (ThisEnemyAttack == null) TryGetComponent(out ThisEnemyAttack);
 
 		if (EAnimator == null) EAnimator = GetComponentInChildren<EnemyAnimator>();
+		if (AttackProjectorObject == null) AttackProjectorObject = transform.Find("AttackRangeProjector").gameObject;
 
 		ThisEnemyAttack.LinkEnemyMain(this);
+		AttackProjectorObject.SetActive(false);
 
 		isAlive = true;
 		IsAttack = false;
@@ -118,7 +122,7 @@ public class EnemyMain : PoolableMono, IDamageable
 		SetMoveSpeed();
 
 		enemyData.NowHP = MaxHP.GetValue(); 
-		//TargetTransform = IsTesting ? null : Managers.instance?.PlayerMng?.Player.transform;
+		if (IsTesting == true) TargetTransform = Managers.instance?.PlayerMng?.Player.transform;
 	}
 
 	#endregion

@@ -27,13 +27,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1381679043258282084}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4964526342021370020}
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
 --- !u!212 &6419496799340853445
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -119,6 +119,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77c138d49159c0e41b149af0540d0f45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2891178587218808664
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4014599899961056906}
+  - component: {fileID: 7820559306919733703}
+  m_Layer: 0
+  m_Name: AttackRangeProjector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4014599899961056906
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2891178587218808664}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4964526342021370020}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &7820559306919733703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2891178587218808664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 51c53d5feeb0a0e4584f435b8e2682b4, type: 2}
+  m_DrawDistance: 10
+  m_FadeScale: 1
+  m_StartAngleFade: 180
+  m_EndAngleFade: 180
+  m_UVScale: {x: 1, y: 1}
+  m_UVBias: {x: 0, y: 0}
+  m_DecalLayerMask: 1
+  m_ScaleMode: 0
+  m_Offset: {x: 0, y: 0, z: 0.15}
+  m_Size: {x: 4, y: 4, z: 0.3}
+  m_FadeFactor: 1
 --- !u!1 &3518793302707934386
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,9 +185,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4964526342021370020}
   - component: {fileID: 4328421151704837294}
-  - component: {fileID: 2323055639523970824}
   - component: {fileID: 2988543312494612532}
   - component: {fileID: 4079157873532526040}
+  - component: {fileID: 2323055639523970824}
   - component: {fileID: -7047373009021169180}
   m_Layer: 0
   m_Name: SmallGolem
@@ -154,6 +210,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4521784663578157294}
+  - {fileID: 4014599899961056906}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &4328421151704837294
@@ -198,48 +255,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2323055639523970824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3518793302707934386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea0632ba9b92adc46b5ca34d200b18d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PoolName: SmallGolem
-  IsTesting: 1
-  enemyData: {fileID: 11400000, guid: c6337358f37f3b7429c5d6a390dbfc00, type: 2}
-  MaxAttackRange: 2
-  TargetTransform: {fileID: 0}
-  ThisEnemyAttack: {fileID: 11400000, guid: ef291c0621e2601428901434283c01af, type: 2}
-  TargetLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  MinCorrectionAttackRange: 0.1
-  MaxCorrectionAttackRange: 0.5
-  MaxHP:
-    baseValue: 0
-    fixedModifiers: []
-    persentedModifiers: []
-  Attack:
-    baseValue: 0
-    fixedModifiers: []
-    persentedModifiers: []
-  AttackCoolDownTime:
-    baseValue: 0
-    fixedModifiers: []
-    persentedModifiers: []
-  MoveSpeed:
-    baseValue: 0
-    fixedModifiers: []
-    persentedModifiers: []
-  isAlive: 1
-  EnemyAgent: {fileID: 0}
-  EAnimator: {fileID: 0}
 --- !u!195 &2988543312494612532
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -289,6 +304,49 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &2323055639523970824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3518793302707934386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea0632ba9b92adc46b5ca34d200b18d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PoolName: SmallGolem
+  IsTesting: 1
+  enemyData: {fileID: 11400000, guid: c6337358f37f3b7429c5d6a390dbfc00, type: 2}
+  MaxAttackRange: 2
+  TargetTransform: {fileID: 0}
+  ThisEnemyAttack: {fileID: 11400000, guid: ef291c0621e2601428901434283c01af, type: 2}
+  TargetLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  MinCorrectionAttackRange: 0.1
+  MaxCorrectionAttackRange: 0.5
+  MaxHP:
+    baseValue: 0
+    fixedModifiers: []
+    persentedModifiers: []
+  Attack:
+    baseValue: 0
+    fixedModifiers: []
+    persentedModifiers: []
+  AttackCoolDownTime:
+    baseValue: 0
+    fixedModifiers: []
+    persentedModifiers: []
+  MoveSpeed:
+    baseValue: 0
+    fixedModifiers: []
+    persentedModifiers: []
+  isAlive: 1
+  EnemyAgent: {fileID: 0}
+  EAnimator: {fileID: 0}
+  AttackProjectorObject: {fileID: 2891178587218808664}
 --- !u!136 &-7047373009021169180
 CapsuleCollider:
   m_ObjectHideFlags: 0

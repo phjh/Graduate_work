@@ -34,7 +34,7 @@ public class UIManager : ManagerBase<UIManager>
 
 	private bool IsOpenOption = false;
 
-	private Dictionary<string, PopupUI> popups = new Dictionary<string, PopupUI>();
+	public Dictionary<StatType, AddItemUI> AddUIs = new Dictionary<StatType, AddItemUI>();
 
 	private Canvas CurrentActiveCanvas = null;
 	private AsyncOperation asyncLoad;
@@ -72,7 +72,6 @@ public class UIManager : ManagerBase<UIManager>
 		beforeSelected = -1;
 
 		SetUpUICanvases(CanvasContainer);
-		SetUpPopupUIs();
 
         IsOpenOption = false;
 
@@ -103,15 +102,6 @@ public class UIManager : ManagerBase<UIManager>
 
 		MainCanvas.transform.parent = CanvasContainer.transform;
 		MainCanvas.enabled = true;
-	}
-
-	private void SetUpPopupUIs()
-	{
-		foreach (PopupUI popup in FindObjectsOfType<PopupUI>())
-		{
-			popups.Add(popup.GetType().Name.Replace(typeof(PopupUI).Name, ""), popup);
-			popup.TogglePopup(false);
-		}
 	}
 
 	public void EnableSelectCanvas(int index)
@@ -322,15 +312,22 @@ public class UIManager : ManagerBase<UIManager>
 	#endregion
 
 	private RectTransform AddPopupContainer;
-	public void PopupAddItemUI(Sprite ItemSprite, int AddCount = 1)
+	public void PopupAddItemUI(ItemDataSO ItemData, int AddCount = 1)
 	{
-		/*if(AddPopupContainer == null) */CurrentActiveCanvas.transform.Find("AddItemList").TryGetComponent(out AddPopupContainer);
+		CurrentActiveCanvas.transform.Find("AddItemList").TryGetComponent(out AddPopupContainer);
 		Logger.Assert(AddPopupContainer != null, "Item Popup Container is Null");
-		if (mngs.PoolMng.Pop("AddItemUI").TryGetComponent(out AddItemUI uiCompoenet))
+		AddItemUI AddUI;
+		if (AddUIs.TryGetValue(ItemData.AddingStatType, out AddUI) == false)
 		{
-			uiCompoenet.transform.parent = AddPopupContainer;
+			mngs.PoolMng.Pop("AddItemUI").TryGetComponent(out AddUI);
+			AddUI.transform.parent = AddPopupContainer;
+			AddUI.InitData(ItemData, AddCount);
 
-			uiCompoenet.InitData(ItemSprite, AddCount);
+			AddUIs.TryAdd(ItemData.AddingStatType, AddUI);
+		}
+		else if (AddUIs.TryGetValue(ItemData.AddingStatType, out AddUI) == true)
+		{
+			AddUI.SetAddingCountString(AddCount);
 		}
 		else return;
 	}
