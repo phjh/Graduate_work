@@ -47,7 +47,7 @@ public class MiniChuckMapUI : MonoBehaviour
             _beforeChunk = nowChunk;
             images[nowChunk].material = HighlightedMat;
         }
-        if((pos.x >= 25.5f && pos.x < 48.5f)&&(pos.z >= 25.5f && pos.z < 48.5f) && isBorderActived)
+        if((pos.x >= 25.5f && pos.x < 48.5f)&&(pos.z >= 25.5f && pos.z < 48.5f) && !isBorderActived)
         {
             isBorderActived = true;
             MapManager.Instance.ActvieDangerZone(1);

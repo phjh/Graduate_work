@@ -5,7 +5,7 @@ using UnityEngine;
 public class Pickaxe : PlayerWeapon
 {
     
-
+    
     protected override void Start()
     {
         base.Start();

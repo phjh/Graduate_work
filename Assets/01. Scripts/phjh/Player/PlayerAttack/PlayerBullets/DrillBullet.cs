@@ -33,11 +33,15 @@ public class DrillBullet : PlayerBullet
 
             foreach (RaycastHit hit in hits)
             {
+                if(hit.collider.gameObject.TryGetComponent(out BossMain boss))
+                {
+                    DoDamage(boss, hit.point, 0.5f);
+                }
                 if (hit.collider.gameObject.TryGetComponent(out EnemyMain enemy))
                 {
-                    DoDamage(enemy, 0.5f);
+                    DoDamage(enemy, hit.point, 0.5f);
                 }
-                else if (hit.collider.gameObject.TryGetComponent(out Blocks block))
+                if (hit.collider.gameObject.TryGetComponent(out Blocks block))
                 {
                     block.BlockEvent(hit.point);
                     Debug.Log(hit.collider.name);

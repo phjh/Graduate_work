@@ -129,9 +129,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4964526342021370020}
   - component: {fileID: 4328421151704837294}
+  - component: {fileID: 2323055639523970824}
   - component: {fileID: 2988543312494612532}
   - component: {fileID: 4079157873532526040}
-  - component: {fileID: 2323055639523970824}
   - component: {fileID: -7047373009021169180}
   m_Layer: 0
   m_Name: SmallGolem
@@ -198,6 +198,48 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2323055639523970824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3518793302707934386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea0632ba9b92adc46b5ca34d200b18d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PoolName: SmallGolem
+  IsTesting: 1
+  enemyData: {fileID: 11400000, guid: c6337358f37f3b7429c5d6a390dbfc00, type: 2}
+  MaxAttackRange: 2
+  TargetTransform: {fileID: 0}
+  ThisEnemyAttack: {fileID: 11400000, guid: ef291c0621e2601428901434283c01af, type: 2}
+  TargetLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  MinCorrectionAttackRange: 0.1
+  MaxCorrectionAttackRange: 0.5
+  MaxHP:
+    baseValue: 0
+    fixedModifiers: []
+    persentedModifiers: []
+  Attack:
+    baseValue: 0
+    fixedModifiers: []
+    persentedModifiers: []
+  AttackCoolDownTime:
+    baseValue: 0
+    fixedModifiers: []
+    persentedModifiers: []
+  MoveSpeed:
+    baseValue: 0
+    fixedModifiers: []
+    persentedModifiers: []
+  isAlive: 1
+  EnemyAgent: {fileID: 0}
+  EAnimator: {fileID: 0}
 --- !u!195 &2988543312494612532
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -247,48 +289,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &2323055639523970824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3518793302707934386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea0632ba9b92adc46b5ca34d200b18d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PoolName: SmallGolem
-  IsTesting: 1
-  enemyData: {fileID: 11400000, guid: c6337358f37f3b7429c5d6a390dbfc00, type: 2}
-  MaxAttackRange: 2
-  TargetTransform: {fileID: 0}
-  ThisEnemyAttack: {fileID: 11400000, guid: ef291c0621e2601428901434283c01af, type: 2}
-  TargetLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  MinCorrectionAttackRange: 0.1
-  MaxCorrectionAttackRange: 0.5
-  MaxHP:
-    baseValue: 0
-    fixedModifiers: []
-    persentedModifiers: []
-  Attack:
-    baseValue: 0
-    fixedModifiers: []
-    persentedModifiers: []
-  AttackCoolDownTime:
-    baseValue: 0
-    fixedModifiers: []
-    persentedModifiers: []
-  MoveSpeed:
-    baseValue: 0
-    fixedModifiers: []
-    persentedModifiers: []
-  isAlive: 1
-  EnemyAgent: {fileID: 0}
-  EAnimator: {fileID: 0}
 --- !u!136 &-7047373009021169180
 CapsuleCollider:
   m_ObjectHideFlags: 0

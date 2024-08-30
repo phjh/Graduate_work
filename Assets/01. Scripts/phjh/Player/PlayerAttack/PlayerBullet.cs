@@ -52,12 +52,17 @@ public abstract class PlayerBullet : PoolableMono
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.TryGetComponent<EnemyMain>(out EnemyMain enemy))
+        if(other.gameObject.TryGetComponent(out BossMain boss))
         {
-            DoDamage(enemy);
+            DoDamage(boss, this.transform.position);
             DestroyAndStopCoroutine();
         }
-        if (other.gameObject.TryGetComponent<Blocks>(out Blocks block))
+        if(other.gameObject.TryGetComponent(out EnemyMain enemy))
+        {
+            DoDamage(enemy, this.transform.position);
+            DestroyAndStopCoroutine();
+        }
+        if (other.gameObject.TryGetComponent(out Blocks block))
         {
             block.BlockEvent(transform.position);
             DestroyAndStopCoroutine();
@@ -76,6 +81,27 @@ public abstract class PlayerBullet : PoolableMono
         enemy.TakeDamage(damage * additionalFactor);
         DamageText(enemy.transform.position, damage * additionalFactor);
         DamageEffect(enemy.transform.position);
+    }
+
+    protected void DoDamage(BossMain enemy, float additionalFactor = 1)
+    {
+        enemy.TakeDamage(damage * additionalFactor);
+        DamageText(enemy.transform.position, damage * additionalFactor);
+        DamageEffect(enemy.transform.position);
+    }
+
+    protected void DoDamage(EnemyMain enemy, Vector3 pos, float additionalFactor = 1)
+    {
+        enemy.TakeDamage(damage * additionalFactor);
+        DamageText(pos, damage * additionalFactor);
+        DamageEffect(pos);
+    }
+
+    protected void DoDamage(BossMain enemy, Vector3 pos, float additionalFactor = 1)
+    {
+        enemy.TakeDamage(damage * additionalFactor);
+        DamageText(pos, damage * additionalFactor);
+        DamageEffect(pos);
     }
 
     protected void DamageEffect(Vector3 position)

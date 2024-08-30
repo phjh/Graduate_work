@@ -308,10 +308,22 @@ public class MapManager : ManagerBase<MapManager>
 		{
 			dz.ActiveDangerZone(Phase);
 		}
-		//여기서 알아서 보스스폰 시켜주면됨
-	}
+		SpawnBoss("Moai");
+        //여기서 알아서 보스스폰 시켜주면됨
+    }
 
-	public void DeleteDangerZoneBlocks()
+    public void SpawnBoss(string bossName)
+    {
+        Vector3 warpPos = new Vector3(37.5f, 1, 37.5f);
+        if (mngs.PoolMng.Pop(bossName).TryGetComponent<BossMain>(out var main))
+        {
+            main.BossAgent.Warp(warpPos);
+			main.TargetTransform = mngs.PlayerMng.Player.transform;
+        }
+
+    }
+
+    public void DeleteDangerZoneBlocks()
 	{
 		foreach(DangerZoneBlock dz in DangerZoneList)
 		{

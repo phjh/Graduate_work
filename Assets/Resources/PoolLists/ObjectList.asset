@@ -41,3 +41,11 @@ MonoBehaviour:
     poolableMono: {fileID: 1483587284991002659, guid: 22fcb45927393054493216c4e0829f7e, type: 3}
     poolableName: Dynamite
     Count: 10
+  - poolableType: 1
+    poolableMono: {fileID: 2198987290178534912, guid: 11207b8d4e534f8459b5b0a4cd55c7dd, type: 3}
+    poolableName: FallingStone
+    Count: 5
+  - poolableType: 1
+    poolableMono: {fileID: 7253586568384107589, guid: a41c978348bb08a46925911449b3469d, type: 3}
+    poolableName: Moai
+    Count: 1

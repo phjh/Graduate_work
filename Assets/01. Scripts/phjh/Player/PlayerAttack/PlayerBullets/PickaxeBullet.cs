@@ -37,9 +37,13 @@ public class PickaxeBullet : PlayerBullet
 
     protected override void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.TryGetComponent(out BossMain boss))
+        {
+            DoDamage(boss, this.transform.position);
+        }
         if (other.gameObject.TryGetComponent<EnemyMain>(out EnemyMain enemy))
         {
-            DoDamage(enemy);
+            DoDamage(enemy, this.transform.position);
         }
         if (other.gameObject.TryGetComponent<Blocks>(out Blocks block))
         {

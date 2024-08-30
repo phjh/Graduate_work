@@ -28,8 +28,12 @@ MonoBehaviour:
   - poolableType: 2
     poolableMono: {fileID: 5839977251834315368, guid: f7fc5e8f76047fb4eaa2a4bda20e5766, type: 3}
     poolableName: SmallGolemAttackEffect
-    Count: 1
+    Count: 3
   - poolableType: 2
     poolableMono: {fileID: -5338842440114424396, guid: 10da48cd82eacb74c855ccd0b4f9a5cd, type: 3}
     poolableName: MonsterHitEffect
-    Count: 1
+    Count: 3
+  - poolableType: 2
+    poolableMono: {fileID: -3972499618441076076, guid: d22dd31b6be2bb34093b3d65ddbf8971, type: 3}
+    poolableName: StoneBreakEffect
+    Count: 10

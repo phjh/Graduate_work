@@ -12,7 +12,7 @@ public abstract class EnemyAttackBase : ScriptableObject
 		E_Main.EAnimator.OnActiveAttack += ActiveAttack;
 		E_Main.EAnimator.OnEndAttack += EndAttack;
 	}
-
+	
 	public void DisableAttackEvent()
 	{
 		if (E_Main.EAnimator != null)
@@ -30,5 +30,6 @@ public abstract class EnemyAttackBase : ScriptableObject
 	{
 		E_Main.IsAttack = false;
 		E_Main.StartCoroutine(E_Main.ActiveAttackCooldown());
+		
 	}
 }

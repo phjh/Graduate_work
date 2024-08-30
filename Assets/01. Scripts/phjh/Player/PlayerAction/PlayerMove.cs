@@ -105,14 +105,13 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-
+        
     }
 
     private void SetMoveAnimation()
     {
         if (_nowMoveDir == _lastMoveDir) return;
         SpineAnimator.SetAnimation(_body, _animations[(int)_nowMoveDir], loop: true);
-        Logger.Log(_nowMoveDir);
         _lastMoveDir = _nowMoveDir;
     }
 

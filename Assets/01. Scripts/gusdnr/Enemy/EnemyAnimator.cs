@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(Animator))]
@@ -13,6 +14,7 @@ public class EnemyAnimator : MonoBehaviour
     public event Action OnActiveAttack;
     public event Action OnEndAttack;
     public event Action OnDie;
+
 
 	private void Awake()
 	{
