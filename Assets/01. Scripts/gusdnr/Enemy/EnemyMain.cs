@@ -8,8 +8,6 @@ using UnityEngine.Rendering.Universal;
 
 public class EnemyMain : PoolableMono, IDamageable
 {
-	public bool IsTesting;
-
 	[Header("Enemy Values")]
 	public StatusSO enemyData;
 	[Range(0.01f, 30f)] public float MaxAttackRange;
@@ -38,15 +36,6 @@ public class EnemyMain : PoolableMono, IDamageable
 	public GameObject AttackProjectorObject;
 
 	private float DistanceToTarget => Vector3.Distance(transform.position, TargetTransform.position);
-
-	private void Start()
-	{
-		if (IsTesting == true)
-		{
-			ResetPoolableMono();
-			EnablePoolableMono();
-		}
-	}
 
 	private void FixedUpdate()
 	{
@@ -122,7 +111,7 @@ public class EnemyMain : PoolableMono, IDamageable
 		SetMoveSpeed();
 
 		enemyData.NowHP = MaxHP.GetValue(); 
-		if (IsTesting == true) TargetTransform = Managers.instance?.PlayerMng?.Player.transform;
+		TargetTransform = Managers.instance?.PlayerMng?.Player.transform;
 	}
 
 	#endregion
