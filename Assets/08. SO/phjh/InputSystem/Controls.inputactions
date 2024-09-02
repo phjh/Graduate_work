@@ -33,6 +33,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "SecondAttack",
+                    "type": "Button",
+                    "id": "306f6e5f-9b0e-4802-ba7e-2884bded3dad",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Dodge",
                     "type": "Button",
                     "id": "df221f0a-0fe2-4bfa-94ec-fc48fab223eb",
@@ -219,6 +228,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "OreDetect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c4f864c3-1242-43c3-98fe-e6e31d03c680",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SecondAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

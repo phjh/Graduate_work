@@ -41,6 +41,7 @@ public class Player : MonoBehaviour, IDamageable
     //임시 무기
     public WeaponDataSO weaponData { get; private set; }
     public StatusSO playerStat { get; private set; }
+    public PlayerLevel level;
 
     #endregion
 
@@ -133,7 +134,6 @@ public class Player : MonoBehaviour, IDamageable
 
         PlayerManager.Instance.perlin = VirtualCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-
         inputReader = _inputReader;
         skeletonAnimation = _skeletonAnimation;
 
@@ -168,6 +168,12 @@ public class Player : MonoBehaviour, IDamageable
             skill.Init(this, inputReader, _skill);
         else
             Logger.LogWarning("playerskill is null");
+
+        if (this.gameObject.TryGetComponent(out level))
+        //level.Init();
+            {  }
+        else
+            Logger.LogWarning("player level is null");
 
         #endregion
 

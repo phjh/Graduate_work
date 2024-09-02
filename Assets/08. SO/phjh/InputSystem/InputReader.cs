@@ -9,6 +9,7 @@ public class InputReader : ScriptableObject, IPlayerActions
 {
     public event Action<Vector2> MovementEvent;
     public event Action<bool> AttackOnOffEvent;
+    public event Action<bool> SecondAttackOnOffEvent;
     public event Action SkillEvent;
     public event Action DodgeEvent;
     public event Action ReloadEvent;
@@ -119,4 +120,21 @@ public class InputReader : ScriptableObject, IPlayerActions
         }
     }
 
+    public void OnSecondAttack(InputAction.CallbackContext context)
+    {
+        if (isactived)
+        {
+            //attack Event
+            if (context.performed)
+            {
+                SecondAttackOnOffEvent?.Invoke(true);
+                Cursor.SetCursor(FiringCursor, Vector2.zero, CursorMode.Auto);
+            }
+            if (context.canceled)
+            {
+                SecondAttackOnOffEvent?.Invoke(false);
+                Cursor.SetCursor(normalCursor, Vector2.zero, CursorMode.Auto);
+            }
+        }
+    }
 }

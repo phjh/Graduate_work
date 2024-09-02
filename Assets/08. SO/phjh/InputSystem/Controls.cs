@@ -55,6 +55,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""SecondAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""306f6e5f-9b0e-4802-ba7e-2884bded3dad"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Dodge"",
                     ""type"": ""Button"",
                     ""id"": ""df221f0a-0fe2-4bfa-94ec-fc48fab223eb"",
@@ -243,6 +252,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""OreDetect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c4f864c3-1242-43c3-98fe-e6e31d03c680"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SecondAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -271,6 +291,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
+        m_Player_SecondAttack = m_Player.FindAction("SecondAttack", throwIfNotFound: true);
         m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_Option = m_Player.FindAction("Option", throwIfNotFound: true);
@@ -340,6 +361,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Aim;
     private readonly InputAction m_Player_Attack;
+    private readonly InputAction m_Player_SecondAttack;
     private readonly InputAction m_Player_Dodge;
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_Option;
@@ -352,6 +374,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Aim => m_Wrapper.m_Player_Aim;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
+        public InputAction @SecondAttack => m_Wrapper.m_Player_SecondAttack;
         public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputAction @Option => m_Wrapper.m_Player_Option;
@@ -375,6 +398,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
+            @SecondAttack.started += instance.OnSecondAttack;
+            @SecondAttack.performed += instance.OnSecondAttack;
+            @SecondAttack.canceled += instance.OnSecondAttack;
             @Dodge.started += instance.OnDodge;
             @Dodge.performed += instance.OnDodge;
             @Dodge.canceled += instance.OnDodge;
@@ -403,6 +429,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
+            @SecondAttack.started -= instance.OnSecondAttack;
+            @SecondAttack.performed -= instance.OnSecondAttack;
+            @SecondAttack.canceled -= instance.OnSecondAttack;
             @Dodge.started -= instance.OnDodge;
             @Dodge.performed -= instance.OnDodge;
             @Dodge.canceled -= instance.OnDodge;
@@ -449,6 +478,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnSecondAttack(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnOption(InputAction.CallbackContext context);

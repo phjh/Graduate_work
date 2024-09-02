@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Rendering.Universal;
 
 public class EnemyMain : PoolableMono, IDamageable
 {
@@ -12,6 +10,7 @@ public class EnemyMain : PoolableMono, IDamageable
 	public StatusSO enemyData;
 	[Range(0.01f, 30f)] public float MaxAttackRange;
 	public Transform TargetTransform;
+	public float dieXp;
 
 	[Header("Enemy Attack")]
 	[SerializeField] private EnemyAttackBase ThisEnemyAttack;
@@ -161,6 +160,7 @@ public class EnemyMain : PoolableMono, IDamageable
 		isAlive = false;
 		StopChaing();
 		ThisEnemyAttack.DisableAttackEvent();
+		PlayerManager.Instance.Player.level.GrindXp(dieXp);
 		PoolManager.Instance.Push(this, this.PoolName);
 	}
 

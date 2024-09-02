@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New NearArea Attack", menuName = "BossAttack/FallingStones")]
 public class FallingStones : BossAttackBase
 {
+    [SerializeField]
     private string shootStones;
     [SerializeField]
     private int stoneCount;
@@ -20,8 +21,8 @@ public class FallingStones : BossAttackBase
     {
         for(int i = 0; i < stoneCount; i++)
         {
-            Vector3 pos = Random.insideUnitSphere * 10;
-            pos.y = 5;
+            Vector3 pos = Random.insideUnitSphere * attackRange;
+            pos.y = 10;
             FallStone stone = PoolManager.Instance.Pop(shootStones, pos + boss_Main.transform.position).GetComponent<FallStone>();
             stone.Damage = Damage;
         }

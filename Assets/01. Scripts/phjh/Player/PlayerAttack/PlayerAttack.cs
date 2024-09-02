@@ -26,6 +26,7 @@ public class PlayerAttack : MonoBehaviour
     private float _lastFireTime;
     private bool _isReloading = false;
     private bool _isAttackOn = false;
+    private bool _secondisAttackOn = false;
 
     public float strength;
     public float criticalChance;
@@ -49,6 +50,7 @@ public class PlayerAttack : MonoBehaviour
         mainCamera = Camera.main;
         _inputReader.ReloadEvent += ReloadWeapon;
         _inputReader.AttackOnOffEvent += AttackOnOff;
+        _inputReader.SecondAttackOnOffEvent += SecondAttackOnOff;
 
         strength = _player.playerStat.Attack.GetValue();
         criticalChance = _player.playerStat.CriticalChance.GetValue();
@@ -61,8 +63,10 @@ public class PlayerAttack : MonoBehaviour
     {
         WeaponInfomation.Instance.SetMaxBullet(weapon.maxAmmo);
         WeaponInfomation.Instance.SetCurrentBullet(weapon.currentAmmo);
-        if(_isAttackOn)
+        if (_isAttackOn)
             DoAttack();
+        else if (_secondisAttackOn)
+            DoAttack(false);
     }
 
     public void AttackOnOff(bool value)
@@ -70,7 +74,12 @@ public class PlayerAttack : MonoBehaviour
         _isAttackOn = value;
     }
 
-    private void DoAttack()
+    public void SecondAttackOnOff(bool value)
+    {
+        _secondisAttackOn = value;
+    }
+
+    private void DoAttack(bool first = true)
     {
         CheckShoot();
 
@@ -85,25 +94,30 @@ public class PlayerAttack : MonoBehaviour
             return;
         }
 
-        FireBullet();
+        FireBullet(first);
     }
 
-    private void FireBullet()
+    private void FireBullet(bool first = true)
     {
+        PlayerBullet bullet;
         weapon.currentAmmo--;
-        WeaponInfomation.Instance.SetCurrentBullet(weapon.currentAmmo);
-
-        PlayerBullet bullet = (PlayerBullet)PoolManager.Instance.Pop(tempBullet.name, weapon.firePos.position);//this.transform.position + new Vector3(0, 0.4f, 0.25f));
-        //bullet.transform.forward = rot;
-
         Quaternion rotation = Quaternion.LookRotation(rot);
-
+        WeaponInfomation.Instance.SetCurrentBullet(weapon.currentAmmo);
         var (damage, iscritical) = CalculateDamage();
-        bullet.Init(rotation, damage * weapon.damageFactor, iscritical, true);
+        
+        if (first)
+        {
+            bullet = (PlayerBullet)PoolManager.Instance.Pop(tempBullet.name, weapon.firePos.position);//this.transform.position + new Vector3(0, 0.4f, 0.25f));
+            bullet.Init(rotation, damage * weapon.damageFactor, iscritical, true);
+        }
+        else
+        {
+            bullet = (PlayerBullet)PoolManager.Instance.Pop(tempBullet.name, weapon.firePos.position);//this.transform.position + new Vector3(0, 0.4f, 0.25f));
+            bullet.Init(rotation, damage * weapon.damageFactor, iscritical, true, true);
+        }
 
         _lastFireTime = Time.time;
         weapon.AttackWeaponEvent(weapon.AttackCooltime / attackSpeed);
-        //bullet.transform.rotation = Quaternion.Slerp(bullet.transform.rotation, rotation, 1);
 
         if(weapon.currentAmmo <= 0)
         {

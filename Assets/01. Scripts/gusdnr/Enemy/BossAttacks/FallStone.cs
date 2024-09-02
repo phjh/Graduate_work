@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class FallStone : PoolableMono
 {
@@ -12,17 +13,26 @@ public class FallStone : PoolableMono
     public float Damage;
 
     private SpriteRenderer rp;
+    private Rigidbody rb;
+    private float gravity = 9.8f;
+    private float time = 0;
 
     private void Awake()
     {
         rp = GetComponent<SpriteRenderer>();
-        Rigidbody rb = GetComponent<Rigidbody>();
-        rb.velocity = Vector3.up / 2;
+        rb = GetComponent<Rigidbody>();
     }
 
     private void OnEnable()
     {
         rp.sprite = sprites[Random.Range(0,sprites.Count)];
+        time = 0;
+    }
+
+    private void FixedUpdate()
+    {
+        time += Time.fixedDeltaTime;
+        rb.velocity = new Vector3(0, (gravity * time)/-1.75f, 0);
     }
 
     private void OnTriggerEnter(Collider other)

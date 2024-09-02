@@ -9,10 +9,19 @@ public class PlayerLevel : MonoBehaviour
     private float XP = 0;
     private int level = 0;
 
-    public void GrindXp(float xp)
+    public void Init(Player player)
     {
-
+        _player = player;
     }
 
+    public void GrindXp(float xp)
+    {
+        SetPlayerLevelUI();
+    }
+
+    private void SetPlayerLevelUI()
+    {
+        //레벨바 세팅
+    }
 
 }

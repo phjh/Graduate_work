@@ -15,5 +15,6 @@ MonoBehaviour:
   attackRange: 5
   isbefore: 1
   coolTime: 6
+  shootStones: FallingStone
   stoneCount: 8
   Damage: 10
