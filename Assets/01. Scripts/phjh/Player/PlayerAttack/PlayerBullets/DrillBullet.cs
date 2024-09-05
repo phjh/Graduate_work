@@ -47,15 +47,17 @@ public class DrillBullet : PlayerBullet
                 if(hit.collider.gameObject.TryGetComponent(out BossMain boss))
                 {
                     DoDamage(boss, hit.point, 0.5f);
+                    CollisionAbility();
                 }
                 if (hit.collider.gameObject.TryGetComponent(out EnemyMain enemy))
                 {
                     DoDamage(enemy, hit.point, 0.5f);
+                    CollisionAbility();
                 }
                 if (hit.collider.gameObject.TryGetComponent(out Blocks block))
                 {
                     block.BlockEvent(hit.point);
-                    Debug.Log(hit.collider.name);
+                    CollisionAbility();
                 }
             }
 
@@ -66,6 +68,12 @@ public class DrillBullet : PlayerBullet
             DestroyAndStopCoroutine();
         }
         PoolManager.Instance.PopAndPushEffect(_bombEffectName, transform.position, 0.2f);
+    }
+
+    protected override void DestroyAndStopCoroutine()
+    {
+        PoolManager.Instance.Push(this, this.gameObject.name);
+        StopCoroutine(destroyCoroutine);
     }
 
     protected override void OnTriggerEnter(Collider other)

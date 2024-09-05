@@ -25,6 +25,8 @@ public abstract class PlayerBullet : PoolableMono
     protected float damage = 1;
     protected bool isCritical = false;
 
+    protected void CollisionAbility() => PlayerManager.Instance.Player.level.CollisionAbility();
+
     public virtual void Init(Quaternion rot, float damage, bool isCritical, bool first = false, bool isSecondAttack = false)
     {
         this.rot = rot;
@@ -72,6 +74,7 @@ public abstract class PlayerBullet : PoolableMono
 
     protected virtual void DestroyAndStopCoroutine()
     {
+        CollisionAbility();
         PoolManager.Instance.Push(this, this.gameObject.name);
         StopCoroutine(destroyCoroutine);
     }

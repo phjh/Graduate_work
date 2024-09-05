@@ -1738,6 +1738,7 @@ GameObject:
   - component: {fileID: 1732037700}
   - component: {fileID: 1732037699}
   - component: {fileID: 1732037706}
+  - component: {fileID: 1732037707}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -1759,7 +1760,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defensiveRegenRate: 0.5
   maxChargedDefences: 5
-  _immuniateTime: 0.5
+  _immuniateTime: 0.6
   _shieldObj: {fileID: 1138782183}
 --- !u!114 &1732037700
 MonoBehaviour:
@@ -1874,6 +1875,7 @@ MonoBehaviour:
   _skill: {fileID: 1483587284991002659, guid: 22fcb45927393054493216c4e0829f7e, type: 3}
   _weaponParent: {fileID: 1988163932}
   _immuniateTime: 0.5
+  level: {fileID: 0}
   _playerShield: {fileID: 0}
   weapon: {fileID: 0}
   _move: {fileID: 0}
@@ -1910,6 +1912,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   strength: 0
+--- !u!114 &1732037707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732037698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54550a09f290d6545a0bbf03810c9063, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ability:
+  - {fileID: 11400000, guid: b2b7b855ec961ff4a80ec14b31290ef9, type: 2}
+  - {fileID: 11400000, guid: 1bf964d9292af3f42bc6bf0bac2bfd3b, type: 2}
+  - {fileID: 11400000, guid: 349567784677d1f4fb141b8e26fd619b, type: 2}
 --- !u!1 &1841755822
 GameObject:
   m_ObjectHideFlags: 0

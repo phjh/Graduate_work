@@ -103,11 +103,6 @@ public class PlayerMove : MonoBehaviour
         _rb.velocity = _movementVelocity;
     }
 
-    private void Update()
-    {
-        
-    }
-
     private void SetMoveAnimation()
     {
         if (_nowMoveDir == _lastMoveDir) return;

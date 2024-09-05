@@ -55,11 +55,6 @@ public class PickaxeBullet : PlayerBullet
         mono.Init(rot, damage, isCritical);
     }
 
-    protected override void DestroyAndStopCoroutine()
-    {
-        base.DestroyAndStopCoroutine();
-    }
-
     private void Update()
     {
         rotaterot = Quaternion.Euler(45, 0, rotaterot.eulerAngles.z + rotateSpeed);
@@ -71,10 +66,12 @@ public class PickaxeBullet : PlayerBullet
         if (other.gameObject.TryGetComponent(out BossMain boss))
         {
             DoDamage(boss, this.transform.position);
+            DestroyAndStopCoroutine();
         }
         if (other.gameObject.TryGetComponent<EnemyMain>(out EnemyMain enemy))
         {
             DoDamage(enemy, this.transform.position);
+            CollisionAbility();
         }
         if (other.gameObject.TryGetComponent<Blocks>(out Blocks block))
         {

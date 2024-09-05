@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerStat
   m_EditorClassIdentifier: 
   MaxHP:
-    baseValue: 100
+    baseValue: 5
     fixedModifiers: []
     persentedModifiers: []
   Attack:

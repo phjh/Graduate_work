@@ -135,6 +135,7 @@ public class BossMain : PoolableMono, IDamageable
     public void DieObject()
 	{
 		isAlive = false;
+        MapManager.Instance.DeleteDangerZoneBlocks();
 		PoolManager.Instance.Push(this, this.PoolName);
 	}
 

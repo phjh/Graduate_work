@@ -33,7 +33,7 @@ public class Stat
 	{
 		if (value != 0)
 		{
-			if (IsPersent) { fixedModifiers.Add(value); }
+			if (!IsPersent) { fixedModifiers.Add(value); }
 			else { persentedModifiers.Add(value); }
 		}
 	}
@@ -42,7 +42,7 @@ public class Stat
 	{
 		if (value != 0)
 		{
-			if (IsPersent) { fixedModifiers.Remove(value); }
+			if (!IsPersent) { fixedModifiers.Remove(value); }
 			else { persentedModifiers.Remove(value); }
 		}
 	}

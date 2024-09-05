@@ -1,7 +1,9 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerManager : ManagerBase<PlayerManager>
 {
@@ -26,6 +28,12 @@ public class PlayerManager : ManagerBase<PlayerManager>
 	public ShieldUI playerShield;
 
 	private float lastDetectTime = -3f;
+
+	public Slider levelSlider;
+	public TextMeshProUGUI levelText;
+
+	public RectTransform levelUpAbilityUI;
+	public List<PlayerAbilityCard> abilityCards;
 
 	public override void InitManager()
 	{
@@ -73,16 +81,6 @@ public class PlayerManager : ManagerBase<PlayerManager>
 		nowWeapon.SetActive(true);
 		PlayerWeapon weapon = nowWeapon.GetComponent<PlayerWeapon>();
 		LobbyPlayer.SetSpineIK(weapon.leftHandIK, weapon.rightHandIK);
-	}
-
-	public void SetActiveXRay(bool active)
-	{
-		ActioveXRay = active;
-
-		if (ActioveXRay)
-		{
-
-		}
 	}
 
 	public WeaponDataSO SentWeaponData()
@@ -172,5 +170,22 @@ public class PlayerManager : ManagerBase<PlayerManager>
         blockMat.SetVector("_PlayerPos", Vector3.zero);
     }
 
+	public void SetPowerupAbilityUI()
+	{
+		Time.timeScale = 0;
+		for (int i = 0; i < 3; i++) 
+		{
+			CardInfo info = Player.level.GetRandomAbility();
+			abilityCards[i].SetCard(info);
+		}
+		levelUpAbilityUI.gameObject.SetActive(true);
+	}
+
+	public void PowerupSelectedAbility(int num)
+	{
+		Player.level.ability[num].AbilityLevelUp();
+		levelUpAbilityUI.gameObject.SetActive(false);
+		Time.timeScale = 1;
+	}
 
 }

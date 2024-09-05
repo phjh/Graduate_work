@@ -41,6 +41,7 @@ public class Player : MonoBehaviour, IDamageable
     //임시 무기
     public WeaponDataSO weaponData { get; private set; }
     public StatusSO playerStat { get; private set; }
+
     public PlayerLevel level;
 
     #endregion
@@ -191,14 +192,23 @@ public class Player : MonoBehaviour, IDamageable
         if (isImmunity || isDodging)
             return;
 
-        //그대로 데미지 입게끔 해준다
-        playerStat.NowHP -= dmg;
+        //그대로 데미지 입게끔 해준다 => 데미지를 1만 받는다
+        playerStat.NowHP--;
+        Debug.Log($"dmg : {dmg} => 1, left health : {playerStat.NowHP}");
         if (playerStat.NowHP <= 0)
         {
             DieObject();
         }
 		
         StartCoroutine(TakeDamageEffects());
+        SetHealthBar();
+    }
+
+    public void SetMaxhp(float maxhp)
+    {
+        playerStat.MaxHP.baseValue = maxhp;
+        playerStat.NowHP = Mathf.Min(playerStat.NowHP, maxhp);
+        Debug.Log($"nowhp : {playerStat.NowHP}. maxhp : {playerStat.MaxHP.GetValue()}");
         SetHealthBar();
     }
 
@@ -224,4 +234,5 @@ public class Player : MonoBehaviour, IDamageable
 		Managers.instance.TimeMng.TimerText.gameObject.SetActive(false);
 		Managers.instance.FlowMng.ChangeSceneInFlow();
     }
+
 }
