@@ -298,8 +298,6 @@ public class MapManager : ManagerBase<MapManager>
 		{
 			DangerZoneList.Add(DangerZone);
 		}
-
-		//maps[position].Value.GetComponent<Blocks>().Init(position, poolObj.gameObject, poolObject);
 	}
 
 	public void ActvieDangerZone(int Phase)
